@@ -15,7 +15,7 @@ public class Reserva {
     
     public String validarReserva(){
         if (estado=true)
-            return "RESERVA VALIDA";
+            return "RESERVA VALIDAa";
         else 
             return "RESERVA INVALIDA";
     }

@@ -313,11 +313,11 @@ public class Mavenproject3 {
         while ((linea = reader.readLine()) != null) {
             String[] partes = linea.split(",");
 
-            if (partes.length == 4) {
-                String nombre = partes[0];
-                String apellido = partes[1];
-                String correo = partes[2];
-                String contraseña = partes[3];
+            if (partes.length == 9) {
+                String nombre = partes[1];
+                String apellido = partes[2];
+                String correo = partes[4];
+                String contraseña = partes[6];
 
                 if (correo.equals(correoIngresado) && contraseña.equals(contraseñaIngresada)) {
                     Empleado empleado = new Empleado();

@@ -64,17 +64,18 @@ public class Empleado extends Usuarios {
     }
     public static void guardarEmpleado(Empleado e) {
         try (FileWriter writer = new FileWriter("empleados.txt", true)) {
-            writer.write("ID: " + e.getId() + "\n");
-            writer.write("Nombre: " + e.getNombre() + "\n");
-            writer.write("Apellido: " + e.getApellido() + "\n");
-            writer.write("Teléfono: " + e.getTelefono() + "\n");
-            writer.write("Correo: " + e.getCorreo() + "\n");
-            writer.write("Nickname: " + e.getNickname() + "\n");
-            writer.write("Clave: " + e.getClave() + "\n");
-            writer.write("Área: " + e.getArea() + "\n");
-            writer.write("Puesto: " + e.getPuesto() + "\n");
-            writer.write("=====================================\n");
-            System.out.println("✅ Empleado guardado exitosamente.");
+               String linea = e.getId() + "," +
+                       e.getNombre() + "," +
+                       e.getApellido() + "," +
+                       e.getTelefono() + "," +
+                       e.getCorreo() + "," +
+                       e.getNickname() + "," +
+                       e.getClave() + "," +
+                       e.getArea() + "," +
+                       e.getPuesto();
+        writer.write(linea + "\n");            
+        
+        System.out.println("✅ Empleado guardado exitosamente.");
         } catch (IOException ex) {
             System.out.println("❌ Error al guardar el empleado: " + ex.getMessage());
         }

@@ -1,11 +1,2 @@
-fito,Recepcionista,Recepcionista
-ID: 1
-Nombre: jose
-Apellido: Borja
-Teléfono: 77474574
-Correo: jborja@mapfre.com.sv
-Nickname: fito1
-Clave: Mapfre2025$
-Área: Recepcion
-Puesto: Recepcionista
-=====================================
+1,Jose,Borja,77474574,jborja@mapfre.com.sv,fito1,Mapfre2025$,Recepcion,Recepcionista
+2,Cristian,Perez,77777777,cristian@gmail.com,cristian1,Cristian$,Ingenieria,Ingeniero

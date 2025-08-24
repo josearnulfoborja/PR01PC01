@@ -11,9 +11,6 @@ package com.mycompany.mavenproject3;
 public class Mavenproject3 {
 
     public static void main(String[] args) {
-        Habitaciones gestor = new Habitaciones();
-        
-        gestor.agregarHabitacionDesdeScanner(); // Pide datos al usuario
-        gestor.guardarEnArchivo(); // Guarda en Habitaciones.txt
+       
     }
 }

@@ -156,5 +156,15 @@ public class Mavenproject3 {
                     System.out.println("X Opcion invalida X");
             }
         }
+
+        //METODO PARA VERIFICAR QUE LA HABITACION NO ESTE OCUPADA, solo es de copiar y pegarlo justo donde se pide el ID de la habitacion
+        Habitaciones habitacionSeleccionada = null;
+        while (habitacionSeleccionada == null) {
+            System.out.print("Ingrese el ID de la habitacion: ");
+            int id = sc.nextInt();
+            sc.nextLine();
+            habitacionSeleccionada = Habitaciones.buscarHabitacionPorId(listaHabitaciones, id);
+        }
+        System.out.println("===== Habitacion seleccionada: " + habitacionSeleccionada);
     }
 }

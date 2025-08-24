@@ -105,4 +105,19 @@ public class Habitaciones {
                 + ", Precio:" + precio
                 + ", Estado:" + estado;
     }
+    
+    //VERIFICAR ESTADO DE LA HABITACION
+    public static Habitaciones buscarHabitacionPorId(ArrayList<Habitaciones> lista, int id) {
+        for (Habitaciones h : lista) {
+            if (h.getId() == id) {
+                if (h.getEstado().equalsIgnoreCase("Ocupado")) {
+                    System.out.println("===== La habitación " + id + " no está disponible, selecciona otra.");
+                    return null; // retorna null si está ocupada
+                }
+                return h; // retorna la habitacion si está disponible
+            }
+        }
+        System.out.println("====== No existe una habitación con el ID: " + id);
+        return null; // retorna null si no encuentra el id
+    }
 }

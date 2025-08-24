@@ -84,10 +84,10 @@ public class Mavenproject3 {
             System.out.print("1. Iniciar sesion\n2. Registrar usuario");
             opcionInicio = scanner.nextInt();
 
-            if (opcionInicio != 1 || opcionInicio != 2) {
+            if (opcionInicio != 1 && opcionInicio != 2) {
                 System.out.println("\nIngrese una opcion valida.\nVuelva a intentar: ");
             }
-        } while (opcionInicio != 1 || opcionInicio != 2);
+        } while (opcionInicio != 1 && opcionInicio != 2);
 
         if (opcionInicio == 1) {
             System.out.print("Correo: ");

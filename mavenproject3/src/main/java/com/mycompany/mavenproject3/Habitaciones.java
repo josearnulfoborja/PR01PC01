@@ -78,8 +78,8 @@ public class Habitaciones {
     }
 
     public void setPrecio(float precio) {
-        if (precio < 0) {
-            throw new IllegalArgumentException("El precio no puede ser negativo.");
+        if (precio <= 0) {
+            throw new IllegalArgumentException("El precio debe ser mayor que 0");
         }
         this.precio = precio;
     }

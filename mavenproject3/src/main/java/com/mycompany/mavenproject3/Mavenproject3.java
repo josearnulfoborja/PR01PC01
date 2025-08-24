@@ -95,16 +95,45 @@ public class Mavenproject3 {
                         }
                     }
 
-                    System.out.print("Nivel (1-3): ");
-                    habi.setNivel(sc.nextInt());
-                    sc.nextLine();
+                    //NIVEL
+                    while (true) {
+                        try {
+                            System.out.print("Nivel (1-3): ");
+                            habi.setNivel(sc.nextInt());
+                            sc.nextLine();
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("FALLO:  " + e.getMessage());
+                            sc.nextLine(); // limpiar buffer
+                        }
+                    }
 
-                    System.out.print("Precio: ");
-                    habi.setPrecio(sc.nextFloat());
-                    sc.nextLine();
+                    //PRECIO
+                    while (true) {
+                        try {
+                            System.out.print("Precio: ");
+                            habi.setPrecio(sc.nextFloat());
+                            sc.nextLine();
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("FALLO:  " + e.getMessage());
+                            sc.nextLine(); // limpiar buffer
+                        }
+                    }
+                    
+                    //ESTADO
+                     while (true) {
+                        try {
+                            System.out.print("Estado (disponible/ocupado): ");
+                            habi.setEstado(sc.nextLine());
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("FALLO:  " + e.getMessage());
+                            sc.nextLine(); // limpiar buffer
+                        }
+                    }
 
-                    System.out.print("Estado (disponible/ocupado): ");
-                    habi.setEstado(sc.nextLine());
+                    
 
                     listaHabitaciones.add(habi);
                     System.out.println("========== Habitacion agregada con exito.");

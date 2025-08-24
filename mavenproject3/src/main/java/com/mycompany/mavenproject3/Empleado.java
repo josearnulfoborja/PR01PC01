@@ -15,8 +15,9 @@ import java.util.Scanner;
  * @author User
  */
 public class Empleado extends Usuarios {
-    private String Area ="SIN ESPECIFICAR";
-    private String Puesto  = "SIN ESPECIFICAR";
+
+    private String Area = "SIN ESPECIFICAR";
+    private String Puesto = "SIN ESPECIFICAR";
 
     public Empleado() {
     }
@@ -24,19 +25,39 @@ public class Empleado extends Usuarios {
     public Empleado(int id, String nombre, String apellido, String telefono, String correo, String nickname, String clave, String Area, String Puesto) {
         super(id, nombre, apellido, telefono, correo, nickname, clave);
         this.Area = Area;
-        this.Puesto =  Puesto;
-    }    
-    
-   public void setArea(String area) {
-        if (area == null || area.length() < 3)
-            throw new IllegalArgumentException("Área inválida.");
-        this.Area = area.trim();
+        this.Puesto = Puesto;
+    }
+
+    public void setArea(String area) {
+        try {
+            while (true) {
+                if (area == null || area.length() < 3) {
+                    throw new IllegalArgumentException("Área inválida.");
+                }
+                this.Area = area.trim();
+                break;
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error en el area: " + e.getMessage());
+            System.out.print("Vuelva a intentar. Area: ");
+            area = scanner.nextLine();
+        }
     }
 
     public void setPuesto(String puesto) {
-        if (puesto == null || puesto.length() < 3)
-            throw new IllegalArgumentException("Puesto inválido.");
-        this.Puesto = puesto.trim();
+        try {
+            while (true) {
+                if (puesto == null || puesto.length() < 3) {
+                    throw new IllegalArgumentException("Puesto inválido.");
+                }
+                this.Puesto = puesto.trim();
+                break;
+            }
+        } catch (IllegalArgumentException e){
+            System.out.println("Error en el puesto: "+e.getMessage());
+            System.out.print("Vuelva a intentar. Puesto: ");
+            puesto=scanner.nextLine();
+        }
     }
 
     public static Empleado crearEmpleadoDesdeUsuario(Usuarios usuario, Scanner scanner) {
@@ -49,7 +70,7 @@ public class Empleado extends Usuarios {
         String puesto = scanner.nextLine();
 
         Empleado empleado = new Empleado(usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getTelefono(),
-                                         usuario.getCorreo(), usuario.getNickname(), usuario.getClave(), area, puesto);
+                usuario.getCorreo(), usuario.getNickname(), usuario.getClave(), area, puesto);
         guardarEmpleado(empleado);
         return empleado;
     }
@@ -69,6 +90,5 @@ public class Empleado extends Usuarios {
     public String getPuesto() {
         return Puesto;
     }
-
 
 }

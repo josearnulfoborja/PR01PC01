@@ -39,36 +39,50 @@ public class Empleado extends Usuarios {
         this.Puesto = puesto.trim();
     }
 
-    public static Empleado crearEmpleadoDesdeUsuario(Usuarios usuario, Scanner scanner) {
-        System.out.println("\n=== Datos del Empleado ===");
+    public Empleado crearEmpleadoDesdeUsuario(Empleado usuario) {
+       
+        /*
+                System.out.println("\n=== Datos del Empleado ===");
 
         System.out.print("Área: ");
         String area = scanner.nextLine();
 
         System.out.print("Puesto: ");
         String puesto = scanner.nextLine();
-
+    */
         Empleado empleado = new Empleado(usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getTelefono(),
-                                         usuario.getCorreo(), usuario.getNickname(), usuario.getClave(), area, puesto);
+                                         usuario.getCorreo(), usuario.getNickname(), usuario.getClave(),usuario.getArea() , usuario.getPuesto());
         guardarEmpleado(empleado);
         return empleado;
     }
-
-    public static void guardarEmpleado(Empleado empleado) {
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("empleados.txt", true)))) {
-            out.println(empleado.getNickname() + "," + empleado.Area + "," + empleado.Puesto);
-        } catch (IOException e) {
-            System.out.println("❌ Error al guardar empleado: " + e.getMessage());
-        }
-    }
-
+    
     public String getArea() {
         return Area;
     }
-
     public String getPuesto() {
         return Puesto;
     }
+    public static void guardarEmpleado(Empleado e) {
+        try (FileWriter writer = new FileWriter("empleados.txt", true)) {
+            writer.write("ID: " + e.getId() + "\n");
+            writer.write("Nombre: " + e.getNombre() + "\n");
+            writer.write("Apellido: " + e.getApellido() + "\n");
+            writer.write("Teléfono: " + e.getTelefono() + "\n");
+            writer.write("Correo: " + e.getCorreo() + "\n");
+            writer.write("Nickname: " + e.getNickname() + "\n");
+            writer.write("Clave: " + e.getClave() + "\n");
+            writer.write("Área: " + e.getArea() + "\n");
+            writer.write("Puesto: " + e.getPuesto() + "\n");
+            writer.write("=====================================\n");
+            System.out.println("✅ Empleado guardado exitosamente.");
+        } catch (IOException ex) {
+            System.out.println("❌ Error al guardar el empleado: " + ex.getMessage());
+        }
+    }
+
+    
+
+
 
 
 }

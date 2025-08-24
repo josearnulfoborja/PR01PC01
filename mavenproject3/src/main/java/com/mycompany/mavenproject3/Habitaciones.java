@@ -6,60 +6,54 @@ package com.mycompany.mavenproject3;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
  * @author PC
  */
 public class Habitaciones {
-    private int id =0;
-    private int capacidad =0;
-    private String tipo ="SIN ESPECIFICAR";//Solo hay 3 tipos individual, doble y triple
-    private int nivel =0;// solo hay 3 niveles
-    private float precio=(float) 0.0;
-    private String estado="SIN ESPECIFICAR";
-    
-    public Habitaciones() {
-    }
+    private int id = 0;
+    private int capacidad = 0;
+    private String tipo = "SIN ESPECIFICAR";
+    private int nivel = 0;
+    private float precio = (float) 0.0;
+    private String estado = "SIN ESPECIFICAR";
+
+    // Lista para almacenar habitaciones
+    private ArrayList<Habitaciones> listaHabitaciones = new ArrayList<>();
+    private final String archivo = "Habitaciones.txt";
+
+    // Constructores
+    public Habitaciones() {}
     public Habitaciones(int id) {
         try {
             if (id <= 0) {
                 throw new IllegalArgumentException("El ID debe ser mayor que 0.");
             }
             this.id = id;
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println("Error en el Id: " + e.getMessage());
         }
-        
-    }
-    public int getId() {
-        return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    // Getters y Setters con validaciones
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public int getCapacidad() {
-        return capacidad;
-    }
-
+    public int getCapacidad() { return capacidad; }
     public void setCapacidad(int capacidad) {
         try {
             if (capacidad <= 0) {
                 throw new IllegalArgumentException("La capacidad debe ser mayor que 0.");
             }
             this.capacidad = capacidad;
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println("Error en la capacidad: " + e.getMessage());
         }
-
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
+    public String getTipo() { return tipo; }
     public void setTipo(String tipo) {
         try {
             tipo = tipo.trim().toLowerCase();
@@ -68,14 +62,11 @@ public class Habitaciones {
             }
             this.tipo = tipo;
         } catch (IllegalArgumentException e) {
-            System.out.println("Error en el Tipo de habitacion: " + e.getMessage());
+            System.out.println("Error en el Tipo de habitación: " + e.getMessage());
         }
     }
 
-    public int getNivel() {
-        return nivel;
-    }
-
+    public int getNivel() { return nivel; }
     public void setNivel(int nivel) {
         try {
             if (nivel < 1 || nivel > 3) {
@@ -87,10 +78,7 @@ public class Habitaciones {
         }
     }
 
-    public float getPrecio() {
-        return precio;
-    }
-
+    public float getPrecio() { return precio; }
     public void setPrecio(float precio) {
         try {
             if (precio < 0) {
@@ -102,48 +90,58 @@ public class Habitaciones {
         }
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
+    public String getEstado() { return estado; }
     public void setEstado(String estado) {
         try {
             estado = estado.trim().toLowerCase();
             if (!(estado.equals("disponible") || estado.equals("ocupado"))) {
                 throw new IllegalArgumentException("El estado solo puede ser: Disponible u Ocupado.");
             }
-            // Guardamos con mayúscula inicial
             this.estado = Character.toUpperCase(estado.charAt(0)) + estado.substring(1);
         } catch (IllegalArgumentException e) {
             System.out.println("Error en el Estado: " + e.getMessage());
         }
-    } 
-    
-    //METODOS PARA GUARDAR LAS HABITACIONES
-    private static ArrayList<Habitaciones> listaHabitaciones = new ArrayList<>();
-
-    public static void agregarHabitacion(Habitaciones habitacion) {
-        if (habitacion != null) {
-            listaHabitaciones.add(habitacion);
-            System.out.println("Habitación agregada correctamente.");
-        } else {
-            System.out.println("No se puede agregar una habitación nula.");
-        }
     }
 
-    public static ArrayList<Habitaciones> getListaHabitaciones() {
-        return listaHabitaciones;
+    // ===== MÉTODOS DE GESTIÓN DE HABITACIONES =====
+    public void agregarHabitacionDesdeScanner() {
+        Scanner sc = new Scanner(System.in);
+        Habitaciones h = new Habitaciones();
+
+        System.out.print("ID: ");
+        h.setId(sc.nextInt());
+        sc.nextLine(); // Limpiar buffer
+
+        System.out.print("Capacidad: ");
+        h.setCapacidad(sc.nextInt());
+        sc.nextLine();
+
+        System.out.print("Tipo (individual/doble/triple): ");
+        h.setTipo(sc.nextLine());
+
+        System.out.print("Nivel (1-3): ");
+        h.setNivel(sc.nextInt());
+        sc.nextLine();
+
+        System.out.print("Precio: ");
+        h.setPrecio(sc.nextFloat());
+        sc.nextLine();
+
+        System.out.print("Estado (disponible/ocupado): ");
+        h.setEstado(sc.nextLine());
+
+        listaHabitaciones.add(h);
+        System.out.println("Habitación agregada correctamente.");
     }
 
-    // ===== Guardar lista en archivo TXT
-    public static void guardarHabitacionesEnTxt(String rutaArchivo) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
+    public void guardarEnArchivo() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
             for (Habitaciones h : listaHabitaciones) {
                 writer.write(h.getId() + "," + h.getCapacidad() + "," + h.getTipo() + "," +
                              h.getNivel() + "," + h.getPrecio() + "," + h.getEstado());
                 writer.newLine();
             }
-            System.out.println("Archivo guardado exitosamente en " + rutaArchivo);
+            System.out.println("Datos guardados en " + archivo);
         } catch (IOException e) {
             System.out.println("Error al guardar el archivo: " + e.getMessage());
         }

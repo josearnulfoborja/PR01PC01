@@ -33,14 +33,10 @@ public class Habitaciones {
     }
 
     public void setId(int id) {
-        try {
-            if (id <= 0) {
-                throw new IllegalArgumentException("El ID debe ser mayor que 0.");
-            }
-            this.id = id;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error en el Id: " + e.getMessage());
+        if (id <= 0) {
+            throw new IllegalArgumentException("El ID debe ser mayor que 0.");
         }
+        this.id = id;
     }
 
     public int getCapacidad() {
@@ -48,14 +44,10 @@ public class Habitaciones {
     }
 
     public void setCapacidad(int capacidad) {
-        try {
-            if (capacidad <= 0) {
-                throw new IllegalArgumentException("La capacidad debe ser mayor que 0.");
-            }
-            this.capacidad = capacidad;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error en la capacidad: " + e.getMessage());
+        if (capacidad <= 0) {
+            throw new IllegalArgumentException("La capacidad debe ser mayor que 0.");
         }
+        this.capacidad = capacidad;
     }
 
     public String getTipo() {
@@ -63,15 +55,11 @@ public class Habitaciones {
     }
 
     public void setTipo(String tipo) {
-        try {
-            tipo = tipo.trim().toLowerCase();
-            if (!(tipo.equals("individual") || tipo.equals("doble") || tipo.equals("triple"))) {
-                throw new IllegalArgumentException("El tipo debe ser: individual, doble o triple.");
-            }
-            this.tipo = tipo;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error en el Tipo de habitación: " + e.getMessage());
+        tipo = tipo.trim().toLowerCase();
+        if (!(tipo.equals("individual") || tipo.equals("doble") || tipo.equals("triple"))) {
+            throw new IllegalArgumentException("El tipo debe ser: individual, doble o triple.");
         }
+        this.tipo = tipo;
     }
 
     public int getNivel() {
@@ -79,14 +67,10 @@ public class Habitaciones {
     }
 
     public void setNivel(int nivel) {
-        try {
-            if (nivel < 1 || nivel > 3) {
-                throw new IllegalArgumentException("El nivel solo puede ser 1, 2 o 3.");
-            }
-            this.nivel = nivel;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error en el Nivel: " + e.getMessage());
+        if (nivel < 1 || nivel > 3) {
+            throw new IllegalArgumentException("El nivel solo puede ser 1, 2 o 3.");
         }
+        this.nivel = nivel;
     }
 
     public float getPrecio() {
@@ -94,14 +78,10 @@ public class Habitaciones {
     }
 
     public void setPrecio(float precio) {
-        try {
-            if (precio < 0) {
-                throw new IllegalArgumentException("El precio no puede ser negativo.");
-            }
-            this.precio = precio;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error en el Precio: " + e.getMessage());
+        if (precio < 0) {
+            throw new IllegalArgumentException("El precio no puede ser negativo.");
         }
+        this.precio = precio;
     }
 
     public String getEstado() {
@@ -109,24 +89,20 @@ public class Habitaciones {
     }
 
     public void setEstado(String estado) {
-        try {
-            estado = estado.trim().toLowerCase();
-            if (!(estado.equals("disponible") || estado.equals("ocupado"))) {
-                throw new IllegalArgumentException("El estado solo puede ser: disponible u ocupado.");
-            }
-            this.estado = Character.toUpperCase(estado.charAt(0)) + estado.substring(1);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error en el Estado: " + e.getMessage());
+        estado = estado.trim().toLowerCase();
+        if (!(estado.equals("disponible") || estado.equals("ocupado"))) {
+            throw new IllegalArgumentException("El estado solo puede ser: disponible u ocupado.");
         }
+        this.estado = Character.toUpperCase(estado.charAt(0)) + estado.substring(1);
     }
 
     @Override
     public String toString() {
-        return "Habitacion "+ id +
-                ", Capacidad:" + capacidad +
-                ", Tipo:" + tipo +
-                ", Nivel:" + nivel +
-                ", Precio:" + precio +
-                ", Estado:" + estado;
+        return "Habitacion " + id
+                + ", Capacidad:" + capacidad
+                + ", Tipo:" + tipo
+                + ", Nivel:" + nivel
+                + ", Precio:" + precio
+                + ", Estado:" + estado;
     }
 }

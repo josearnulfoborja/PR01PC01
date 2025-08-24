@@ -39,7 +39,7 @@ public class Mavenproject3 {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
+
         ArrayList<Habitaciones> listaHabitaciones = new ArrayList<>();
 
         boolean salir = false;
@@ -56,16 +56,44 @@ public class Mavenproject3 {
                 case 1:
                     Habitaciones habi = new Habitaciones();
 
-                    System.out.print("ID: ");
-                    habi.setId(sc.nextInt());
-                    sc.nextLine();
+                    // ID
+                    while (true) {
+                        try {
+                            System.out.print("ID: ");
+                            habi.setId(sc.nextInt());
+                            sc.nextLine();
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("FALLO:  " + e.getMessage());
+                            sc.nextLine(); // limpiar buffer
+                        }
+                    }
 
-                    System.out.print("Capacidad: ");
-                    habi.setCapacidad(sc.nextInt());
-                    sc.nextLine();
+                    //CAPACIDAD
+                    while (true) {
+                        try {
+                            System.out.print("Capacidad: ");
+                            habi.setCapacidad(sc.nextInt());
+                            sc.nextLine();
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("FALLO:  " + e.getMessage());
+                            sc.nextLine(); // limpiar buffer
+                        }
+                    }
 
-                    System.out.print("Tipo (individual/doble/triple): ");
-                    habi.setTipo(sc.nextLine());
+                    //TIPO
+                    while (true) {
+                        try {
+                            System.out.print("Tipo (individual/doble/triple): ");
+                            habi.setTipo(sc.nextLine());
+                            sc.nextLine();
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("FALLO:  " + e.getMessage());
+                            sc.nextLine(); // limpiar buffer
+                        }
+                    }
 
                     System.out.print("Nivel (1-3): ");
                     habi.setNivel(sc.nextInt());

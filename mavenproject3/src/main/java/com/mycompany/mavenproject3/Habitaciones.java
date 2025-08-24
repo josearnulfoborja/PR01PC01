@@ -4,6 +4,9 @@
  */
 package com.mycompany.mavenproject3;
 
+import java.io.*;
+import java.util.ArrayList;
+
 /**
  *
  * @author PC
@@ -15,7 +18,7 @@ public class Habitaciones {
     private int nivel =0;// solo hay 3 niveles
     private float precio=(float) 0.0;
     private String estado="SIN ESPECIFICAR";
-
+    
     public Habitaciones() {
     }
     public Habitaciones(int id) {
@@ -115,4 +118,34 @@ public class Habitaciones {
             System.out.println("Error en el Estado: " + e.getMessage());
         }
     } 
+    
+    //METODOS PARA GUARDAR LAS HABITACIONES
+    private static ArrayList<Habitaciones> listaHabitaciones = new ArrayList<>();
+
+    public static void agregarHabitacion(Habitaciones habitacion) {
+        if (habitacion != null) {
+            listaHabitaciones.add(habitacion);
+            System.out.println("Habitación agregada correctamente.");
+        } else {
+            System.out.println("No se puede agregar una habitación nula.");
+        }
+    }
+
+    public static ArrayList<Habitaciones> getListaHabitaciones() {
+        return listaHabitaciones;
+    }
+
+    // ===== Guardar lista en archivo TXT
+    public static void guardarHabitacionesEnTxt(String rutaArchivo) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
+            for (Habitaciones h : listaHabitaciones) {
+                writer.write(h.getId() + "," + h.getCapacidad() + "," + h.getTipo() + "," +
+                             h.getNivel() + "," + h.getPrecio() + "," + h.getEstado());
+                writer.newLine();
+            }
+            System.out.println("Archivo guardado exitosamente en " + rutaArchivo);
+        } catch (IOException e) {
+            System.out.println("Error al guardar el archivo: " + e.getMessage());
+        }
+    }
 }

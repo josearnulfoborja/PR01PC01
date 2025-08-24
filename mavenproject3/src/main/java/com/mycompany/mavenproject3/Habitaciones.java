@@ -4,115 +4,78 @@
  */
 package com.mycompany.mavenproject3;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 /**
  *
  * @author PC
  */
 public class Habitaciones {
-    private int id =0;
-    private int capacidad =0;
-    private String tipo ="SIN ESPECIFICAR";//Solo hay 3 tipos individual, doble y triple
-    private int nivel =0;// solo hay 3 niveles
-    private float precio=(float) 0.0;
-    private String estado="SIN ESPECIFICAR";
+private ArrayList<String> habitaciones = new ArrayList<>();
+    private final String archivo = "Habitaciones.txt";
 
-    public Habitaciones() {
-    }
-    public Habitaciones(int id) {
+    public void agregarHabitacion() {
+        Scanner sc = new Scanner(System.in);
+
         try {
-            if (id <= 0) {
-                throw new IllegalArgumentException("El ID debe ser mayor que 0.");
-            }
-            this.id = id;
-        } catch (IllegalArgumentException e){
-            System.out.println("Error en el Id: " + e.getMessage());
-        }
-        
-    }
-    public int getId() {
-        return id;
-    }
+            System.out.print("ID: ");
+            int id = sc.nextInt();
+            if (id <= 0) throw new IllegalArgumentException("ID debe ser mayor que 0");
+            sc.nextLine();
 
-    public void setId(int id) {
-        this.id = id;
-    }
+            System.out.print("Capacidad: ");
+            int capacidad = sc.nextInt();
+            if (capacidad <= 0) throw new IllegalArgumentException("Capacidad debe ser mayor que 0");
+            sc.nextLine();
 
-    public int getCapacidad() {
-        return capacidad;
-    }
-
-    public void setCapacidad(int capacidad) {
-        try {
-            if (capacidad <= 0) {
-                throw new IllegalArgumentException("La capacidad debe ser mayor que 0.");
-            }
-            this.capacidad = capacidad;
-        } catch (IllegalArgumentException e){
-            System.out.println("Error en la capacidad: " + e.getMessage());
-        }
-
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        try {
-            tipo = tipo.trim().toLowerCase();
+            System.out.print("Tipo (individual/doble/triple): ");
+            String tipo = sc.nextLine().trim().toLowerCase();
             if (!(tipo.equals("individual") || tipo.equals("doble") || tipo.equals("triple"))) {
-                throw new IllegalArgumentException("El tipo debe ser: individual, doble o triple.");
+                throw new IllegalArgumentException("Tipo inválido");
             }
-            this.tipo = tipo;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error en el Tipo de habitacion: " + e.getMessage());
-        }
-    }
 
-    public int getNivel() {
-        return nivel;
-    }
+            System.out.print("Nivel (1-3): ");
+            int nivel = sc.nextInt();
+            if (nivel < 1 || nivel > 3) throw new IllegalArgumentException("Nivel debe ser 1, 2 o 3");
+            sc.nextLine();
 
-    public void setNivel(int nivel) {
-        try {
-            if (nivel < 1 || nivel > 3) {
-                throw new IllegalArgumentException("El nivel solo puede ser 1, 2 o 3.");
-            }
-            this.nivel = nivel;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error en el Nivel: " + e.getMessage());
-        }
-    }
+            System.out.print("Precio: ");
+            float precio = sc.nextFloat();
+            if (precio < 0) throw new IllegalArgumentException("Precio no puede ser negativo");
+            sc.nextLine();
 
-    public float getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(float precio) {
-        try {
-            if (precio < 0) {
-                throw new IllegalArgumentException("El precio no puede ser negativo.");
-            }
-            this.precio = precio;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error en el Precio: " + e.getMessage());
-        }
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        try {
-            estado = estado.trim().toLowerCase();
+            System.out.print("Estado (disponible/ocupado): ");
+            String estado = sc.nextLine().trim().toLowerCase();
             if (!(estado.equals("disponible") || estado.equals("ocupado"))) {
-                throw new IllegalArgumentException("El estado solo puede ser: Disponible u Ocupado.");
+                throw new IllegalArgumentException("Estado inválido");
             }
-            // Guardamos con mayúscula inicial
-            this.estado = Character.toUpperCase(estado.charAt(0)) + estado.substring(1);
+
+            // Guardar en lista y archivo solo si todo es válido
+            String habitacion = id + "," + capacidad + "," + tipo + "," + nivel + "," + precio + "," + estado;
+            habitaciones.add(habitacion);
+            guardarHabitacionEnArchivo(habitacion);
+            System.out.println("✔ Habitación guardada correctamente.");
+
         } catch (IllegalArgumentException e) {
-            System.out.println("Error en el Estado: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
-    } 
+    }
+
+    private void guardarHabitacionEnArchivo(String habitacion) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
+            bw.write(habitacion);
+            bw.newLine();
+        } catch (IOException e) {
+            System.out.println("Error al guardar en archivo: " + e.getMessage());
+        }
+    }
+
+    public void mostrarHabitaciones() {
+        if (habitaciones.isEmpty()) {
+            System.out.println("No hay habitaciones registradas en memoria.");
+        } else {
+            habitaciones.forEach(System.out::println);
+        }
+    }
 }

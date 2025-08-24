@@ -114,7 +114,5 @@ public class Habitaciones {
         } catch (IllegalArgumentException e) {
             System.out.println("Error en el Estado: " + e.getMessage());
         }
-    }
-    
-    
+    } 
 }

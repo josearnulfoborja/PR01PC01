@@ -4,6 +4,12 @@
  */
 package com.mycompany.mavenproject3;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 /**
  *
  * @author User
@@ -21,18 +27,40 @@ public class Empleado extends Usuarios {
         this.Puesto =  Puesto;
     }    
     
-    public void setArea(String Area) {
-        this.Area = Area;
+   public void setArea(String area) {
+        if (area == null || area.length() < 3)
+            throw new IllegalArgumentException("Área inválida.");
+        this.Area = area.trim();
     }
 
-    public void setPuesto(String Puesto) {
-        this.Puesto = Puesto;
-    }
-    public String getArea() {
-        return Area;
+    public void setPuesto(String puesto) {
+        if (puesto == null || puesto.length() < 3)
+            throw new IllegalArgumentException("Puesto inválido.");
+        this.Puesto = puesto.trim();
     }
 
-    public String getPuesto() {
-        return Puesto;
+    public static Empleado crearEmpleadoDesdeUsuario(Usuarios usuario, Scanner scanner) {
+        System.out.println("\n=== Datos del Empleado ===");
+
+        System.out.print("Área: ");
+        String area = scanner.nextLine();
+
+        System.out.print("Puesto: ");
+        String puesto = scanner.nextLine();
+
+        Empleado empleado = new Empleado(usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getTelefono(),
+                                         usuario.getCorreo(), usuario.getNickname(), usuario.getClave(), area, puesto);
+        guardarEmpleado(empleado);
+        return empleado;
     }
+
+    private static void guardarEmpleado(Empleado empleado) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("empleados.txt", true)))) {
+            out.println(empleado.getNickname() + "," + empleado.Area + "," + empleado.Puesto);
+        } catch (IOException e) {
+            System.out.println("❌ Error al guardar empleado: " + e.getMessage());
+        }
+    }
+
+
 }

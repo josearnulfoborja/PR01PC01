@@ -4,6 +4,10 @@
  */
 package com.mycompany.mavenproject3;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
@@ -43,49 +47,6 @@ public class AppHotel {
         } else {
             System.out.println("❌ No se pudo iniciar sesión.");
         }
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Usuario: ");
-        String usuario = scanner.nextLine();
-        System.out.print("Clave: ");
-        String clave = scanner.nextLine();
-
-        Empleado empleadoActivo = Usuarios.loginDesdeArchivo(usuario, clave);
-        if (empleadoActivo != null) {
-            System.out.println("✅ Bienvenido, " + empleadoActivo.getNombre());
-        } else {
-            System.out.println("❌ Usuario o clave incorrectos.");
-        }
-        
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("=== BIENVENIDO AL SISTEMA HOTEL EL PARAISO ===");
-        System.out.println("1. Ingresar como empleado existente");
-        System.out.println("2. Registrar nuevo empleado");
-        System.out.print("Seleccione una opción: ");
-        int opcion = scanner.nextInt();
-        scanner.nextLine(); // limpiar buffer
-
-        Empleado empleadoActivo = null;
-
-        if (opcion == 1) {
-            System.out.print("Ingrese nombre de usuario: ");
-            String usuario = scanner.nextLine();
-            System.out.print("Ingrese contraseña: ");
-            String clave = scanner.nextLine();
-            empleadoActivo = login(usuario, clave);
-            if (empleadoActivo == null) {
-                System.out.println("❌ Usuario o contraseña incorrectos.");
-                return;
-            }
-        } else if (opcion == 2) {
-            empleadoActivo = registrarEmpleado(scanner);
-            guardarEmpleadoEnArchivo(empleadoActivo);
-            System.out.println("✅ Registro exitoso.");
-        } else {
-            System.out.println("Opción inválida.");
-            return;
-        }
-
     }
     
     
@@ -110,8 +71,8 @@ public class AppHotel {
         System.out.println("❌ Todos los campos son obligatorios.");
         return null;
     }
-
-    Usuarios nuevoUsuario = new Usuarios(nombre, apellido, usuario, contrasena);
+   // Usuarios usuario = Usuarios.crearUsuarioDesdeInput(usuario, clave);
+   // Usuarios nuevoUsuario = new Usuarios(nombre, apellido, usuario, contrasena);
 
     // Datos del empleado
     System.out.print("Puesto: ");
@@ -120,7 +81,7 @@ public class AppHotel {
     System.out.print("Área: ");
     String area = scanner.nextLine().trim();
 
-    Empleado nuevoEmpleado = new Empleado(usuario, puesto, area); // Relacionado por usuario
+ //   Empleado nuevoEmpleado = new Empleado(usuario, puesto, area); // Relacionado por usuario
 
     // Guardar usuario
     try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("usuarios.txt", true)))) {
@@ -139,6 +100,25 @@ public class AppHotel {
     }
 
     System.out.println("✅ Registro exitoso. Bienvenido, " + nombre + "!");
-    return nuevoEmpleado;
+    return null;
+            //nuevoEmpleado;
+    
 }
+    
+    public static Empleado iniciarSesion(Scanner scanner)
+    {       
+        System.out.print("Usuario: ");
+        String usuario = scanner.nextLine();
+        System.out.print("Clave: ");
+        String clave = scanner.nextLine();
+/*
+        Empleado empleadoActivo = Usuarios.loginDesdeArchivo(usuario, clave);
+        if (empleadoActivo != null) {
+            System.out.println("✅ Bienvenido, " + empleadoActivo.getNombre());
+        } else {
+            System.out.println("❌ Usuario o clave incorrectos.");
+        }
+*/
+    return null;
+    }    
 }

@@ -147,6 +147,11 @@ public class Usuarios {
         }
 
     }
+    
+     public String getNombreCompleto() {
+        return nombre + " " + apellido;
+    }   
+
         
     //======Método toString para mostrar información
     @Override
@@ -160,13 +165,14 @@ public class Usuarios {
                 '}';
     }
     
+    
     // Método para validar login
     /*
     public boolean login(String usuarioIngresado, String claveIngresada) {
         return this.nickname.equals(usuarioIngresado) && this.clave.equals(claveIngresada);
     }
 */
-    
+  /*  
      public static Empleado loginDesdeArchivo(String usuarioIngresado, String claveIngresada) {
         try (BufferedReader br = new BufferedReader(new FileReader("empleados.txt"))) {
             String linea;
@@ -183,7 +189,7 @@ public class Usuarios {
                     String puesto = datos[6];
 
                     // Crear y devolver el Empleado logueado
-                    return new Usuarios(id, usuario, clave, nombre, apellido, area, puesto);
+                    return new Empleado(id, usuario, clave, nombre, apellido, area, puesto);
                 }
             }
         } catch (IOException e) {
@@ -193,7 +199,7 @@ public class Usuarios {
         }
         return null; // No se encontró
     }
-     
+   */  
       // Método estático para crear usuario desde consola
     public static Usuarios crearUsuarioDesdeInput(Scanner scanner) {
         System.out.println("\n=== Registro de Usuario ===");

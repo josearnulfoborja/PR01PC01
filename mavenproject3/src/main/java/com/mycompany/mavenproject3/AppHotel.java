@@ -85,7 +85,8 @@ public class AppHotel {
 
     // Guardar usuario
     try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("usuarios.txt", true)))) {
-        out.println(nuevoUsuario.toLineaTXT());
+        //out.println(nuevoUsuario.toLineaTXT());
+        out.println("");
     } catch (IOException e) {
         System.out.println("❌ Error al guardar usuario: " + e.getMessage());
         return null;
@@ -93,7 +94,8 @@ public class AppHotel {
 
     // Guardar empleado
     try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("empleados.txt", true)))) {
-        out.println(nuevoEmpleado.toLineaTXT());
+        //out.println(nuevoEmpleado.toLineaTXT());
+         out.println("");
     } catch (IOException e) {
         System.out.println("❌ Error al guardar empleado: " + e.getMessage());
         return null;

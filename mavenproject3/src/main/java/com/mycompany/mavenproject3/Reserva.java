@@ -5,7 +5,7 @@
 package com.mycompany.mavenproject3;
 
 import java.text.SimpleDateFormat;
-
+import java.util.Date;
 
 /**
  *
@@ -13,18 +13,16 @@ import java.text.SimpleDateFormat;
  */
 public class Reserva {
 
-    private int id=0;
+    private int id = 0;
     //private String fechaSolicitud=null, inicioReserva=null, finReserva=null;
-    private Date fechaSolicitud=null, inicioReserva=null, finReserva=null;
-   // private String reservante=null;
+    private Date fechaSolicitud, inicioReserva, finReserva;
+    // private String reservante=null;
     private Empleado recepcionista;
     private Cliente reservante;
 
-    
-
     private Habitaciones suite;
-    
-    public String estadoReserva="INVALIDA", mensaje="SIN MENSAJE";
+
+    public String estadoReserva = "INVALIDA", mensaje = "SIN MENSAJE";
 
     public int getId() {
         return id;
@@ -34,55 +32,44 @@ public class Reserva {
         this.id = id;
     }
 
-    public String getFechaSolicitud() {
-        return fechaSolicitud;
-    }
-
-    public void setFechaSolicitud(String fechaSolicitud) {
+    public void setFechaSolicitud(Date fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
 
-    public String getInicioReserva() {
-        return inicioReserva;
-    }
-
-    public void setInicioReserva(String inicioReserva) {
+    public void setInicioReserva(Date inicioReserva) {
         this.inicioReserva = inicioReserva;
     }
 
-    public String getFinReserva() {
-        return finReserva;
-    }
-
-    public void setFinReserva(String finReserva) {
+    public void setFinReserva(Date finReserva) {
         this.finReserva = finReserva;
     }
+
     public void setReservante(Cliente reservante) {
         this.reservante = reservante;
     }
-/*
+
+    /*
     public String getReservante() {
         return reservante;
     }
-    */
+     */
 
-  
-
-    /*
+ /*
     public String getRecepcionista() {
         return recepcionista;
     }
-    */
+     */
 
-    /*
+ /*
     public void setRecepcionista(String recepcionista) {
         this.recepcionista = recepcionista;
     }
-    */
+     */
     public void setRecepcionista(Empleado recepcionista) {
-    this.recepcionista = recepcionista;
+        this.recepcionista = recepcionista;
     }
-/*
+
+    /*
     public String getSuite() {
         return suite;
     }
@@ -92,14 +79,12 @@ public class Reserva {
     public void setSuite(String suite) {
         this.suite = suite;
     } 
-*/
-    
-    public void setSuite(Habitaciones suite) 
-    {
-        this.suite = suite;
-}
+     */
 
-    
+    public void setSuite(Habitaciones suite) {
+        this.suite = suite;
+    }
+
     public String validarReserva() throws Exception {
         if (reservante == null || recepcionista == null || suite == null) {
             Exception excep = new Exception("No tiene asignado a cliente o empleado o habitacion");
@@ -112,21 +97,21 @@ public class Reserva {
             }
         }
     }
-    
-    @Override
-public String toString() {
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    return "Reserva {" +
-            "ID=" + id +
-            ", FechaSolicitud=" + (fechaSolicitud != null ? sdf.format(fechaSolicitud) : "null") +
-            ", InicioReserva=" + (inicioReserva != null ? sdf.format(inicioReserva) : "null") +
-            ", FinReserva=" + (finReserva != null ? sdf.format(finReserva) : "null") +
-            ", Cliente=" + (reservante != null ? reservante.getCorreo() : "null") +
-            ", Empleado=" + (recepcionista != null ? recepcionista.getNombre() : "null") +
-            ", Habitación=" + (suite != null ? suite.getNivel(): "null") +
-            ", Estado='" + estadoReserva + '\'' +
-            ", Mensaje='" + mensaje + '\'' +
-            '}';
-}
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        return "Reserva {"
+                + "ID=" + id
+                + ", FechaSolicitud=" + (fechaSolicitud != null ? sdf.format(fechaSolicitud) : "null")
+                + ", InicioReserva=" + (inicioReserva != null ? sdf.format(inicioReserva) : "null")
+                + ", FinReserva=" + (finReserva != null ? sdf.format(finReserva) : "null")
+                + ", Cliente=" + (reservante != null ? reservante.getCorreo() : "null")
+                + ", Empleado=" + (recepcionista != null ? recepcionista.getNombre() : "null")
+                + ", Habitación=" + (suite != null ? suite.getNivel() : "null")
+                + ", Estado='" + estadoReserva + '\''
+                + ", Mensaje='" + mensaje + '\''
+                + '}';
+    }
 }

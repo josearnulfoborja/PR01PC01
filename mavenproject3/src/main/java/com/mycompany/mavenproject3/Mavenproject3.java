@@ -81,18 +81,20 @@ public class Mavenproject3 {
 
         int opcionInicio = 0;
         do {
-            System.out.print("1. Iniciar sesion\n2. Registrar usuario");
+            System.out.println("1. Iniciar sesion\n2. Registrar usuario");
             opcionInicio = scanner.nextInt();
 
             if (opcionInicio != 1 && opcionInicio != 2) {
                 System.out.println("\nIngrese una opcion valida.\nVuelva a intentar: ");
             }
         } while (opcionInicio != 1 && opcionInicio != 2);
-
+        
         if (opcionInicio == 1) {
             System.out.print("Correo: ");
             String correoIngresado = scanner.nextLine();
 
+            scanner.nextLine();
+            
             System.out.print("Contraseña: ");
             String contraseñaIngresada = scanner.nextLine();
 

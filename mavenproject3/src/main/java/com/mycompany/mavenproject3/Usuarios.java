@@ -18,23 +18,7 @@ public class Usuarios {
     public Usuarios() {
     }
     
-    public Usuarios(int id, String nombre, String apellido, String telefono, String correo, String nickname, String clave) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.nickname = nickname;
-        this.clave = clave;
-    }
-    
-    //======Metodos Getters y Setters con sus validaciones respectivas
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id){
+    public Usuarios(int id) {
         try {
             if (id <= 0) {
                 throw new IllegalArgumentException("El ID debe ser mayor que 0.");
@@ -43,6 +27,12 @@ public class Usuarios {
         } catch (IllegalArgumentException e){
             System.out.println("Error en el Id: " + e.getMessage());
         }
+    }
+    
+    //======Metodos Getters y Setters con sus validaciones respectivas
+
+    public int getId() {
+        return id;
     }
 
     public String getNombre() {

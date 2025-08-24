@@ -9,6 +9,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+
+import java.util.Scanner;
+
+import java.io.FileWriter;
+
+import java.lang.reflect.Field;
+
+import java.io.FileWriter;
+
+import java.io.FileWriter;
+
+import java.lang.reflect.Field;
+
+import java.lang.reflect.Field;
+
+import java.io.FileWriter;
+
+import java.text.SimpleDateFormat;
+
 import java.util.Scanner;
 
 /**
@@ -18,6 +37,7 @@ import java.util.Scanner;
 public class Mavenproject3 {
 
     public static void main(String[] args) {
+
         System.out.println("=== BIENVENIDO AL SISTEMA DE RESERVAS HOTEL EL PARAISO ===");
         System.out.println("=== -------------------------------------------------- ===");
         System.out.println("=== INGRESE SUS CREDENCIALES PARA PODER INICIAR ===");
@@ -30,7 +50,28 @@ public class Mavenproject3 {
         } else {
             System.out.println("❌ Acceso denegado.");
         }
+        /*
+        Habitaciones hotel = new Habitaciones();
+        Scanner sc = new Scanner(System.in);
+        int opcion;
 
+        do {
+            System.out.println("\n--- MENÚ DE HABITACIONES ---");
+            System.out.println("1. Agregar Habitación");
+            System.out.println("2. Mostrar Habitaciones (en memoria)");
+            System.out.println("0. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcion = sc.nextInt();
+            sc.nextLine(); // limpiar buffer
+
+            switch (opcion) {
+                case 1 -> hotel.agregarHabitacion();
+                case 2 -> hotel.mostrarHabitaciones();
+                case 0 -> System.out.println("Saliendo...");
+                default -> System.out.println("Opción inválida.");
+            }
+        } while (opcion != 0);
+*/
     }
 
     public static Empleado iniciarSesion(Scanner scanner) {

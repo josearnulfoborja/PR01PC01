@@ -2,9 +2,9 @@ package com.mycompany.mavenproject3;
 
 public class Cliente extends Usuarios {
 
-    private String noTarjeta, tipoCliente, codTarjeta;
+    private String noTarjeta="SIN ESPECIFICAR", tipoCliente="SIN ESPECIFICAR", codTarjeta="SIN ESPECIFICAR";
 
-    public void setNoTarjeta(String noTarjeta) {
+    public void setTarjeta(String noTarjeta) {
         this.noTarjeta = noTarjeta;
     }
 
@@ -18,10 +18,6 @@ public class Cliente extends Usuarios {
 
     public void setTipoCliente(String tipoCliente) {
         this.tipoCliente = tipoCliente;
-    }
-
-    public String getCodTarjeta() {
-        return codTarjeta;
     }
 
     public void setCodTarjeta(String codTarjeta) {

@@ -4,6 +4,7 @@
 package com.mycompany.mavenproject3;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Field;
 
 import java.io.FileWriter;
+import java.io.PrintWriter;
 
 import java.text.SimpleDateFormat;
 
@@ -50,65 +52,58 @@ public class Mavenproject3 {
         } else {
             System.out.println("❌ Acceso denegado.");
         }
-        /*
-        Habitaciones hotel = new Habitaciones();
-        Scanner sc = new Scanner(System.in);
-        int opcion;
-
-        do {
-            System.out.println("\n--- MENÚ DE HABITACIONES ---");
-            System.out.println("1. Agregar Habitación");
-            System.out.println("2. Mostrar Habitaciones (en memoria)");
-            System.out.println("0. Salir");
-            System.out.print("Seleccione una opción: ");
-            opcion = sc.nextInt();
-            sc.nextLine(); // limpiar buffer
-
-            switch (opcion) {
-                case 1 -> hotel.agregarHabitacion();
-                case 2 -> hotel.mostrarHabitaciones();
-                case 0 -> System.out.println("Saliendo...");
-                default -> System.out.println("Opción inválida.");
-            }
-        } while (opcion != 0);
-         */
     }
 
     public static Empleado iniciarSesion(Scanner scanner) {
         System.out.println("\n=== INICIO DE SESIÓN ===");
 
-        System.out.print("Correo: ");
-        String correoIngresado = scanner.nextLine();
+        int opcionInicio = 0;
+        do {
+            System.out.print("1. Iniciar sesion\n2. Registrar usuario");
+            opcionInicio = scanner.nextInt();
 
-        System.out.print("Contraseña: ");
-        String contraseñaIngresada = scanner.nextLine();
+            if (opcionInicio != 1 && opcionInicio != 2) {
+                System.out.println("\nIngrese una opcion valida.\nVuelva a intentar: ");
+            }
+        } while (opcionInicio != 1 && opcionInicio != 2);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("empleados.txt"))) {
-            String linea;
+        if (opcionInicio == 1) {
+            System.out.print("Correo: ");
+            String correoIngresado = scanner.nextLine();
 
-            while ((linea = reader.readLine()) != null) {
-                String[] partes = linea.split(",");
+            System.out.print("Contraseña: ");
+            String contraseñaIngresada = scanner.nextLine();
 
-                if (partes.length == 4) {
-                    String nombre = partes[0];
-                    String apellido = partes[1];
-                    String correo = partes[2];
-                    String contraseña = partes[3];
+            try (BufferedReader reader = new BufferedReader(new FileReader("empleados.txt"))) {
+                String linea;
 
-                    if (correo.equals(correoIngresado) && contraseña.equals(contraseñaIngresada)) {
-                        Empleado empleado = new Empleado();
-                        empleado.setNombre(nombre);
-                        empleado.setApellido(apellido);
-                        empleado.setCorreo(correo);
-                        empleado.setClave(contraseña);
-                        return empleado;
+                while ((linea = reader.readLine()) != null) {
+                    String[] partes = linea.split(",");
+
+                    if (partes.length == 4) {
+                        String nombre = partes[0];
+                        String apellido = partes[1];
+                        String correo = partes[2];
+                        String contraseña = partes[3];
+
+                        if (correo.equals(correoIngresado) && contraseña.equals(contraseñaIngresada)) {
+                            Empleado empleado = new Empleado();
+                            empleado.setNombre(nombre);
+                            empleado.setApellido(apellido);
+                            empleado.setCorreo(correo);
+                            empleado.setClave(contraseña);
+                            return empleado;
+                        }
                     }
                 }
-            }
 
-            System.out.println("❌ Credenciales incorrectas o empleado no encontrado.");
-        } catch (IOException e) {
-            System.out.println("❌ Error al leer el archivo: " + e.getMessage());
+                System.out.println("❌ Credenciales incorrectas o empleado no encontrado.");
+            } catch (IOException e) {
+                System.out.println("❌ Error al leer el archivo: " + e.getMessage());
+            }
+            return null;
+        } else {
+            crearEmpleado(scanner);
         }
         return null;
     }
@@ -268,7 +263,6 @@ public class Mavenproject3 {
         } catch (Exception e) {
             System.out.println("Error en el formato de fecha o entrada: " + e.getMessage());
         }
-
     }
 
     public static void mostrarReservas() {
@@ -296,6 +290,48 @@ public class Mavenproject3 {
         } catch (IOException e) {
             System.out.println("❌ Error al leer reservas: " + e.getMessage());
         }
+    }
+
+    /**
+     * Creacion de nuevo usuario
+     *
+     * @param empleado
+     */
+    public static void crearEmpleado(Scanner sc) {
+        Empleado empleado = new Empleado(); // ID fijo para ejemplo
+        Usuarios usuarios = new Usuarios();
+        sc.nextLine(); //limpiar buffer
+
+        System.out.print("ID: ");
+        usuarios.setId(sc.nextInt());
+
+        System.out.print("Nombre: ");
+        usuarios.setNombre(sc.nextLine());
+
+        System.out.print("Apellido: ");
+        usuarios.setApellido(sc.nextLine());
+
+        System.out.print("Telefono: ");
+        usuarios.setTelefono(sc.nextLine());
+
+        System.out.print("Correo: ");
+        usuarios.setCorreo(sc.nextLine());
+
+        System.out.print("Nickname (apodo): ");
+        usuarios.setNickname(sc.nextLine());
+
+        System.out.print("Clave: ");
+        usuarios.setClave(sc.nextLine());
+
+        System.out.print("Área: ");
+        empleado.setArea(sc.nextLine());
+
+        System.out.print("Puesto: ");
+        empleado.setPuesto(sc.nextLine());
+
+        Empleado empleado1 = new Empleado(usuarios.getId(), usuarios.getNombre(), usuarios.getApellido(), usuarios.getTelefono(),
+                usuarios.getCorreo(), usuarios.getNickname(), usuarios.getClave(), empleado.getArea(), empleado.getPuesto());
+        Empleado.guardarEmpleado(empleado1);
     }
 
     public static void guardarArchivo(Object entidad, String nombreArchivo) {

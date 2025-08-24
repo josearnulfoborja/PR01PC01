@@ -54,12 +54,20 @@ public class Empleado extends Usuarios {
         return empleado;
     }
 
-    private static void guardarEmpleado(Empleado empleado) {
+    public static void guardarEmpleado(Empleado empleado) {
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("empleados.txt", true)))) {
             out.println(empleado.getNickname() + "," + empleado.Area + "," + empleado.Puesto);
         } catch (IOException e) {
             System.out.println("❌ Error al guardar empleado: " + e.getMessage());
         }
+    }
+
+    public String getArea() {
+        return Area;
+    }
+
+    public String getPuesto() {
+        return Puesto;
     }
 
 

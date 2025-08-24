@@ -77,7 +77,7 @@ public class Reserva {
             Exception excep = new Exception("No tiene asignado a cliente o empleado o habitacion");
             throw excep;
         } else {
-            if (estadoReserva == "INVALIDA") {
+            if (estadoReserva.contentEquals("INVALIDA")) {
                 return "RESERVA INVALIDA";
             } else {
                 return "RESERVA VALIDA";

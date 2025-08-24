@@ -13,6 +13,17 @@ import java.util.Scanner;
  * @author PC
  */
 public class Habitaciones {
+
+    private int nivel =0;// solo hay 3 niveles
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+    
 private ArrayList<String> habitaciones = new ArrayList<>();
     private final String archivo = "Habitaciones.txt";
 

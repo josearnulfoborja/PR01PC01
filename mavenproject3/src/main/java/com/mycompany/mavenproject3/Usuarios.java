@@ -28,7 +28,7 @@ public class Usuarios {
         this.clave = clave;
     }
     
-    //======Metodos Getters y Setters
+    //======Metodos Getters y Setters con sus validaciones respectivas
 
     public int getId() {
         return id;
@@ -52,8 +52,8 @@ public class Usuarios {
     public void setNombre(String nombre){
         try {
             nombre = nombre.trim();
-            if (nombre.length() <= 1 || !nombre.matches("^[a-zA-Z]+$")){
-                throw new IllegalArgumentException("El nombre debe tener solo letras y al menos 2 caracteres.");
+            if (nombre.length() <= 3 || !nombre.matches("^[a-zA-Z]+$")){ //matches indica si ka cadena coincide o no con la expresión regular dada
+                throw new IllegalArgumentException("El nombre debe tener solo letras y al menos 3 caracteres.");
             }
             this.nombre = nombre;
         } catch (IllegalArgumentException e){
@@ -67,7 +67,7 @@ public class Usuarios {
 
     public void setApellido(String apellido){
         try {
-            apellido = apellido.trim();
+            apellido = apellido.trim(); //trim elimina los espacios iniciales y finales de la cedena
             if (apellido.length() <= 1 || !apellido.matches("^[a-zA-Z]+$")){
                 throw new IllegalArgumentException("El apellido debe tener solo letras y al menos 2 caracteres.");
             }

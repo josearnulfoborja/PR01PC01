@@ -1,5 +1,13 @@
 package com.mycompany.mavenproject3;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 /**
  *
  * @author karen
@@ -152,4 +160,87 @@ public class Usuarios {
                 '}';
     }
     
+    // Método para validar login
+    /*
+    public boolean login(String usuarioIngresado, String claveIngresada) {
+        return this.nickname.equals(usuarioIngresado) && this.clave.equals(claveIngresada);
+    }
+*/
+    
+     public static Empleado loginDesdeArchivo(String usuarioIngresado, String claveIngresada) {
+        try (BufferedReader br = new BufferedReader(new FileReader("empleados.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(",");
+                String usuario = datos[1];
+                String clave = datos[2];
+
+                if (usuario.equals(usuarioIngresado) && clave.equals(claveIngresada)) {
+                    int id = Integer.parseInt(datos[0]);
+                    String nombre = datos[3];
+                    String apellido = datos[4];
+                    String area = datos[5];
+                    String puesto = datos[6];
+
+                    // Crear y devolver el Empleado logueado
+                    return new Usuarios(id, usuario, clave, nombre, apellido, area, puesto);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("❌ Error al leer archivo: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("❌ Error inesperado: " + e.getMessage());
+        }
+        return null; // No se encontró
+    }
+     
+      // Método estático para crear usuario desde consola
+    public static Usuarios crearUsuarioDesdeInput(Scanner scanner) {
+        System.out.println("\n=== Registro de Usuario ===");
+
+        System.out.print("Nombre: ");
+        String nombre = scanner.nextLine().trim();
+
+        System.out.print("Apellido: ");
+        String apellido = scanner.nextLine().trim();
+
+        System.out.print("Teléfono: ");
+        String telefono = scanner.nextLine().trim();
+
+        System.out.print("Correo: ");
+        String correo = scanner.nextLine().trim();
+
+        System.out.print("Nickname: ");
+        String nickName = scanner.nextLine().trim();
+
+        System.out.print("Clave: ");
+        String clave = scanner.nextLine().trim();
+
+        int nuevoId = generarNuevoId(); // Método que busca el último ID en el archivo
+
+        Usuarios nuevoUsuario = new Usuarios(nuevoId, nombre, apellido, telefono, correo, nickName, clave);
+        guardarUsuarioEnArchivo(nuevoUsuario);
+        return nuevoUsuario;
+    }
+
+    private static void guardarUsuarioEnArchivo(Usuarios usuario) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("usuarios.txt", true)))) {
+            out.println(usuario.toLineaTXT());
+            System.out.println("Usuario guardado correctamente.");
+        } catch (IOException e) {
+            System.out.println("Error al guardar usuario: " + e.getMessage());
+        }
+    }
+
+    public String toLineaTXT() {
+        return id + "," + nombre + "," + apellido + "," + telefono + "," + correo + "," + nickname + "," + clave;
+    }
+
+    private static int generarNuevoId() {
+        // Lógica para leer el archivo y obtener el último ID + 1
+        // Puedes implementarla luego si quieres que te ayude
+        return (int)(Math.random() * 10000); // Temporal
+    }
+
+
 }

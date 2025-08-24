@@ -28,50 +28,52 @@ public class Usuarios {
         this.clave = clave;
     }
     
-    //======Metodos Getters y Setters
+    //======Metodos Getters y Setters con sus validaciones respectivas
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        if (id > 0){
-           this.id = id; 
-        }else{
-            System.out.println("El ID debe ser mayor que 0");
+    public void setId(int id){
+        try {
+            if (id <= 0) {
+                throw new IllegalArgumentException("El ID debe ser mayor que 0.");
+            }
+            this.id = id;
+        } catch (IllegalArgumentException e){
+            System.out.println("Error en el Id: " + e.getMessage());
         }
-        
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        String regex = ".*[^a-zA-Z].*";
-        nombre=nombre.trim();
-        if(nombre.matches(regex)){
-            this.nombre = "Nombre inválido";
-        }else if(nombre.length()<=1){
-            this.nombre = "Nombre inválido";
-        }else{
+    public void setNombre(String nombre){
+        try {
+            nombre = nombre.trim();
+            if (nombre.length() <= 3 || !nombre.matches("^[a-zA-Z]+$")){ //matches indica si ka cadena coincide o no con la expresión regular dada
+                throw new IllegalArgumentException("El nombre debe tener solo letras y al menos 3 caracteres.");
+            }
             this.nombre = nombre;
-        }        
+        } catch (IllegalArgumentException e){
+            System.out.println("Error en el Nombre: " + e.getMessage());
+        }    
     }
 
     public String getApellido() {
         return apellido;
     }
 
-    public void setApellido(String apellido) {
-        String regex = ".*[^a-zA-Z].*";
-        apellido=apellido.trim();
-        if(apellido.matches(regex)){
-            this.apellido = "Apellido inválido";
-        }else if(apellido.length()<=1){
-            this.apellido = "Apellido inválido";
-        }else{
+    public void setApellido(String apellido){
+        try {
+            apellido = apellido.trim(); //trim elimina los espacios iniciales y finales de la cedena
+            if (apellido.length() <= 1 || !apellido.matches("^[a-zA-Z]+$")){
+                throw new IllegalArgumentException("El apellido debe tener solo letras y al menos 2 caracteres.");
+            }
             this.apellido = apellido;
+        } catch (IllegalArgumentException e){
+            System.out.println("Error en el Apellido: " + e.getMessage());
         } 
     }
 
@@ -79,11 +81,14 @@ public class Usuarios {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
-        if (telefono != null && telefono.matches("\\d{8}")) { 
+    public void setTelefono(String telefono){
+        try {
+            if (telefono == null || !telefono.matches("\\d{8}")){
+                throw new IllegalArgumentException("El teléfono debe tener exactamente 8 dígitos.");
+            }
             this.telefono = telefono;
-        } else {
-            System.out.println("El teléfono debe tener 8 dígitos, sin guion.");
+        } catch (IllegalArgumentException e){
+            System.out.println("Error en el Teléfono: " + e.getMessage());
         }
     }
 
@@ -92,10 +97,13 @@ public class Usuarios {
     }
 
     public void setCorreo(String correo) {
-        if (correo != null && correo.contains("@")) {
+        try {
+            if (correo == null || !correo.contains("@")){
+                throw new IllegalArgumentException("El correo debe contener '@'.");
+            }
             this.correo = correo;
-        } else {
-            System.out.println("Correo inválido.");
+        } catch (IllegalArgumentException e){
+            System.out.println("Error en el Correo: " + e.getMessage());
         }
     }
 
@@ -104,14 +112,14 @@ public class Usuarios {
     }
 
     public void setNickname(String nickname) {
-        String regex = ".*[^a-zA-Z0-9].*";
-        nickname=nickname.trim();
-        if(nickname.matches(regex)){
-            this.nickname = "nickname invalido";
-        }else if(nickname.length()<=4){
-            this.nickname = "nickname invalido";
-        }else{
+        try {
+            nickname = nickname.trim();
+            if (nickname.length() <= 4 || !nickname.matches("^[a-zA-Z0-9]+$")){
+                throw new IllegalArgumentException("El nickname debe tener al menos 5 caracteres y solo letras/números.");
+            }
             this.nickname = nickname;
+        } catch (IllegalArgumentException e){
+            System.out.println("Error en el Nickname: " + e.getMessage());
         }
     }
 
@@ -119,14 +127,17 @@ public class Usuarios {
         return clave;
     }
 
-    public void setClave(String clave) {
-        String regex ="^(?=.*[A-Za-z])(?=.*[^A-Za-z0-9]).{9,}$";
-        
-        if (clave.matches(regex)){
+    public void setClave(String clave){
+        try {
+            String regex = "^(?=.*[A-Za-z])(?=.*[^A-Za-z0-9]).{9,}$";
+            if (!clave.matches(regex)) {
+                throw new IllegalArgumentException("La clave debe tener al menos 9 caracteres, una letra y un carácter especial.");
+            }
             this.clave = clave;
-        }else{
-            this.clave = "Clave invalida";
+        } catch (IllegalArgumentException e){
+            System.out.println("Error en la Clave: " + e.getMessage());
         }
+
     }
         
     //======Método toString para mostrar información

@@ -1,0 +1,1 @@
+1,2,doble,2,50.0,ocupado

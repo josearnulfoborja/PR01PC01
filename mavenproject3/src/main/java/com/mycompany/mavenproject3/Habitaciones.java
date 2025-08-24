@@ -14,80 +14,119 @@ import java.util.Scanner;
  */
 public class Habitaciones {
 
-    private int nivel =0;// solo hay 3 niveles
+    private int id = 0;
+    private int capacidad = 0;
+    private String tipo = "SIN ESPECIFICAR"; // individual, doble o triple
+    private int nivel = 0; // solo hay 3 niveles
+    private float precio = 0.0f;
+    private String estado = "SIN ESPECIFICAR"; // disponible u ocupado
+
+    public Habitaciones() {
+    }
+
+    public Habitaciones(int id) {
+        setId(id);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        try {
+            if (id <= 0) {
+                throw new IllegalArgumentException("El ID debe ser mayor que 0.");
+            }
+            this.id = id;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error en el Id: " + e.getMessage());
+        }
+    }
+
+    public int getCapacidad() {
+        return capacidad;
+    }
+
+    public void setCapacidad(int capacidad) {
+        try {
+            if (capacidad <= 0) {
+                throw new IllegalArgumentException("La capacidad debe ser mayor que 0.");
+            }
+            this.capacidad = capacidad;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error en la capacidad: " + e.getMessage());
+        }
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        try {
+            tipo = tipo.trim().toLowerCase();
+            if (!(tipo.equals("individual") || tipo.equals("doble") || tipo.equals("triple"))) {
+                throw new IllegalArgumentException("El tipo debe ser: individual, doble o triple.");
+            }
+            this.tipo = tipo;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error en el Tipo de habitación: " + e.getMessage());
+        }
+    }
 
     public int getNivel() {
         return nivel;
     }
 
     public void setNivel(int nivel) {
-        this.nivel = nivel;
-    }
-    
-private ArrayList<String> habitaciones = new ArrayList<>();
-    private final String archivo = "Habitaciones.txt";
-
-    public void agregarHabitacion() {
-        Scanner sc = new Scanner(System.in);
-
         try {
-            System.out.print("ID: ");
-            int id = sc.nextInt();
-            if (id <= 0) throw new IllegalArgumentException("ID debe ser mayor que 0");
-            sc.nextLine();
-
-            System.out.print("Capacidad: ");
-            int capacidad = sc.nextInt();
-            if (capacidad <= 0) throw new IllegalArgumentException("Capacidad debe ser mayor que 0");
-            sc.nextLine();
-
-            System.out.print("Tipo (individual/doble/triple): ");
-            String tipo = sc.nextLine().trim().toLowerCase();
-            if (!(tipo.equals("individual") || tipo.equals("doble") || tipo.equals("triple"))) {
-                throw new IllegalArgumentException("Tipo inválido");
+            if (nivel < 1 || nivel > 3) {
+                throw new IllegalArgumentException("El nivel solo puede ser 1, 2 o 3.");
             }
-
-            System.out.print("Nivel (1-3): ");
-            int nivel = sc.nextInt();
-            if (nivel < 1 || nivel > 3) throw new IllegalArgumentException("Nivel debe ser 1, 2 o 3");
-            sc.nextLine();
-
-            System.out.print("Precio: ");
-            float precio = sc.nextFloat();
-            if (precio < 0) throw new IllegalArgumentException("Precio no puede ser negativo");
-            sc.nextLine();
-
-            System.out.print("Estado (disponible/ocupado): ");
-            String estado = sc.nextLine().trim().toLowerCase();
-            if (!(estado.equals("disponible") || estado.equals("ocupado"))) {
-                throw new IllegalArgumentException("Estado inválido");
-            }
-
-            // Guardar en lista y archivo solo si todo es válido
-            String habitacion = id + "," + capacidad + "," + tipo + "," + nivel + "," + precio + "," + estado;
-            habitaciones.add(habitacion);
-            guardarHabitacionEnArchivo(habitacion);
-            System.out.println("✔ Habitación guardada correctamente.");
-
+            this.nivel = nivel;
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error en el Nivel: " + e.getMessage());
         }
     }
 
-    private void guardarHabitacionEnArchivo(String habitacion) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
-            bw.write(habitacion);
-            bw.newLine();
-        } catch (IOException e) {
-            System.out.println("Error al guardar en archivo: " + e.getMessage());
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        try {
+            if (precio < 0) {
+                throw new IllegalArgumentException("El precio no puede ser negativo.");
+            }
+            this.precio = precio;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error en el Precio: " + e.getMessage());
         }
     }
 
-    public void mostrarHabitaciones() {
-        if (habitaciones.isEmpty()) {
-            System.out.println("No hay habitaciones registradas en memoria.");
-        } else {
-            habitaciones.forEach(System.out::println);
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        try {
+            estado = estado.trim().toLowerCase();
+            if (!(estado.equals("disponible") || estado.equals("ocupado"))) {
+                throw new IllegalArgumentException("El estado solo puede ser: disponible u ocupado.");
+            }
+            this.estado = Character.toUpperCase(estado.charAt(0)) + estado.substring(1);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error en el Estado: " + e.getMessage());
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Habitacion "+ id +
+                ", Capacidad:" + capacidad +
+                ", Tipo:" + tipo +
+                ", Nivel:" + nivel +
+                ", Precio:" + precio +
+                ", Estado:" + estado;
     }
 }

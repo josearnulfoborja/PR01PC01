@@ -71,7 +71,7 @@ public class Mavenproject3 {
                 default -> System.out.println("Opción inválida.");
             }
         } while (opcion != 0);
-*/
+         */
     }
 
     public static Empleado iniciarSesion(Scanner scanner) {
@@ -217,26 +217,7 @@ public class Mavenproject3 {
 
     public static void crearReserva(Scanner sc) {
         System.out.println("\n=== Crear Reserva ===");
-        /*
-        System.out.print("Correo del cliente: ");
-        String correoCliente = scanner.nextLine();
 
-        System.out.print("Número de habitación: ");
-        String numeroHabitacion = scanner.nextLine();
-
-        System.out.print("Fecha de entrada (YYYY-MM-DD): ");
-        String fechaEntrada = scanner.nextLine();
-
-        System.out.print("Fecha de salida (YYYY-MM-DD): ");
-        String fechaSalida = scanner.nextLine();
-
-        // Validación básica
-        if (correoCliente.isEmpty() || numeroHabitacion.isEmpty()
-                || fechaEntrada.isEmpty() || fechaSalida.isEmpty()) {
-            System.out.println("❌ Todos los campos son obligatorios.");
-            return;
-        }
-         */
         Reserva reserva = new Reserva(); // ID fijo para ejemplo
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -279,7 +260,7 @@ public class Mavenproject3 {
             if (resultado.equals("RESERVA VÁLIDA")) {
                 System.out.println("Reserva lista para guardar en archivo.");
                 // Aquí podrías llamar a guardarEnArchivo(reserva);
-                guardarArchivo(reserva, "reservas.txt"); 
+                guardarArchivo(reserva, "reservas.txt");
             } else {
                 System.out.println("No se puede guardar la reserva. Datos incompletos.");
             }
@@ -287,32 +268,7 @@ public class Mavenproject3 {
         } catch (Exception e) {
             System.out.println("Error en el formato de fecha o entrada: " + e.getMessage());
         }
-    /*
-            try (FileWriter writer = new FileWriter("reservas.txt", true)) {
-                writer.write(correoCliente + ","
-                        + numeroHabitacion + ","
-                        + fechaEntrada + ","
-                        + fechaSalida + "\n");
-                System.out.println("✅ Reserva creada correctamente.");
-            } catch (IOException e) {
-                System.out.println("❌ Error al guardar la reserva: " + e.getMessage());
-            }
-        
-            try (FileWriter writer = new FileWriter("reservas.txt", true)) {
-        writer.write(
-            reserva.getReservante().getCorreo() + "," +
-            reserva.getSuite().getNumero() + "," +
-            formatoFecha(reserva.getInicioReserva()) + "," +
-            formatoFecha(reserva.getFinReserva()) + "," +
-            reserva.getRecepcionista().getNombre() + "," +
-            reserva.getEstadoReserva() + "\n"
-        );
-        System.out.println("✅ Reserva guardada correctamente.");
-    } catch (IOException e) {
-        System.out.println("❌ Error al guardar la reserva: " + e.getMessage());
-    }
 
-    */
     }
 
     public static void mostrarReservas() {
@@ -360,4 +316,39 @@ public class Mavenproject3 {
             System.out.println("❌ Error al guardar " + entidad.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
+
+    public Cliente buscarCliente(String criterio) {
+        try (BufferedReader br = new BufferedReader(new FileReader("clientes.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+
+                // Validación mínima
+                if (partes.length < 5) {
+                    continue;
+                }
+
+                //String id = partes[0].trim();
+                int id = Integer.parseInt(partes[0].trim());
+                String nombre = partes[1].trim();
+
+                if (nombre.equalsIgnoreCase(criterio)) {
+                    Cliente cliente = new Cliente();
+                    cliente.setId(id);
+                    cliente.setNombre(nombre);
+                    cliente.setApellido(partes[2].trim());
+                    cliente.setTipoCliente(partes[3].trim());
+                    cliente.setCorreo(partes[4].trim());
+                    cliente.setClave(partes[5].trim());
+                    cliente.setNickname(partes[6].trim());
+
+                    return cliente;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("❌ Error al buscar cliente: " + e.getMessage());
+        }
+        return null;
+    }
+
 }

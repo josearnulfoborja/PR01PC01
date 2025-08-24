@@ -60,8 +60,15 @@ public class Mavenproject3 {
                     while (true) {
                         try {
                             System.out.print("ID: ");
-                            habi.setId(sc.nextInt());
+                            int nuevoId = sc.nextInt();
                             sc.nextLine();
+
+                            if (Habitaciones.existeId(listaHabitaciones, nuevoId)) {
+                                System.out.println("==== Ya existe una habitaciOn con ese ID. Ingrese otro.");
+                                continue; // vuelve a pedir el ID
+                            }
+
+                            habi.setId(nuevoId);
                             break;
                         } catch (Exception e) {
                             System.out.println("FALLO:  " + e.getMessage());

@@ -120,4 +120,14 @@ public class Habitaciones {
         System.out.println("====== No existe una habitación con el ID: " + id);
         return null; // retorna null si no encuentra el id
     }
+    
+    //VALIDA QUE EL IDE NO SE REPITA AL AÑADIR OTRO
+    public static boolean existeId(ArrayList<Habitaciones> lista, int id) {
+        for (Habitaciones h : lista) {
+            if (h.getId() == id) {
+                return true; // ya existe ese ID
+            }
+        }
+        return false; // no existe todavía
+    }
 }

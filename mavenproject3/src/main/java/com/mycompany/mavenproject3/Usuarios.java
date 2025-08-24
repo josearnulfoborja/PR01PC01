@@ -129,6 +129,16 @@ public class Usuarios {
         }
     }
     
+    public void setClaved(String clave) {
+        String regex ="^(?=.*[A-Za-z])(?=.*[^A-Za-z0-9]).{9,}$";
+        
+        if (clave.matches(regex)){
+            this.clave = clave;
+        }else{
+            this.clave = "Clave invalida";
+        }
+    }
+    
     //======Método toString para mostrar información
     @Override
     public String toString() {

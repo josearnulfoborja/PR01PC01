@@ -111,13 +111,13 @@ public class Habitaciones {
         for (Habitaciones h : lista) {
             if (h.getId() == id) {
                 if (h.getEstado().equalsIgnoreCase("Ocupado")) {
-                    System.out.println("===== La habitación " + id + " no está disponible, selecciona otra.");
+                    System.out.println("===== La habitacion " + id + " no esta disponible, selecciona otra.");
                     return null; // retorna null si está ocupada
                 }
                 return h; // retorna la habitacion si está disponible
             }
         }
-        System.out.println("====== No existe una habitación con el ID: " + id);
+        System.out.println("====== No existe una habitacion con el ID: " + id);
         return null; // retorna null si no encuentra el id
     }
     

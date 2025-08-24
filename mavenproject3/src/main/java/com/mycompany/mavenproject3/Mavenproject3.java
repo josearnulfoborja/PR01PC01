@@ -39,19 +39,49 @@ import java.util.Scanner;
 public class Mavenproject3 {
 
     public static void main(String[] args) {
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("=== -------------------------------------------------- ===");
         System.out.println("=== BIENVENIDO AL SISTEMA DE RESERVAS HOTEL EL PARAISO ===");
         System.out.println("=== -------------------------------------------------- ===");
-        System.out.println("=== INGRESE SUS CREDENCIALES PARA PODER INICIAR ===");
-        System.out.println("=== -------------------------------------------------- ===");
-        Scanner scanner = new Scanner(System.in);
-        Empleado empleadoActivo = iniciarSesion(scanner);
 
-        if (empleadoActivo != null) {
-            mostrarMenuPrincipal(scanner, empleadoActivo);
-        } else {
-            System.out.println("❌ Acceso denegado.");
+        Empleado empleadoActivo = null;
+        
+        boolean salir = false;
+
+        while (!salir && empleadoActivo == null) {
+        System.out.println("=== INGRESE SUS CREDENCIALES PARA PODER INICIAR ===");
+        empleadoActivo = iniciarSesion(scanner);
+
+        if (empleadoActivo == null) {
+            System.out.println("\n❌ Acceso denegado.");
+            System.out.println("¿Qué desea hacer?");
+            System.out.println("1. Intentar de nuevo");
+            System.out.println("2. Volver al menú principal");
+            System.out.println("3. Salir");
+
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar buffer
+
+            switch (opcion) {
+                case 1:
+                    // Reintenta
+                    break;
+                case 2:
+                    mostrarMenuPrincipal(scanner, null); // Puedes adaptar este método para usuarios no logueados
+                    break;
+                case 3:
+                    salir = true;
+                    System.out.println("👋 Gracias por usar el sistema.");
+                    break;
+                default:
+                    System.out.println("⚠️ Opción no válida. Volviendo a intentar...");
+            }
         }
+    }
+
+    if (empleadoActivo != null) {
+        mostrarMenuPrincipal(scanner, empleadoActivo);
+    }
     }
 
     /**

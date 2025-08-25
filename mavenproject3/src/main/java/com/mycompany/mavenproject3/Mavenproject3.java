@@ -401,8 +401,9 @@ public class Mavenproject3 {
             /**
              * Pedir datos de habitaciones
              */
-            menuHabitaciones(scanner);
+            Habitaciones habit =  menuHabitaciones(scanner);
             
+            reserva.setSuite(habit);
             //validar
             
 
@@ -536,7 +537,7 @@ public class Mavenproject3 {
         }
     }
 
-    public static void menuHabitaciones(Scanner scanner) {
+    public static Habitaciones menuHabitaciones(Scanner scanner) {
         Habitaciones habitaciones = new Habitaciones();
         while (true) {
             System.out.println("\n--- MENU ---");

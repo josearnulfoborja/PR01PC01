@@ -156,5 +156,7 @@ public class Mavenproject3 {
             habitacionSeleccionada = Habitaciones.buscarHabitacionPorId(listaHabitaciones, id);
         }
         System.out.println("===== Habitacion seleccionada: " + habitacionSeleccionada);
+        
+        
     }
 }

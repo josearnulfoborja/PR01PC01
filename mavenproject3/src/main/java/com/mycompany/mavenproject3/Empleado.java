@@ -73,7 +73,7 @@ public class Empleado extends Usuarios {
                        e.getClave() + "," +
                        e.getArea() + "," +
                        e.getPuesto();
-        writer.write(linea + "\n");            
+            writer.write(linea + "\n");            
         
         System.out.println("✅ Empleado guardado exitosamente.");
         } catch (IOException ex) {

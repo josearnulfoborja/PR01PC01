@@ -367,7 +367,7 @@ public class Mavenproject3 {
                 String usuarioCliente = sc.nextLine();
                 System.out.print("Contraseña del cliente: ");
                 String contrasenaCliente = sc.nextLine();
-                // cliente = buscarCliente(cliente);
+                //cliente = buscarCliente(cliente);
 
                 if (cliente == null) {
                     System.out.println("❌ Cliente no encontrado. No se puede continuar.");
@@ -401,11 +401,10 @@ public class Mavenproject3 {
             /**
              * Pedir datos de habitaciones
              */
-            Habitaciones habit =  menuHabitaciones(scanner);
-            
+            Habitaciones habit = menuHabitaciones(scanner);
+
             reserva.setSuite(habit);
             //validar
-            
 
             // Validación
             String resultado = reserva.validarReserva();
@@ -543,12 +542,13 @@ public class Mavenproject3 {
             System.out.println("\n--- MENU ---");
             System.out.println("1. Agregar habitacion");
             System.out.println("2. Mostrar habitaciones");
-            System.out.println("3. Salir");
+            System.out.println("3. Buscar habitacion");
+            System.out.println("4. Salir");
             System.out.print("Seleccione una opcion: ");
             int opcion = scanner.nextInt();
             scanner.nextLine();
 
-            if (opcion < 1 && opcion > 3) {
+            if (opcion < 1 && opcion > 4) {
                 throw new IllegalArgumentException("Escoja una opcion valida.");
             }
 
@@ -556,11 +556,25 @@ public class Mavenproject3 {
                 switch (opcion) {
                     case 1:
                         habitaciones.agregarHabitacion();
+                        // Guardar en lista y archivo solo si todo es válido
+                        Habitaciones hab = new Habitaciones(habitaciones.getId(), habitaciones.getCapacidad(),
+                                habitaciones.getTipo(), habitaciones.getNivel(), habitaciones.getPrecio(),
+                                habitaciones.getEstado());
+                        habitaciones.guardarHabitacionEnArchivo(hab);
                         break;
                     case 2:
                         habitaciones.mostrarHabitaciones();
                         break;
                     case 3:
+                        // 🔍 Buscar cliente existente
+                        System.out.print("Ingrese el codigo de la habitacion: ");
+                        String idHabitacion = scanner.nextLine();
+                        System.out.print("Contraseña del cliente: ");
+                        String nivel = scanner.nextLine();
+                        //habitacion = buscarHabitaciones(cliente);
+
+                        break;
+                    case 4:
                         System.out.println("Regresando al registro de reserva...\n");
                         break;
                 }
@@ -569,6 +583,34 @@ public class Mavenproject3 {
                 System.out.print("Vuelva a ingresar. ");
             }
         }
+    }
+
+    public Habitaciones buscarHabitacion(Habitaciones habi) {
+        try (BufferedReader br = new BufferedReader(new FileReader("habitaciones.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+
+                //String id = partes[0].trim();
+                int id = Integer.parseInt(partes[0].trim());
+                int nivel = Integer.parseInt(partes[3].trim());
+
+                if (id == habi.getId()) {
+                    Habitaciones habitacion = new Habitaciones();
+                    habitacion.setId(id);
+                    habitacion.setCapacidad(Integer.parseInt(partes[1].trim()));
+                    habitacion.setTipo(partes[2].trim());
+                    habitacion.setNivel(nivel);
+                    habitacion.setPrecio(Float.parseFloat(partes[4].trim()));
+                    habitacion.setEstado(partes[5].trim());
+
+                    return habitacion;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("❌ Error al buscar habitacion: " + e.getMessage());
+        }
+        return null;
     }
 
 }

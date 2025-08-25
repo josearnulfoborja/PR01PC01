@@ -15,16 +15,82 @@ import java.util.Scanner;
 public class Habitaciones {
 
     private int nivel = 0;// solo hay 3 niveles
-    private int id,capacidad;
-    private String tipo,estado;
+
+    private int id, capacidad;
+    private String tipo, estado;
     private float precio;
+
+    public Habitaciones(int id,int capacidad,String tipo,int nivel,float precio,String estado){
+        this.id=id;
+        this.capacidad=capacidad;
+        this.tipo=tipo;
+        this.nivel=nivel;
+        this.precio=precio;
+        this.estado=estado;
+    }
+
+    Habitaciones() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
+    public int getId() {
+        return id;
+    }
+
     public int getNivel() {
         return nivel;
     }
 
+    public int getCapacidad() {
+        return capacidad;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public ArrayList<String> getHabitaciones() {
+        return habitaciones;
+    }
+
+    public String getArchivo() {
+        return archivo;
+    }
+
     public void setNivel(int nivel) {
         this.nivel = nivel;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+
+    public void setHabitaciones(ArrayList<String> habitaciones) {
+        this.habitaciones = habitaciones;
     }
 
     private ArrayList<String> habitaciones = new ArrayList<>();
@@ -122,29 +188,29 @@ public class Habitaciones {
                 }
             }
 
-            // Guardar en lista y archivo solo si todo es válido
-            String habitacion = id + "," + capacidad + "," + tipo + "," + nivel + "," + precio + "," + estado;
-            habitaciones.add(habitacion);
-            guardarHabitacionEnArchivo(habitacion);
-            System.out.println("✔ Habitación guardada correctamente.");
-
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
-    private void guardarHabitacionEnArchivo(String habitacion) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
-            bw.write(habitacion);
-            bw.newLine();
+    public void guardarHabitacionEnArchivo(Habitaciones h) {
+        try (FileWriter writer = new FileWriter("habitaciones.txt", true)) {
+            String linea = h.getId() + ","
+                    + h.getCapacidad() + ","
+                    + h.getTipo() + ","
+                    + h.getNivel() + ","
+                    + h.getPrecio() + ","
+                    + h.getEstado() + ",+";
+            writer.write(linea + "\n");
+            System.out.println("✅ Habitacion guardado exitosamente.");
         } catch (IOException e) {
             System.out.println("Error al guardar en archivo: " + e.getMessage());
         }
     }
 
     public void mostrarHabitaciones() {
-        Reserva reserva=new Reserva();
-        Scanner scanner=new Scanner(System.in);
+        Reserva reserva = new Reserva();
+        Scanner scanner = new Scanner(System.in);
         Habitaciones habitacion;
         if (habitaciones.isEmpty()) {
             System.out.println("No hay habitaciones registradas en memoria.");

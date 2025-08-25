@@ -143,6 +143,9 @@ public class Habitaciones {
     }
 
     public void mostrarHabitaciones() {
+        Reserva reserva=new Reserva();
+        Scanner scanner=new Scanner(System.in);
+        Habitaciones habitacion;
         if (habitaciones.isEmpty()) {
             System.out.println("No hay habitaciones registradas en memoria.");
         } else {

@@ -44,7 +44,7 @@ public class Mavenproject3 {
         Scanner scanner = new Scanner(System.in);
         Empleado empleadoActivo = null;
         boolean salir = false;
-        Empleado empleado1=null;
+        Empleado empleado1 = null;
 
         System.out.println("=== BIENVENIDO AL SISTEMA DE RESERVAS HOTEL EL PARAISO ===");
 
@@ -336,6 +336,7 @@ public class Mavenproject3 {
     // </editor-fold>
     // <editor-fold desc="Reverva">
     public static void crearReserva(Scanner sc) {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("\n=== Crear Reserva ===");
 
         Reserva reserva = new Reserva();
@@ -397,12 +398,13 @@ public class Mavenproject3 {
             empleado.setNombre(nombreEmpleado);
             reserva.setRecepcionista(empleado);
 
-            System.out.print("Número de habitación: ");
-            int numeroHabitacion = Integer.parseInt(sc.nextLine());
-            Habitaciones habitacion = new Habitaciones();
-            habitacion.setNivel(numeroHabitacion);
+            /**
+             * Pedir datos de habitaciones
+             */
+            menuHabitaciones(scanner);
+            
             //validar
-            reserva.setSuite(habitacion);
+            
 
             // Validación
             String resultado = reserva.validarReserva();
@@ -545,15 +547,25 @@ public class Mavenproject3 {
             int opcion = scanner.nextInt();
             scanner.nextLine();
 
-            switch (opcion) {
-                case 1:
-                    habitaciones.agregarHabitacion();
-                    break;
-                case 2:
-                    habitaciones.mostrarHabitaciones();
-                    break;
-                case 3:
-                    mostrarMenuPrincipal(scanner, empleado1);
+            if (opcion < 1 && opcion > 3) {
+                throw new IllegalArgumentException("Escoja una opcion valida.");
+            }
+
+            try {
+                switch (opcion) {
+                    case 1:
+                        habitaciones.agregarHabitacion();
+                        break;
+                    case 2:
+                        habitaciones.mostrarHabitaciones();
+                        break;
+                    case 3:
+                        System.out.println("Regresando al registro de reserva...\n");
+                        break;
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ha ocurrido un error: " + e.getMessage());
+                System.out.print("Vuelva a ingresar. ");
             }
         }
     }

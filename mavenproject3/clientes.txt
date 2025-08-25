@@ -1,2 +1,4 @@
 1,Martin,Perez,77474574,mar@gmail.com,47457458,465,VIP
-2,Pedrito,Martinez,77474574,pedri@gmail.com,4444440011,375,VIP
+2,Pedrito,Martinez,77474574,pedri@gmail.com,4444440011,375,VIPLuis,Martinez,luis.martinez@gmail.com,contra1234!,78632596
+3,Diego,Mejia,75362458,dmejia@gmail.com,154861215663,124,vip
+4,Juan,Martinez,45789863,jmart@gmail.com,154965456,789,regular

@@ -30,7 +30,7 @@ public class Habitaciones {
     }
 
     Habitaciones() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     public int getId() {
@@ -96,102 +96,94 @@ public class Habitaciones {
     private ArrayList<String> habitaciones = new ArrayList<>();
     private final String archivo = "Habitaciones.txt";
 
-    public void agregarHabitacion() {
-        Scanner sc = new Scanner(System.in);
+   public Habitaciones agregarHabitacion() {
+    Scanner sc = new Scanner(System.in);
 
-        try {
-            while (true) {
-                try {
-                    System.out.print("ID: ");
-                    int id = sc.nextInt();
-                    if (id <= 0) {
-                        throw new IllegalArgumentException("ID debe ser mayor que 0");
-                    }
-                    sc.nextLine();
-                    break;
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Ha ocurrido un error: " + e.getMessage());
-                    System.out.print("Vuelva a ingresar. ");
-                }
+    // ✅ Declarar variables al inicio
+    int id = 0, capacidad = 0, nivel = 0;
+    float precio = 0;
+    String tipo = "", estado = "";
+
+    try {
+        while (true) {
+            try {
+                System.out.print("ID: ");
+                id = sc.nextInt();
+                if (id <= 0) throw new IllegalArgumentException("ID debe ser mayor que 0");
+                sc.nextLine();
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("❌ " + e.getMessage());
             }
-
-            while (true) {
-                try {
-                    System.out.print("Capacidad: ");
-                    int capacidad = sc.nextInt();
-                    if (capacidad <= 0) {
-                        throw new IllegalArgumentException("Capacidad debe ser mayor que 0");
-                    }
-                    sc.nextLine();
-                    break;
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Ha ocurrido un error: " + e.getMessage());
-                    System.out.print("Vuelva a ingresar. ");
-                }
-            }
-
-            while (true) {
-                try {
-                    System.out.print("Tipo (individual/doble/triple): ");
-                    String tipo = sc.nextLine().trim().toLowerCase();
-                    if (!(tipo.equals("individual") || tipo.equals("doble") || tipo.equals("triple"))) {
-                        throw new IllegalArgumentException("Tipo inválido");
-                    }
-                    break;
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Ha ocurrido un error: " + e.getMessage());
-                    System.out.print("Vuelva a ingresar. ");
-                }
-            }
-
-            while (true) {
-                try {
-                    System.out.print("Nivel (1-3): ");
-                    int nivel = sc.nextInt();
-                    if (nivel < 1 || nivel > 3) {
-                        throw new IllegalArgumentException("Nivel debe ser 1, 2 o 3");
-                    }
-                    sc.nextLine();
-                    break;
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Ha ocurrido un error: " + e.getMessage());
-                    System.out.print("Vuelva a ingresar. ");
-                }
-            }
-
-            while (true) {
-                try {
-                    System.out.print("Precio: ");
-                    float precio = sc.nextFloat();
-                    if (precio < 0) {
-                        throw new IllegalArgumentException("Precio no puede ser negativo");
-                    }
-                    sc.nextLine();
-                    break;
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Ha ocurrido un error: " + e.getMessage());
-                    System.out.print("Vuelva a ingresar. ");
-                }
-            }
-
-            while (true) {
-                try {
-                    System.out.print("Estado (disponible/ocupado): ");
-                    String estado = sc.nextLine().trim().toLowerCase();
-                    if (!(estado.equals("disponible") || estado.equals("ocupado"))) {
-                        throw new IllegalArgumentException("Estado inválido");
-                    }
-                    break;
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Ha ocurrido un error: " + e.getMessage());
-                    System.out.print("Vuelva a ingresar. ");
-                }
-            }
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
         }
+
+        while (true) {
+            try {
+                System.out.print("Capacidad: ");
+                capacidad = sc.nextInt();
+                if (capacidad <= 0) throw new IllegalArgumentException("Capacidad debe ser mayor que 0");
+                sc.nextLine();
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("❌ " + e.getMessage());
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.print("Tipo (individual/doble/triple): ");
+                tipo = sc.nextLine().trim().toLowerCase();
+                if (!(tipo.equals("individual") || tipo.equals("doble") || tipo.equals("triple")))
+                    throw new IllegalArgumentException("Tipo inválido");
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("❌ " + e.getMessage());
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.print("Nivel (1-3): ");
+                nivel = sc.nextInt();
+                if (nivel < 1 || nivel > 3) throw new IllegalArgumentException("Nivel debe ser 1, 2 o 3");
+                sc.nextLine();
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("❌ " + e.getMessage());
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.print("Precio: ");
+                precio = sc.nextFloat();
+                if (precio < 0) throw new IllegalArgumentException("Precio no puede ser negativo");
+                sc.nextLine();
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("❌ " + e.getMessage());
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.print("Estado (disponible/ocupado): ");
+                estado = sc.nextLine().trim().toLowerCase();
+                if (!(estado.equals("disponible") || estado.equals("ocupado")))
+                    throw new IllegalArgumentException("Estado inválido");
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("❌ " + e.getMessage());
+            }
+        }
+
+    } catch (Exception e) {
+        System.out.println("❌ Error inesperado: " + e.getMessage());
+        return null;
     }
+   
+    return new Habitaciones(id, capacidad, tipo, nivel, precio, estado);
+}
 
     public void guardarHabitacionEnArchivo(Habitaciones h) {
         try (FileWriter writer = new FileWriter("habitaciones.txt", true)) {
@@ -200,7 +192,7 @@ public class Habitaciones {
                     + h.getTipo() + ","
                     + h.getNivel() + ","
                     + h.getPrecio() + ","
-                    + h.getEstado() + ",+";
+                    + h.getEstado();
             writer.write(linea + "\n");
             System.out.println("✅ Habitacion guardado exitosamente.");
         } catch (IOException e) {

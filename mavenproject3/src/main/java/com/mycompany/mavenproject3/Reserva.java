@@ -94,6 +94,11 @@ public String getEstadoReserva() {
     return estadoReserva;
 }
 
+    public void setEstadoReserva(String estadoReserva) {
+        this.estadoReserva = estadoReserva;
+    }
+
+
     public Habitaciones getSuite() {
         return suite;
     }

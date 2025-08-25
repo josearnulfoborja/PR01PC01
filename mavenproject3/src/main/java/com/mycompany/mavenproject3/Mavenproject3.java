@@ -49,8 +49,8 @@ public class Mavenproject3 {
         System.out.println("=== BIENVENIDO AL SISTEMA DE RESERVAS HOTEL EL PARAISO ===");
 
     while (!salir && empleadoActivo == null) {        
-        System.out.println("\n=== MENÚ DE INICIO ===");
-        System.out.println("1. Iniciar sesión");
+        System.out.println("\n=== MENU DE INICIO ===");
+        System.out.println("1. Iniciar sesion");
         System.out.println("2. Registrar usuario");
         System.out.println("3. Salir");
         System.out.print("Seleccione una opcion: ");
@@ -62,7 +62,7 @@ public class Mavenproject3 {
                 case 1:
                     empleadoActivo = iniciarSesion(scanner);
                     if (empleadoActivo == null) {
-                        System.out.println("❌ Credenciales incorrectas.");
+                        System.out.println(" Credenciales incorrectas.");
                     }
                     break;
                 case 2:
@@ -70,10 +70,10 @@ public class Mavenproject3 {
                     break;
                 case 3:
                     salir = true;
-                    System.out.println("👋 Gracias por usar el sistema.");
+                    System.out.println(" Gracias por usar el sistema.");
                     break;
                 default:
-                    System.out.println("⚠️ Opción no válida. Intente de nuevo.");
+                    System.out.println(" Opción no válida. Intente de nuevo.");
             }
         }
 
@@ -116,7 +116,7 @@ public class Mavenproject3 {
                 }
             }
         } catch (IOException e) {
-            System.out.println("❌ Error al buscar cliente: " + e.getMessage());
+            System.out.println(" Error al buscar cliente: " + e.getMessage());
         }
         return null;
     }
@@ -145,7 +145,7 @@ public class Mavenproject3 {
         }
         br.close();
     } catch (IOException e) {
-        System.out.println("❌ Error al leer archivo de clientes: " + e.getMessage());
+        System.out.println(" Error al leer archivo de clientes: " + e.getMessage());
     }
     return null;
 }
@@ -182,12 +182,12 @@ public class Mavenproject3 {
                         + cliente.getCorreo() + ","
                         + cliente.getClave() + ","
                         + cliente.getTelefono() + "\n");
-                System.out.println("✅ Cliente registrado y guardado correctamente.");
+                System.out.println(" Cliente registrado y guardado correctamente.");
             } catch (IOException e) {
-                System.out.println("❌ Error al guardar el cliente: " + e.getMessage());
+                System.out.println(" Error al guardar el cliente: " + e.getMessage());
             }
         } else {
-            System.out.println("⚠️ Registro fallido. Verifique los datos.");
+            System.out.println(" Registro fallido. Verifique los datos.");
         }
     }
 
@@ -210,10 +210,10 @@ public class Mavenproject3 {
             }
 
             if (contador == 1) {
-                System.out.println("⚠️ No hay clientes registrados.");
+                System.out.println(" No hay clientes registrados.");
             }
         } catch (IOException e) {
-            System.out.println("❌ Error al leer clientes: " + e.getMessage());
+            System.out.println(" Error al leer clientes: " + e.getMessage());
         }
     }
 
@@ -254,7 +254,7 @@ public class Mavenproject3 {
 
         empleado.crearEmpleadoDesdeUsuario(empleado);
 
-        System.out.println("✅ Empleado registrado con ID: " + nuevoId);
+        System.out.println(" Empleado registrado con ID: " + nuevoId);
 
     }
 
@@ -268,7 +268,7 @@ public class Mavenproject3 {
                     archivo.createNewFile();
                     return 1; // Primer ID
                 } catch (IOException e) {
-                    System.out.println("❌ Error al crear el archivo: " + e.getMessage());
+                    System.out.println(" Error al crear el archivo: " + e.getMessage());
                     return 1; // Asignamos 1 por defecto
                 }
 
@@ -292,7 +292,7 @@ public class Mavenproject3 {
                 }
             }
         } catch (IOException e) {
-            System.out.println("⚠️ No se pudo leer el archivo: " + e.getMessage());
+            System.out.println(" No se pudo leer el archivo: " + e.getMessage());
         }
 
     return maxId + 1;
@@ -307,7 +307,7 @@ public class Mavenproject3 {
                     archivo.createNewFile();
                     return 1; // Primer ID
                 } catch (IOException e) {
-                    System.out.println("❌ Error al crear el archivo: " + e.getMessage());
+                    System.out.println(" Error al crear el archivo: " + e.getMessage());
                     return 1; // Asignamos 1 por defecto
                 }
             }
@@ -329,7 +329,7 @@ public class Mavenproject3 {
                     }
                 }
             } catch (IOException e) {
-                System.out.println("⚠️ No se pudo leer el archivo: " + e.getMessage());
+                System.out.println(" No se pudo leer el archivo: " + e.getMessage());
             }
 
     return maxId + 1;
@@ -358,7 +358,7 @@ public class Mavenproject3 {
                 }
             }
         } catch (IOException e) {
-           System.out.println("❌ Error al buscar cliente: " + e.getMessage());
+           System.out.println(" Error al buscar cliente: " + e.getMessage());
         }
         return null;
     }
@@ -366,13 +366,13 @@ public class Mavenproject3 {
 
     public static Empleado iniciarSesion(Scanner scanner) {
 
-        System.out.println("\n=== INICIO DE SESIÓN ===");
+        System.out.println("\n=== INICIO DE SESION ===");
 
         //scanner.nextLine(); // Limpiar buffer sdespués del nextInt en el main
         System.out.print("Correo: ");
         String correoIngresado = scanner.nextLine();
 
-        System.out.print("Contraseña: ");
+        System.out.print("🔒 Contraseña: ");
         String contraseñaIngresada = scanner.nextLine();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("empleados.txt"))) {
@@ -398,9 +398,9 @@ public class Mavenproject3 {
                 }
             }
 
-            System.out.println("❌ Credenciales incorrectas o empleado no encontrado.");
+            System.out.println(" Credenciales incorrectas o empleado no encontrado.");
         } catch (IOException e) {
-            System.out.println("❌ Error al leer el archivo: " + e.getMessage());
+            System.out.println(" Error al leer el archivo: " + e.getMessage());
         }
 
         return null;
@@ -434,7 +434,7 @@ public class Mavenproject3 {
             String respuesta = sc.nextLine().trim().toLowerCase();  
             cliente = new Cliente();
             if (respuesta.equals("s")) {
-                // 🔍 Buscar cliente existente
+                //  Buscar cliente existente
                 System.out.print("Ingrese el codigo del Cliente: ");                
                 int idCliente;
                 String codCliente = sc.nextLine();                
@@ -444,11 +444,10 @@ public class Mavenproject3 {
 
 
                 if (cliente == null) {
-                    System.out.println("❌ Cliente no encontrado. No se puede continuar.");
+                    System.out.println(" Cliente no encontrado. No se puede continuar.");
                     return;
                 }
-            } else {
-                // 🆕 Registrar nuevo cliente
+            } else {              
                
                 int nuevoId = obtenerNuevoIdCliente(); // ID automático        
                 cliente.setId(nuevoId);
@@ -482,7 +481,7 @@ public class Mavenproject3 {
                 
                 cliente.crearClienteDesdeUsuario(cliente);
                           
-                System.out.println("✅ Cliente registrado exitosamente.");                
+                System.out.println(" Cliente registrado exitosamente.");                
             }
                 reserva.setReservante(cliente);
                 reserva.setRecepcionista(recepcionistaActivo);
@@ -536,10 +535,10 @@ public class Mavenproject3 {
             }
 
             if (contador == 1) {
-                System.out.println("⚠️ No hay reservas registradas.");
+                System.out.println(" No hay reservas registradas.");
             }
         } catch (IOException e) {
-            System.out.println("❌ Error al leer reservas: " + e.getMessage());
+            System.out.println(" Error al leer reservas: " + e.getMessage());
         }
     }
 
@@ -559,9 +558,9 @@ public class Mavenproject3 {
             }
 
             writer.write(linea.substring(0, linea.length() - 1) + "\n");
-            System.out.println("✅ " + clase.getSimpleName() + " guardado en " + nombreArchivo);
+            System.out.println(" " + clase.getSimpleName() + " guardado en " + nombreArchivo);
         } catch (Exception e) {
-            System.out.println("❌ Error al guardar " + entidad.getClass().getSimpleName() + ": " + e.getMessage());
+            System.out.println(" Error al guardar " + entidad.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
      */
@@ -583,9 +582,9 @@ public class Mavenproject3 {
         }
 
         writer.write(linea.substring(0, linea.length() - 1) + "\n");
-        System.out.println("✅ " + entidad.getClass().getSimpleName() + " guardado en " + nombreArchivo);
+        System.out.println(" " + entidad.getClass().getSimpleName() + " guardado en " + nombreArchivo);
     } catch (Exception e) {
-        System.out.println("❌ Error al guardar " + entidad.getClass().getSimpleName() + ": " + e.getMessage());
+        System.out.println(" Error al guardar " + entidad.getClass().getSimpleName() + ": " + e.getMessage());
     }
 }
      */
@@ -617,10 +616,10 @@ public class Mavenproject3 {
                     break;
                 case "5":
                     continuar = false;
-                    System.out.println("👋 Cerrando sesión...");
+                    System.out.println(" Cerrando sesión...");
                     break;
                 default:
-                    System.out.println("❌ Opción inválida.");
+                    System.out.println(" Opción inválida.");
             }
         }
     }
@@ -656,7 +655,7 @@ public class Mavenproject3 {
                         habitaciones.mostrarHabitaciones();
                         break;
                     case 3:
-                        // 🔍 Buscar cliente existente
+                        //  Buscar cliente existente
                         System.out.print("Ingrese el codigo de la habitacion: ");
                         String idHabitacion = scanner.nextLine();
                         System.out.print("Contraseña del cliente: ");
@@ -698,7 +697,7 @@ public class Mavenproject3 {
                 }
             }
         } catch (IOException e) {
-            System.out.println("❌ Error al buscar habitacion: " + e.getMessage());
+            System.out.println(" Error al buscar habitacion: " + e.getMessage());
         }
         return null;
     }

@@ -74,9 +74,9 @@ public class Cliente extends Usuarios {
                        e.getCodTarjeta();               
         writer.write(linea + "\n");            
         
-        System.out.println("✅ Empleado guardado exitosamente.");
+        System.out.println("✅ Cliente guardado exitosamente.");
         } catch (IOException ex) {
-            System.out.println("❌ Error al guardar el empleado: " + ex.getMessage());
+            System.out.println("❌ Error al guardar el cliente: " + ex.getMessage());
         }
     }
 

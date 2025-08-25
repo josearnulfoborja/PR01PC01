@@ -53,6 +53,7 @@ public class Mavenproject3 {
         System.out.println("1. Iniciar sesión");
         System.out.println("2. Registrar usuario");
         System.out.println("3. Salir");
+        System.out.print("Seleccione una opcion: ");
 
         int opcion = scanner.nextInt();
         scanner.nextLine(); // Limpiar buffer

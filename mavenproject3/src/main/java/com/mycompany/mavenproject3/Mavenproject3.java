@@ -97,6 +97,8 @@ public class Mavenproject3 {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         try {
+            int idReserva  =  obtenerNuevoReservaId();
+            reserva.setId(idReserva);
             System.out.print("Fecha de solicitud (dd/MM/yyyy): ");
             reserva.setFechaSolicitud(sdf.parse(sc.nextLine()));
 
@@ -111,6 +113,10 @@ public class Mavenproject3 {
             System.out.print("¿El cliente ya está registrado? (s/n): ");
             String respuestaC = sc.nextLine().trim().toLowerCase();
             cliente = new Cliente();
+            while (!respuestaC.equals("s") && !respuestaC.equals("n")){
+                System.out.print("ERROR: Ingrese una respuesta valida\n¿El cliente ya está registrado? (s/n): ");
+                respuestaC = sc.nextLine().trim().toLowerCase();
+            }
             if (respuestaC.equals("s")) {
                 //  Buscar cliente existente
                 System.out.print("Ingrese el codigo del Cliente: ");
@@ -200,14 +206,17 @@ public class Mavenproject3 {
             reserva.setEstadoReserva("VALIDA");
             String resultado = reserva.validarReserva();
             System.out.println("Resultado: " + resultado);
-            //Crear el mensaje
-            System.out.println("Mensaje: " + reserva.toString());
+           
 
             // Persistencia simuladaINVALIDA
-            if (resultado.equals("RESERVA VÁLIDA")) {
+            if (resultado.equals("RESERVA VALIDA")) {
                 System.out.println("Reserva lista para guardar en archivo.");
                 // Aquí podrías llamar a guardarEnArchivo(reserva);
                 reserva.crearReserva(reserva);
+                System.out.println("-------------------------------");
+                 //Crear el mensaje
+                System.out.println("Datos de la Reserva: " + reserva.toString());
+                 System.out.println("-------------------------------");
             } else {
                 System.out.println("No se puede guardar la reserva. Datos incompletos.");
             }
@@ -277,6 +286,45 @@ public class Mavenproject3 {
             System.out.println(" Error al leer reservas: " + e.getMessage());
         }
     }
+    
+     public static int obtenerNuevoReservaId() {
+        File archivo = new File("reservas.txt");
+        int maxId = 0;
+
+        if (!archivo.exists()) {
+            try {
+                archivo.createNewFile();
+                return 1; // Primer ID
+            } catch (IOException e) {
+                System.out.println(" Error al crear el archivo: " + e.getMessage());
+                return 1; // Asignamos 1 por defecto
+            }
+
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length >= 1) {
+                    try {
+                        int id = Integer.parseInt(partes[0].trim());
+                        if (id > maxId) {
+                            maxId = id;
+                        }
+                    } catch (NumberFormatException e) {
+                        // Ignorar líneas mal formateadas
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println(" No se pudo leer el archivo: " + e.getMessage());
+        }
+
+        return maxId + 1;
+    }
+
 
 // </editor-fold>
 // <editor-fold desc="Habitaciones">
@@ -455,6 +503,7 @@ public class Mavenproject3 {
     }
 
     // </editor-fold>
+    
 // <editor-fold desc="Empleados">
     public static void crearEmpleado(Scanner sc) {
         Empleado empleado = new Empleado();
@@ -639,6 +688,7 @@ public class Mavenproject3 {
     }
 
     // </editor-fold>
+    
     public static void mostrarMenuPrincipal(Scanner scanner, Empleado empleadoActivo) {
         boolean continuar = true;
         while (continuar) {

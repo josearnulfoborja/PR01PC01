@@ -1,2 +1,3 @@
 1,Jose,Borja,77474574,jborja@mapfre.com.sv,fito1,Mapfre2025$,Recepcion,Recepcionista
 2,Cristian,Perez,77777777,cristian@gmail.com,cristian1,Cristian$,Ingenieria,Ingeniero
+3,karen,rodriguez,12345678,karen@,karen,12345678a_,abcd,avcd

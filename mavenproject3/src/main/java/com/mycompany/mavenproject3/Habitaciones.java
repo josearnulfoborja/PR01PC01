@@ -95,7 +95,7 @@ public class Habitaciones {
         for (Habitaciones h : lista) {
             if (h.getId() == id) {
                 if (h.getEstado().equalsIgnoreCase("Ocupado")) {
-                    System.out.println("===== La habitacion " + id + " no esta disponible, selecciona otra.");
+                    System.out.println("x|x ERROR: La habitacion " + id + " no esta disponible, selecciona otra x|x");
                     return null; // retorna null si está ocupada
                 }
                 return h; // retorna la habitacion si está disponible

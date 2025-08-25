@@ -99,7 +99,6 @@ public class Mavenproject3 {
                 if (partes.length < 5) {
                     continue;
                 }
-
                 //String id = partes[0].trim();
                 int id = Integer.parseInt(partes[0].trim());
                 String nombre = partes[1].trim();
@@ -113,7 +112,7 @@ public class Mavenproject3 {
                     cliente.setCorreo(partes[4].trim());
                     cliente.setClave(partes[5].trim());
                     cliente.setNickname(partes[6].trim());
-
+                    
                     return cliente;
                 }
             }
@@ -122,6 +121,35 @@ public class Mavenproject3 {
         }
         return null;
     }
+    
+    public static Cliente buscarClientePorId(int idBuscado) {
+    try {
+        BufferedReader br = new BufferedReader(new FileReader("clientes.txt"));
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            String[] partes = linea.split(",");
+            if (partes.length >= 9 && partes[0].equals(idBuscado)) {
+                Cliente cliente = new Cliente();
+                cliente.setId(Integer.parseInt(partes[0].trim()));
+                cliente.setNombre(partes[1]);
+                cliente.setApellido(partes[2]);
+                cliente.setTelefono(partes[3]);
+                cliente.setCorreo(partes[4]);
+                cliente.setNickname(partes[5]);
+                cliente.setClave(partes[6]);
+                cliente.setTarjeta(partes[7]);
+                cliente.setTipoCliente(partes[8]);
+                cliente.setCodTarjeta(partes[9]);
+                br.close();
+                return cliente;
+            }
+        }
+        br.close();
+    } catch (IOException e) {
+        System.out.println("❌ Error al leer archivo de clientes: " + e.getMessage());
+    }
+    return null;
+}
 
      public static void registrarNuevoCliente(Scanner scanner) {
         Cliente cliente = new Cliente();
@@ -198,7 +226,7 @@ public class Mavenproject3 {
          Empleado empleado = new Empleado(); 
           System.out.println("\n=== INGRESE LOS DATOS DEL NUEVO EMPLEADO ===");
             
-        int nuevoId = obtenerNuevoId(); // ID automático        
+        int nuevoId = obtenerNuevoIdEmpleado(); // ID automático        
         empleado.setId(nuevoId);
         
         System.out.print("Nombre: ");
@@ -231,7 +259,7 @@ public class Mavenproject3 {
         
     }
       
-      public static int obtenerNuevoId() {
+    public static int obtenerNuevoIdEmpleado() {
            File archivo = new File("empleados.txt");
            int maxId = 0;
            
@@ -267,6 +295,44 @@ public class Mavenproject3 {
 
     return maxId + 1;
 }
+      
+    public static int obtenerNuevoIdCliente() {
+           File archivo = new File("clientes.txt");
+           int maxId = 0;
+           
+           if (!archivo.exists()) {
+                try {
+                    archivo.createNewFile();
+                    return 1; // Primer ID
+                } catch (IOException e) {
+                    System.out.println("❌ Error al crear el archivo: " + e.getMessage());
+                    return 1; // Asignamos 1 por defecto
+                }
+            }
+
+            try (BufferedReader reader = new BufferedReader(new FileReader("clientes.txt"))) {
+                String linea;
+
+                while ((linea = reader.readLine()) != null) {
+                    String[] partes = linea.split(",");
+                    if (partes.length >= 1) {
+                        try {
+                            int id = Integer.parseInt(partes[0].trim());
+                            if (id > maxId) {
+                                maxId = id;
+                            }
+                        } catch (NumberFormatException e) {
+                            // Ignorar líneas mal formateadas
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("⚠️ No se pudo leer el archivo: " + e.getMessage());
+            }
+
+    return maxId + 1;
+}
+   
       
       public Empleado buscarRecepcionista(String usuarioBuscado, String contrasenaBuscada) {
         try (BufferedReader br = new BufferedReader(new FileReader("empleados.txt"))) {
@@ -341,7 +407,8 @@ public class Mavenproject3 {
     // </editor-fold>
       
     // <editor-fold desc="Reverva">
-         public static void crearReserva(Scanner sc) {
+      
+         public static void crearReserva(Scanner sc, Empleado recepcionistaActivo) {
         System.out.println("\n=== Crear Reserva ===");
 
         Reserva reserva = new Reserva(); 
@@ -356,23 +423,28 @@ public class Mavenproject3 {
 
             System.out.print("Fin de reserva (dd/MM/yyyy): ");
             reserva.setFinReserva(sdf.parse(sc.nextLine()));
-
+ 
+            Cliente cliente = new Cliente();
+            
             // Simulación de objetos relacionados
+            /*
             System.out.print("Nombre del cliente: ");
             String nombreCliente = sc.nextLine();
-            Cliente cliente = new Cliente(); // Constructor simple
+            // Constructor simple
             cliente.setNombre(nombreCliente);
             reserva.setReservante(cliente);
-
+*/
             System.out.print("¿El cliente ya está registrado? (s/n): ");
-            String respuesta = sc.nextLine().trim().toLowerCase();         
+            String respuesta = sc.nextLine().trim().toLowerCase();  
+            cliente = new Cliente();
             if (respuesta.equals("s")) {
                 // 🔍 Buscar cliente existente
-                System.out.print("Ingrese el codigo del Cliente: ");
-                String usuarioCliente = sc.nextLine();
-                System.out.print("Contraseña del cliente: ");
-                String contrasenaCliente = sc.nextLine();
-               // cliente = buscarCliente(cliente);
+                System.out.print("Ingrese el codigo del Cliente: ");                
+                int idCliente;
+                String codCliente = sc.nextLine();                
+                idCliente = Integer.parseInt(codCliente);
+               
+                cliente = buscarClientePorId(idCliente);
 
                 if (cliente == null) {
                     System.out.println("❌ Cliente no encontrado. No se puede continuar.");
@@ -380,29 +452,43 @@ public class Mavenproject3 {
                 }
             } else {
                 // 🆕 Registrar nuevo cliente
-                cliente = new Cliente();
-                System.out.print("Nombre del cliente: ");
+               
+                int nuevoId = obtenerNuevoIdCliente(); // ID automático        
+                cliente.setId(nuevoId);
+                 
+                System.out.print("📝 Nombre del cliente: ");
                 cliente.setNombre(sc.nextLine());
-                System.out.print("Apellido del cliente: ");
+
+                System.out.print("📝 Apellido del cliente: ");
                 cliente.setApellido(sc.nextLine());
-                System.out.print("Usuario para el cliente: ");
-                //cliente.setUsuario(sc.nextLine());
-                System.out.print("Contraseña para el cliente: ");
-                //cliente.setContrasena(sc.nextLine());
 
-                // Puedes generar un ID automático o pedirlo
-                //cliente.setId(generarIdCliente()); // Método que busca el último ID y suma 1
+                System.out.print("📞 Teléfono: ");
+                cliente.setTelefono(sc.nextLine());
 
-                //guardarClienteEnArchivo(cliente); // Persistencia
-                System.out.println("✅ Cliente registrado exitosamente.");
+                System.out.print("📧 Correo electrónico: ");
+                cliente.setCorreo(sc.nextLine());
+
+                //System.out.print("👤 Nickname: ");
+                //cliente.setNickname(sc.nextLine());
+
+                //System.out.print("🔒 Clave: ");
+                //cliente.setClave(sc.nextLine());
+
+                System.out.print("💳 Número de tarjeta: ");
+                cliente.setTarjeta(sc.nextLine());
                 
-            }
+                System.out.print("💳 Codigo de tarjeta: ");
+                cliente.setCodTarjeta(sc.nextLine());
 
-                System.out.print("Nombre del recepcionista: ");
-                String nombreEmpleado = sc.nextLine();
-                Empleado empleado = new Empleado();
-                empleado.setNombre(nombreEmpleado);
-                reserva.setRecepcionista(empleado);
+                System.out.print("🏷️ Tipo de cliente (Ej: Regular, VIP): ");
+                cliente.setTipoCliente(sc.nextLine());
+                
+                cliente.crearClienteDesdeUsuario(cliente);
+                          
+                System.out.println("✅ Cliente registrado exitosamente.");                
+            }
+                reserva.setReservante(cliente);
+                reserva.setRecepcionista(recepcionistaActivo);
 
                 System.out.print("Número de habitación: ");
                 int numeroHabitacion = Integer.parseInt(sc.nextLine());
@@ -531,7 +617,7 @@ public class Mavenproject3 {
                     mostrarClientesRegistrados();
                     break;
                 case "3":
-                    crearReserva(scanner);
+                    crearReserva(scanner , empleadoActivo);
                     break;
                 case "4":
                     mostrarReservas();

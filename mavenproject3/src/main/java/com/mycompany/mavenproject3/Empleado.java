@@ -80,10 +80,4 @@ public class Empleado extends Usuarios {
             System.out.println("❌ Error al guardar el empleado: " + ex.getMessage());
         }
     }
-
-    
-
-
-
-
 }

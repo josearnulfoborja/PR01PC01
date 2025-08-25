@@ -30,6 +30,11 @@ public class Cliente extends Usuarios {
         this.codTarjeta = codTarjeta;
     }
 
+    public String getCodTarjeta() {
+        return codTarjeta;
+    }
+    
+
     public Cliente() {
     }
 
@@ -40,30 +45,38 @@ public class Cliente extends Usuarios {
         this.codTarjeta = codTarjeta;    
     }
     
-     public static Cliente crearClienteDesdeUsuario(Usuarios usuario, Scanner scanner) {
-        System.out.println("\n=== Datos del Cliente ===");
-
-        System.out.print("Número de tarjeta: ");
-        String noTarjeta = scanner.nextLine();
-
-        System.out.print("Tipo de cliente: ");
-        String tipoCliente = scanner.nextLine();
-
-        System.out.print("Código de tarjeta: ");
-        String codTarjeta = scanner.nextLine();
-
+     public Cliente crearClienteDesdeUsuario(Cliente usuario) {       
         Cliente cliente = new Cliente(usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getTelefono(),
                                       usuario.getCorreo(), usuario.getNickname(), usuario.getClave(),
-                                      noTarjeta, tipoCliente, codTarjeta);
+                                     usuario.getNoTarjeta(),usuario.getCodTarjeta(),usuario.getTipoCliente());
         guardarCliente(cliente);
         return cliente;
     }
-
+/*
     private static void guardarCliente(Cliente cliente) {
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("clientes.txt", true)))) {
             out.println(cliente.getNickname() + "," + cliente.noTarjeta + "," + cliente.getTipoCliente() + "," + cliente.getNoTarjeta());
         } catch (IOException e) {
             System.out.println("Error al guardar cliente: " + e.getMessage());
+        }
+    }
+    */
+    
+    public static void guardarCliente(Cliente e) {
+        try (FileWriter writer = new FileWriter("clientes.txt", true)) {
+               String linea = e.getId() + "," +
+                       e.getNombre() + "," +
+                       e.getApellido() + "," +
+                       e.getTelefono() + "," +
+                       e.getCorreo() + "," +                      
+                       e.getNoTarjeta() + "," +
+                       e.getTipoCliente() + "," +
+                       e.getCodTarjeta();               
+        writer.write(linea + "\n");            
+        
+        System.out.println("✅ Empleado guardado exitosamente.");
+        } catch (IOException ex) {
+            System.out.println("❌ Error al guardar el empleado: " + ex.getMessage());
         }
     }
 

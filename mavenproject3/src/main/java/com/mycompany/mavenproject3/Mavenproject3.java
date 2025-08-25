@@ -44,10 +44,10 @@ public class Mavenproject3 {
 
         boolean salir = false;
         while (!salir) {
-            System.out.println("\n--- MENU ---");
+            System.out.println("\n========= MENU HABITACIONES =========");
             System.out.println("1. Agregar habitacion");
             System.out.println("2. Mostrar habitaciones");
-            System.out.println("3. Salir");
+            System.out.println("3. Salir de habitaciones");
             System.out.print("Seleccione una opcion: ");
             int opcion = sc.nextInt();
             sc.nextLine();
@@ -56,18 +56,16 @@ public class Mavenproject3 {
                 case 1:
                     
                     Habitaciones habi = new Habitaciones();
-                    System.out.println(">> Se generó el ID de la habitación: " + habi.getId());
-
-
+                    
                     //CAPACIDAD
                     while (true) {
                         try {
-                            System.out.print("Capacidad: ");
+                            System.out.print("Capacidad (numero entero positivo): ");
                             habi.setCapacidad(sc.nextInt());
                             sc.nextLine();
                             break;
                         } catch (Exception e) {
-                            System.out.println("FALLO:  " + e.getMessage());
+                            System.out.println("x|x ERROR: " + e.getMessage() + " x|x");
                             sc.nextLine(); // limpiar buffer
                         }
                     }
@@ -80,7 +78,7 @@ public class Mavenproject3 {
                             sc.nextLine();
                             break;
                         } catch (Exception e) {
-                            System.out.println("FALLO:  " + e.getMessage());
+                            System.out.println("x|x ERROR: " + e.getMessage() + " x|x");
                             sc.nextLine(); // limpiar buffer
                         }
                     }
@@ -88,12 +86,12 @@ public class Mavenproject3 {
                     //NIVEL
                     while (true) {
                         try {
-                            System.out.print("Nivel (1-3): ");
+                            System.out.print("Nivel (1, 2 o 3): ");
                             habi.setNivel(sc.nextInt());
                             sc.nextLine();
                             break;
                         } catch (Exception e) {
-                            System.out.println("FALLO:  " + e.getMessage());
+                            System.out.println("x|x ERROR: " + e.getMessage() + " x|x");
                             sc.nextLine(); // limpiar buffer
                         }
                     }
@@ -106,7 +104,7 @@ public class Mavenproject3 {
                             sc.nextLine();
                             break;
                         } catch (Exception e) {
-                            System.out.println("FALLO:  " + e.getMessage());
+                            System.out.println("x|x ERROR: " + e.getMessage() + " x|x");
                             sc.nextLine(); // limpiar buffer
                         }
                     }
@@ -118,22 +116,22 @@ public class Mavenproject3 {
                             habi.setEstado(sc.nextLine());
                             break;
                         } catch (Exception e) {
-                            System.out.println("FALLO:  " + e.getMessage());
+                            System.out.println("x|x ERROR: " + e.getMessage() + " x|x");
                             sc.nextLine(); // limpiar buffer
                         }
                     }
 
-                    
+                    System.out.println(">>ENHORABUENA Se genero el ID de la habitacion: " + habi.getId());
 
                     listaHabitaciones.add(habi);
-                    System.out.println("========== Habitacion agregada con exito.");
+                    System.out.println(">> Habitacion agregada con exito.");
                     break;
 
                 case 2:
                     if (listaHabitaciones.isEmpty()) {
-                        System.out.println("No hay habitaciones registradas.");
+                        System.out.println("x|x ERROR: Ups! No hay habitaciones registradas x|x");
                     } else {
-                        System.out.println("========HABITACIONES REGISTRADAS");
+                        System.out.println("\n========LISTADO DE HABITACIONES REGISTRADAS");
                         listaHabitaciones.forEach(System.out::println);
                     }
                     break;
@@ -143,7 +141,7 @@ public class Mavenproject3 {
                     break;
 
                 default:
-                    System.out.println("X Opcion invalida X");
+                    System.out.println("x|x ERROR: Opcion invalida x|x");
             }
         }
 

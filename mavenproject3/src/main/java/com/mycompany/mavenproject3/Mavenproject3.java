@@ -38,13 +38,13 @@ import java.util.Scanner;
  * @author User
  */
 public class Mavenproject3 {
-    
 
     public static void main(String[] args) {
-        
+
         Scanner scanner = new Scanner(System.in);
         Empleado empleadoActivo = null;
         boolean salir = false;
+        Empleado empleado1 = null;
 
         System.out.println("=== BIENVENIDO AL SISTEMA DE RESERVAS HOTEL EL PARAISO ===");
 
@@ -55,31 +55,31 @@ public class Mavenproject3 {
         System.out.println("3. Salir");
         System.out.print("Seleccione una opcion: ");
 
-        int opcion = scanner.nextInt();
-        scanner.nextLine(); // Limpiar buffer
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar buffer
 
-        switch (opcion) {
-            case 1:
-                empleadoActivo = iniciarSesion(scanner);
-                if (empleadoActivo == null) {
-                    System.out.println("❌ Credenciales incorrectas.");
-                }
-                break;
-            case 2:
-                crearEmpleado(scanner);
-                break;
-            case 3:
-                salir = true;
-                System.out.println("👋 Gracias por usar el sistema.");
-                break;
-            default:
-                System.out.println("⚠️ Opción no válida. Intente de nuevo.");
+            switch (opcion) {
+                case 1:
+                    empleadoActivo = iniciarSesion(scanner);
+                    if (empleadoActivo == null) {
+                        System.out.println("❌ Credenciales incorrectas.");
+                    }
+                    break;
+                case 2:
+                    crearEmpleado(scanner);
+                    break;
+                case 3:
+                    salir = true;
+                    System.out.println("👋 Gracias por usar el sistema.");
+                    break;
+                default:
+                    System.out.println("⚠️ Opción no válida. Intente de nuevo.");
+            }
         }
-    }
-    
-    if (empleadoActivo != null) {
-        mostrarMenuPrincipal(scanner, empleadoActivo);
-    }   
+
+        if (empleadoActivo != null) {
+            mostrarMenuPrincipal(scanner, empleadoActivo);
+        }
     }
 
     /**
@@ -87,9 +87,7 @@ public class Mavenproject3 {
      *
      * @param empleado
      */
-    
     // <editor-fold desc="Clientes">
-    
     public Cliente buscarCliente(Cliente criterio) {
         try (BufferedReader br = new BufferedReader(new FileReader("clientes.txt"))) {
             String linea;
@@ -152,7 +150,7 @@ public class Mavenproject3 {
     return null;
 }
 
-     public static void registrarNuevoCliente(Scanner scanner) {
+    public static void registrarNuevoCliente(Scanner scanner) {
         Cliente cliente = new Cliente();
 
         System.out.println("\n=== Registro de Nuevo Cliente ===");
@@ -192,7 +190,7 @@ public class Mavenproject3 {
             System.out.println("⚠️ Registro fallido. Verifique los datos.");
         }
     }
-  
+
     public static void mostrarClientesRegistrados() {
         System.out.println("\n=== Clientes Registrados ===");
 
@@ -218,18 +216,18 @@ public class Mavenproject3 {
             System.out.println("❌ Error al leer clientes: " + e.getMessage());
         }
     }
-  
 
     // </editor-fold>
-    
     // <editor-fold desc="Empleados">
+
       public static void crearEmpleado(Scanner sc) {
          Empleado empleado = new Empleado(); 
           System.out.println("\n=== INGRESE LOS DATOS DEL NUEVO EMPLEADO ===");
             
         int nuevoId = obtenerNuevoIdEmpleado(); // ID automático        
+
         empleado.setId(nuevoId);
-        
+
         System.out.print("Nombre: ");
         empleado.setNombre(sc.nextLine());
 
@@ -253,12 +251,13 @@ public class Mavenproject3 {
 
         System.out.print("Puesto: ");
         empleado.setPuesto(sc.nextLine());
-       
+
         empleado.crearEmpleadoDesdeUsuario(empleado);
 
-    System.out.println("✅ Empleado registrado con ID: " + nuevoId);
-        
+        System.out.println("✅ Empleado registrado con ID: " + nuevoId);
+
     }
+
       
     public static int obtenerNuevoIdEmpleado() {
            File archivo = new File("empleados.txt");
@@ -272,27 +271,29 @@ public class Mavenproject3 {
                     System.out.println("❌ Error al crear el archivo: " + e.getMessage());
                     return 1; // Asignamos 1 por defecto
                 }
+
             }
+        
 
-            try (BufferedReader reader = new BufferedReader(new FileReader("empleados.txt"))) {
-                String linea;
+        try (BufferedReader reader = new BufferedReader(new FileReader("empleados.txt"))) {
+            String linea;
 
-                while ((linea = reader.readLine()) != null) {
-                    String[] partes = linea.split(",");
-                    if (partes.length >= 1) {
-                        try {
-                            int id = Integer.parseInt(partes[0].trim());
-                            if (id > maxId) {
-                                maxId = id;
-                            }
-                        } catch (NumberFormatException e) {
-                            // Ignorar líneas mal formateadas
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length >= 1) {
+                    try {
+                        int id = Integer.parseInt(partes[0].trim());
+                        if (id > maxId) {
+                            maxId = id;
                         }
+                    } catch (NumberFormatException e) {
+                        // Ignorar líneas mal formateadas
                     }
                 }
-            } catch (IOException e) {
-                System.out.println("⚠️ No se pudo leer el archivo: " + e.getMessage());
             }
+        } catch (IOException e) {
+            System.out.println("⚠️ No se pudo leer el archivo: " + e.getMessage());
+        }
 
     return maxId + 1;
 }
@@ -335,7 +336,7 @@ public class Mavenproject3 {
 }
    
       
-      public Empleado buscarRecepcionista(String usuarioBuscado, String contrasenaBuscada) {
+     public Empleado buscarRecepcionista(String usuarioBuscado, String contrasenaBuscada) {
         try (BufferedReader br = new BufferedReader(new FileReader("empleados.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
@@ -362,59 +363,61 @@ public class Mavenproject3 {
         return null;
     }
       
-      public static Empleado iniciarSesion(Scanner scanner) {   
-          
-          System.out.println("\n=== INICIO DE SESIÓN ===");
 
-        //scanner.nextLine(); // Limpiar buffer después del nextInt en el main
+    public static Empleado iniciarSesion(Scanner scanner) {
 
+        System.out.println("\n=== INICIO DE SESIÓN ===");
+
+        //scanner.nextLine(); // Limpiar buffer sdespués del nextInt en el main
         System.out.print("Correo: ");
         String correoIngresado = scanner.nextLine();
 
         System.out.print("Contraseña: ");
         String contraseñaIngresada = scanner.nextLine();
 
-    try (BufferedReader reader = new BufferedReader(new FileReader("empleados.txt"))) {
-        String linea;
+        try (BufferedReader reader = new BufferedReader(new FileReader("empleados.txt"))) {
+            String linea;
 
-        while ((linea = reader.readLine()) != null) {
-            String[] partes = linea.split(",");
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split(",");
 
-            if (partes.length == 9) {
-                String nombre = partes[1];
-                String apellido = partes[2];
-                String correo = partes[4];
-                String contraseña = partes[6];
+                if (partes.length == 9) {
+                    String nombre = partes[1];
+                    String apellido = partes[2];
+                    String correo = partes[4];
+                    String contraseña = partes[6];
 
-                if (correo.equals(correoIngresado) && contraseña.equals(contraseñaIngresada)) {
-                    Empleado empleado = new Empleado();
-                    empleado.setNombre(nombre);
-                    empleado.setApellido(apellido);
-                    empleado.setCorreo(correo);
-                    empleado.setClave(contraseña);
-                    return empleado;
+                    if (correo.equals(correoIngresado) && contraseña.equals(contraseñaIngresada)) {
+                        Empleado empleado = new Empleado();
+                        empleado.setNombre(nombre);
+                        empleado.setApellido(apellido);
+                        empleado.setCorreo(correo);
+                        empleado.setClave(contraseña);
+                        return empleado;
+                    }
                 }
             }
+
+            System.out.println("❌ Credenciales incorrectas o empleado no encontrado.");
+        } catch (IOException e) {
+            System.out.println("❌ Error al leer el archivo: " + e.getMessage());
         }
 
-        System.out.println("❌ Credenciales incorrectas o empleado no encontrado.");
-    } catch (IOException e) {
-        System.out.println("❌ Error al leer el archivo: " + e.getMessage());
+        return null;
     }
 
-    return null;
-    }
-      
     // </editor-fold>
-      
     // <editor-fold desc="Reverva">
+
       
          public static void crearReserva(Scanner sc, Empleado recepcionistaActivo) {
+        Scanner scanner = new Scanner(System.in);
+
         System.out.println("\n=== Crear Reserva ===");
 
-        Reserva reserva = new Reserva(); 
+        Reserva reserva = new Reserva();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        
+
         try {
             System.out.print("Fecha de solicitud (dd/MM/yyyy): ");
             reserva.setFechaSolicitud(sdf.parse(sc.nextLine()));
@@ -427,14 +430,6 @@ public class Mavenproject3 {
  
             Cliente cliente = new Cliente();
             
-            // Simulación de objetos relacionados
-            /*
-            System.out.print("Nombre del cliente: ");
-            String nombreCliente = sc.nextLine();
-            // Constructor simple
-            cliente.setNombre(nombreCliente);
-            reserva.setReservante(cliente);
-*/
             System.out.print("¿El cliente ya está registrado? (s/n): ");
             String respuesta = sc.nextLine().trim().toLowerCase();  
             cliente = new Cliente();
@@ -446,6 +441,7 @@ public class Mavenproject3 {
                 idCliente = Integer.parseInt(codCliente);
                
                 cliente = buscarClientePorId(idCliente);
+
 
                 if (cliente == null) {
                     System.out.println("❌ Cliente no encontrado. No se puede continuar.");
@@ -491,35 +487,36 @@ public class Mavenproject3 {
                 reserva.setReservante(cliente);
                 reserva.setRecepcionista(recepcionistaActivo);
 
-                System.out.print("Número de habitación: ");
-                int numeroHabitacion = Integer.parseInt(sc.nextLine());
-                Habitaciones habitacion = new Habitaciones();
-                habitacion.setNivel(numeroHabitacion);
-                //validar
-                reserva.setSuite(habitacion);
+            /**
+             * Pedir datos de habitaciones
+             */
+            Habitaciones habit = menuHabitaciones(scanner);
 
-                // Validación
-                String resultado = reserva.validarReserva();
-                System.out.println("Resultado: " + resultado);
-                //Crear el mensaje
-                System.out.println("Mensaje: " + reserva.toString());
+            reserva.setSuite(habit);
+            //validar
 
-                // Persistencia simulada
-                if (resultado.equals("RESERVA VÁLIDA")) {
-                    System.out.println("Reserva lista para guardar en archivo.");
-                    // Aquí podrías llamar a guardarEnArchivo(reserva);
-                    reserva.crearReserva(reserva);
-                } else {
-                    System.out.println("No se puede guardar la reserva. Datos incompletos.");
-                }
+            // Validación
+            String resultado = reserva.validarReserva();
+            System.out.println("Resultado: " + resultado);
+            //Crear el mensaje
+            System.out.println("Mensaje: " + reserva.toString());
 
-            }catch (Exception e) {
+            // Persistencia simulada
+            if (resultado.equals("RESERVA VÁLIDA")) {
+                System.out.println("Reserva lista para guardar en archivo.");
+                // Aquí podrías llamar a guardarEnArchivo(reserva);
+                reserva.crearReserva(reserva);
+            } else {
+                System.out.println("No se puede guardar la reserva. Datos incompletos.");
+            }
+
+        } catch (Exception e) {
             System.out.println("Error en el formato de fecha o entrada: " + e.getMessage());
         }
-        
+
     }
-         
-        public static void mostrarReservas() {
+
+    public static void mostrarReservas() {
         System.out.println("\n=== Reservas Registradas ===");
 
         try (BufferedReader reader = new BufferedReader(new FileReader("reservas.txt"))) {
@@ -545,11 +542,8 @@ public class Mavenproject3 {
             System.out.println("❌ Error al leer reservas: " + e.getMessage());
         }
     }
-        
-        
-        
-    // </editor-fold>      
 
+    // </editor-fold>      
     // <editor-fold desc="Archivos">
     /*
       public static void guardarArchivo(Object entidad, String nombreArchivo) {
@@ -570,8 +564,8 @@ public class Mavenproject3 {
             System.out.println("❌ Error al guardar " + entidad.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
-      */
-   /*
+     */
+ /*
       public static void guardarArchivo(Object entidad, String nombreArchivo) {
     try (FileWriter writer = new FileWriter(nombreArchivo, true)) {
         Class<?> clase = entidad.getClass();
@@ -594,11 +588,9 @@ public class Mavenproject3 {
         System.out.println("❌ Error al guardar " + entidad.getClass().getSimpleName() + ": " + e.getMessage());
     }
 }
-*/
-
+     */
     // </editor-fold>
-      
-      public static void mostrarMenuPrincipal(Scanner scanner, Empleado empleadoActivo) {
+    public static void mostrarMenuPrincipal(Scanner scanner, Empleado empleadoActivo) {
         boolean continuar = true;
         while (continuar) {
             System.out.println("\n=== MENÚ PRINCIPAL ===");
@@ -632,5 +624,84 @@ public class Mavenproject3 {
             }
         }
     }
-    
+
+
+    public static Habitaciones menuHabitaciones(Scanner scanner) {
+        Habitaciones habitaciones = new Habitaciones();
+        while (true) {
+            System.out.println("\n--- MENU ---");
+            System.out.println("1. Agregar habitacion");
+            System.out.println("2. Mostrar habitaciones");
+            System.out.println("3. Buscar habitacion");
+            System.out.println("4. Salir");
+            System.out.print("Seleccione una opcion: ");
+            int opcion = scanner.nextInt();
+            scanner.nextLine();
+
+            if (opcion < 1 && opcion > 4) {
+                throw new IllegalArgumentException("Escoja una opcion valida.");
+            }
+
+            try {
+                switch (opcion) {
+                    case 1:
+                        habitaciones.agregarHabitacion();
+                        // Guardar en lista y archivo solo si todo es válido
+                        Habitaciones hab = new Habitaciones(habitaciones.getId(), habitaciones.getCapacidad(),
+                                habitaciones.getTipo(), habitaciones.getNivel(), habitaciones.getPrecio(),
+                                habitaciones.getEstado());
+                        habitaciones.guardarHabitacionEnArchivo(hab);
+                        break;
+                    case 2:
+                        habitaciones.mostrarHabitaciones();
+                        break;
+                    case 3:
+                        // 🔍 Buscar cliente existente
+                        System.out.print("Ingrese el codigo de la habitacion: ");
+                        String idHabitacion = scanner.nextLine();
+                        System.out.print("Contraseña del cliente: ");
+                        String nivel = scanner.nextLine();
+                        //habitacion = buscarHabitaciones(cliente);
+
+                        break;
+                    case 4:
+                        System.out.println("Regresando al registro de reserva...\n");
+                        break;
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ha ocurrido un error: " + e.getMessage());
+                System.out.print("Vuelva a ingresar. ");
+            }
+        }
+    }
+
+    public Habitaciones buscarHabitacion(Habitaciones habi) {
+        try (BufferedReader br = new BufferedReader(new FileReader("habitaciones.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+
+                //String id = partes[0].trim();
+                int id = Integer.parseInt(partes[0].trim());
+                int nivel = Integer.parseInt(partes[3].trim());
+
+                if (id == habi.getId()) {
+                    Habitaciones habitacion = new Habitaciones();
+                    habitacion.setId(id);
+                    habitacion.setCapacidad(Integer.parseInt(partes[1].trim()));
+                    habitacion.setTipo(partes[2].trim());
+                    habitacion.setNivel(nivel);
+                    habitacion.setPrecio(Float.parseFloat(partes[4].trim()));
+                    habitacion.setEstado(partes[5].trim());
+
+                    return habitacion;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("❌ Error al buscar habitacion: " + e.getMessage());
+        }
+        return null;
+    }
+
 }
+

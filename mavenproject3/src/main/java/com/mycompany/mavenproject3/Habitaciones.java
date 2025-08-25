@@ -39,7 +39,7 @@ public class Habitaciones {
 
     public void setCapacidad(int capacidad) {
         if (capacidad <= 0) {
-            throw new IllegalArgumentException("x|x ERROR: La capacidad debe ser mayor que 0 x|x");
+            throw new IllegalArgumentException("La capacidad debe ser mayor que 0.");
         }
         this.capacidad = capacidad;
     }
@@ -51,7 +51,7 @@ public class Habitaciones {
     public void setTipo(String tipo) {
         tipo = tipo.trim().toLowerCase();
         if (!(tipo.equals("individual") || tipo.equals("doble") || tipo.equals("triple"))) {
-            throw new IllegalArgumentException("x|x ERROR: El tipo debe ser: individual, doble o triple x|x");
+            throw new IllegalArgumentException("El tipo debe ser: individual, doble o triple.");
         }
         this.tipo = tipo;
     }
@@ -62,7 +62,7 @@ public class Habitaciones {
 
     public void setNivel(int nivel) {
         if (nivel < 1 || nivel > 3) {
-            throw new IllegalArgumentException("x|x ERROR: El nivel solo puede ser 1, 2 o 3 x|x");
+            throw new IllegalArgumentException("El nivel solo puede ser 1, 2 o 3.");
         }
         this.nivel = nivel;
     }
@@ -73,7 +73,7 @@ public class Habitaciones {
 
     public void setPrecio(float precio) {
         if (precio <= 0) {
-            throw new IllegalArgumentException("x|x ERROR: El precio debe ser mayor que 0 x|x");
+            throw new IllegalArgumentException("El precio debe ser mayor que 0");
         }
         this.precio = precio;
     }
@@ -85,7 +85,7 @@ public class Habitaciones {
     public void setEstado(String estado) {
         estado = estado.trim().toLowerCase();
         if (!(estado.equals("disponible") || estado.equals("ocupado"))) {
-            throw new IllegalArgumentException("x|x ERROR: El estado solo puede ser: disponible u ocupado x|x");
+            throw new IllegalArgumentException("El estado solo puede ser: disponible u ocupado.");
         }
         this.estado = Character.toUpperCase(estado.charAt(0)) + estado.substring(1);
     }
@@ -95,13 +95,13 @@ public class Habitaciones {
         for (Habitaciones h : lista) {
             if (h.getId() == id) {
                 if (h.getEstado().equalsIgnoreCase("Ocupado")) {
-                    System.out.println("x|x ADVERTENCIA: La habitacion " + id + " no esta disponible, selecciona otra. x|x");
+                    System.out.println("===== La habitacion " + id + " no esta disponible, selecciona otra.");
                     return null; // retorna null si está ocupada
                 }
                 return h; // retorna la habitacion si está disponible
             }
         }
-        System.out.println("x|x ERROR: No existe una habitacion con el ID: " + id + " x|x");
+        System.out.println("====== No existe una habitacion con el ID: " + id);
         return null; // retorna null si no encuentra el id
     } 
 

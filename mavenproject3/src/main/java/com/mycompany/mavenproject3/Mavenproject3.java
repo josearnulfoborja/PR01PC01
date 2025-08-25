@@ -44,6 +44,7 @@ public class Mavenproject3 {
         Scanner scanner = new Scanner(System.in);
         Empleado empleadoActivo = null;
         boolean salir = false;
+        Empleado empleado1=null;
 
         System.out.println("=== BIENVENIDO AL SISTEMA DE RESERVAS HOTEL EL PARAISO ===");
 
@@ -294,7 +295,7 @@ public class Mavenproject3 {
 
         System.out.println("\n=== INICIO DE SESIÓN ===");
 
-        //scanner.nextLine(); // Limpiar buffer después del nextInt en el main
+        //scanner.nextLine(); // Limpiar buffer sdespués del nextInt en el main
         System.out.print("Correo: ");
         String correoIngresado = scanner.nextLine();
 
@@ -534,6 +535,7 @@ public class Mavenproject3 {
     }
 
     public static void menuHabitaciones(Scanner scanner) {
+        Habitaciones habitaciones = new Habitaciones();
         while (true) {
             System.out.println("\n--- MENU ---");
             System.out.println("1. Agregar habitacion");
@@ -542,13 +544,18 @@ public class Mavenproject3 {
             System.out.print("Seleccione una opcion: ");
             int opcion = scanner.nextInt();
             scanner.nextLine();
-            
-            switch (opcion){
+
+            switch (opcion) {
                 case 1:
-                    
+                    habitaciones.agregarHabitacion();
+                    break;
+                case 2:
+                    habitaciones.mostrarHabitaciones();
+                    break;
+                case 3:
+                    mostrarMenuPrincipal(scanner, empleado1);
             }
         }
     }
 
-    
 }

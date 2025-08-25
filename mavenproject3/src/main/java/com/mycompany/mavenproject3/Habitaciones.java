@@ -14,8 +14,11 @@ import java.util.Scanner;
  */
 public class Habitaciones {
 
-    private int nivel =0;// solo hay 3 niveles
-
+    private int nivel = 0;// solo hay 3 niveles
+    private int id,capacidad;
+    private String tipo,estado;
+    private float precio;
+    
     public int getNivel() {
         return nivel;
     }
@@ -23,44 +26,100 @@ public class Habitaciones {
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
-    
-private ArrayList<String> habitaciones = new ArrayList<>();
+
+    private ArrayList<String> habitaciones = new ArrayList<>();
     private final String archivo = "Habitaciones.txt";
 
     public void agregarHabitacion() {
         Scanner sc = new Scanner(System.in);
 
         try {
-            System.out.print("ID: ");
-            int id = sc.nextInt();
-            if (id <= 0) throw new IllegalArgumentException("ID debe ser mayor que 0");
-            sc.nextLine();
-
-            System.out.print("Capacidad: ");
-            int capacidad = sc.nextInt();
-            if (capacidad <= 0) throw new IllegalArgumentException("Capacidad debe ser mayor que 0");
-            sc.nextLine();
-
-            System.out.print("Tipo (individual/doble/triple): ");
-            String tipo = sc.nextLine().trim().toLowerCase();
-            if (!(tipo.equals("individual") || tipo.equals("doble") || tipo.equals("triple"))) {
-                throw new IllegalArgumentException("Tipo inválido");
+            while (true) {
+                try {
+                    System.out.print("ID: ");
+                    int id = sc.nextInt();
+                    if (id <= 0) {
+                        throw new IllegalArgumentException("ID debe ser mayor que 0");
+                    }
+                    sc.nextLine();
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ha ocurrido un error: " + e.getMessage());
+                    System.out.print("Vuelva a ingresar. ");
+                }
             }
 
-            System.out.print("Nivel (1-3): ");
-            int nivel = sc.nextInt();
-            if (nivel < 1 || nivel > 3) throw new IllegalArgumentException("Nivel debe ser 1, 2 o 3");
-            sc.nextLine();
+            while (true) {
+                try {
+                    System.out.print("Capacidad: ");
+                    int capacidad = sc.nextInt();
+                    if (capacidad <= 0) {
+                        throw new IllegalArgumentException("Capacidad debe ser mayor que 0");
+                    }
+                    sc.nextLine();
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ha ocurrido un error: " + e.getMessage());
+                    System.out.print("Vuelva a ingresar. ");
+                }
+            }
 
-            System.out.print("Precio: ");
-            float precio = sc.nextFloat();
-            if (precio < 0) throw new IllegalArgumentException("Precio no puede ser negativo");
-            sc.nextLine();
+            while (true) {
+                try {
+                    System.out.print("Tipo (individual/doble/triple): ");
+                    String tipo = sc.nextLine().trim().toLowerCase();
+                    if (!(tipo.equals("individual") || tipo.equals("doble") || tipo.equals("triple"))) {
+                        throw new IllegalArgumentException("Tipo inválido");
+                    }
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ha ocurrido un error: " + e.getMessage());
+                    System.out.print("Vuelva a ingresar. ");
+                }
+            }
 
-            System.out.print("Estado (disponible/ocupado): ");
-            String estado = sc.nextLine().trim().toLowerCase();
-            if (!(estado.equals("disponible") || estado.equals("ocupado"))) {
-                throw new IllegalArgumentException("Estado inválido");
+            while (true) {
+                try {
+                    System.out.print("Nivel (1-3): ");
+                    int nivel = sc.nextInt();
+                    if (nivel < 1 || nivel > 3) {
+                        throw new IllegalArgumentException("Nivel debe ser 1, 2 o 3");
+                    }
+                    sc.nextLine();
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ha ocurrido un error: " + e.getMessage());
+                    System.out.print("Vuelva a ingresar. ");
+                }
+            }
+
+            while (true) {
+                try {
+                    System.out.print("Precio: ");
+                    float precio = sc.nextFloat();
+                    if (precio < 0) {
+                        throw new IllegalArgumentException("Precio no puede ser negativo");
+                    }
+                    sc.nextLine();
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ha ocurrido un error: " + e.getMessage());
+                    System.out.print("Vuelva a ingresar. ");
+                }
+            }
+
+            while (true) {
+                try {
+                    System.out.print("Estado (disponible/ocupado): ");
+                    String estado = sc.nextLine().trim().toLowerCase();
+                    if (!(estado.equals("disponible") || estado.equals("ocupado"))) {
+                        throw new IllegalArgumentException("Estado inválido");
+                    }
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ha ocurrido un error: " + e.getMessage());
+                    System.out.print("Vuelva a ingresar. ");
+                }
             }
 
             // Guardar en lista y archivo solo si todo es válido

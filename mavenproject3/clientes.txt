@@ -5,3 +5,5 @@
 5,Karen,Fernandez,77474574,karen@gmail.com,7852555414245245,125,VIP
 6,Fatima,contreras,75842552,fati@gmail.com,1245875874587457,125,Regular
 7,Juanito,Perez,77474574,juanito@gmail.com,4257857547854785,754,VIP
+8,karla,rojas,12345678,karlarojas@gmail.com,1122334455667788,123,vip
+9,kenia,reyes,12345678,kenia@gmail.com,1234567890123456,123,regular

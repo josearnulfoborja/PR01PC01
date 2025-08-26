@@ -2,3 +2,4 @@
 2,Cristian,Perez,77777777,cristian@gmail.com,cristian1,Cristian$,Ingenieria,Ingeniero
 3,karen,rodriguez,12345678,karen@,karen,12345678a_,abcd,avcd
 4,FERNANDO,castro,74586547,ferdi@gmail.com,frankis,Temporal12$,Ventas,Vendedor
+5,karen,rodriguez,77889944,karen@gmail.com,karen,karenkaren.1,cajera,cajera

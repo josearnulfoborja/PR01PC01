@@ -36,9 +36,7 @@ public class Empleado extends Usuarios {
                 System.out.print("Vuelva a intentar. Arrea: ");
                 area=scanner.nextLine();
             }
-        }
-       
-        
+        } 
     }
 
     public void setPuesto(String puesto) {

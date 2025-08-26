@@ -72,15 +72,7 @@ public class Habitaciones {
         return nivel;
     }
 
-
-    public int getCapacidad() {
-        return capacidad;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
+  
     public String getEstado() {
         return estado;
     }
@@ -99,18 +91,6 @@ public class Habitaciones {
 
     public void setNivel(int nivel) {
         this.nivel = nivel;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public void setEstado(String estado) {

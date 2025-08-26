@@ -62,9 +62,6 @@ public class Usuarios {
     
     //======Metodos Getters y Setters con sus validaciones respectivas
 
-    public int getId() {
-        return id;
-    }
 
     public String getNombre() {
         return nombre;

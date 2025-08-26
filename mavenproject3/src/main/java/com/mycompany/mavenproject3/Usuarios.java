@@ -1,10 +1,19 @@
 package com.mycompany.mavenproject3;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 /**
  *
  * @author karen
  */
 public class Usuarios {
+
     //======Variables
     private int id = 0;
     private String nombre = "SIN ESPECIFICAR";
@@ -14,18 +23,40 @@ public class Usuarios {
     private String nickname = "SIN ESPECIFICAR";
     private String clave = "SIN ESPECIFICAR";
 
+    Scanner scanner = new Scanner(System.in);
+
     //======Constructores
     public Usuarios() {
     }
-    
-    public Usuarios(int id) {
-        try {
-            if (id <= 0) {
-                throw new IllegalArgumentException("El ID debe ser mayor que 0.");
+
+    public Usuarios(int id, String nombre, String apellido, String telefono, String correo, String nickname, String clave) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.nickname = nickname;
+        this.clave = clave;
+    }
+
+    //======Metodos Getters y Setters con sus validaciones respectivas
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        while (true) {
+            try {
+                if (id <= 0) {
+                    throw new IllegalArgumentException("El ID debe ser mayor que 0.");
+                }
+                this.id = id;
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error en el Id: " + e.getMessage());
+                System.out.print("Vuelva a intentar. ID: ");
+                id = scanner.nextInt();
             }
-            this.id = id;
-        } catch (IllegalArgumentException e){
-            System.out.println("Error en el Id: " + e.getMessage());
         }
     }
     
@@ -39,46 +70,61 @@ public class Usuarios {
         return nombre;
     }
 
-    public void setNombre(String nombre){
-        try {
-            nombre = nombre.trim();
-            if (nombre.length() <= 3 || !nombre.matches("^[a-zA-Z]+$")){ //matches indica si ka cadena coincide o no con la expresión regular dada
-                throw new IllegalArgumentException("El nombre debe tener solo letras y al menos 3 caracteres.");
+    public void setNombre(String nombre) {
+        while (true) {
+            try {
+                nombre = nombre.trim();
+                if (nombre.length() <= 3 || !nombre.matches("^[a-zA-Z]+$")) { //matches indica si ka cadena coincide o no con la expresión regular dada
+                    throw new IllegalArgumentException("El nombre debe tener solo letras y al menos 3 caracteres.");
+                }
+                this.nombre = nombre;
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error en el Nombre: " + e.getMessage());
+                System.out.print("Vuelva a intentar. Nombre: ");
+                nombre = scanner.nextLine();
             }
-            this.nombre = nombre;
-        } catch (IllegalArgumentException e){
-            System.out.println("Error en el Nombre: " + e.getMessage());
-        }    
+        }
     }
 
     public String getApellido() {
         return apellido;
     }
 
-    public void setApellido(String apellido){
-        try {
-            apellido = apellido.trim(); //trim elimina los espacios iniciales y finales de la cedena
-            if (apellido.length() <= 1 || !apellido.matches("^[a-zA-Z]+$")){
-                throw new IllegalArgumentException("El apellido debe tener solo letras y al menos 2 caracteres.");
+    public void setApellido(String apellido) {
+        while (true) {
+            try {
+                apellido = apellido.trim(); //trim elimina los espacios iniciales y finales de la cedena
+                if (apellido.length() <= 1 || !apellido.matches("^[a-zA-Z]+$")) {
+                    throw new IllegalArgumentException("El apellido debe tener solo letras y al menos 2 caracteres.");
+                }
+                this.apellido = apellido;
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error en el Apellido: " + e.getMessage());
+                System.out.print("Vuelva a intentar. \nApellido: ");
+                apellido=scanner.nextLine();
             }
-            this.apellido = apellido;
-        } catch (IllegalArgumentException e){
-            System.out.println("Error en el Apellido: " + e.getMessage());
-        } 
+        }
     }
 
     public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono){
-        try {
-            if (telefono == null || !telefono.matches("\\d{8}")){
-                throw new IllegalArgumentException("El teléfono debe tener exactamente 8 dígitos.");
+    public void setTelefono(String telefono) {
+        while (true) {
+            try {
+                if (telefono == null || !telefono.matches("\\d{8}")) {
+                    throw new IllegalArgumentException("El teléfono debe tener exactamente 8 dígitos.");
+                }
+                this.telefono = telefono;
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error en el Teléfono: " + e.getMessage());
+                System.out.print("Vuelva a intentar. Telefono: ");
+                telefono=scanner.nextLine();
             }
-            this.telefono = telefono;
-        } catch (IllegalArgumentException e){
-            System.out.println("Error en el Teléfono: " + e.getMessage());
         }
     }
 
@@ -87,13 +133,18 @@ public class Usuarios {
     }
 
     public void setCorreo(String correo) {
-        try {
-            if (correo == null || !correo.contains("@")){
-                throw new IllegalArgumentException("El correo debe contener '@'.");
+        while (true) {
+            try {
+                if (correo == null || !correo.contains("@")) {
+                    throw new IllegalArgumentException("El correo debe contener '@'.");
+                }
+                this.correo = correo;
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error en el Correo: " + e.getMessage());
+                System.out.print("Vuelva a intentar. Correo: ");
+                correo=scanner.nextLine();
             }
-            this.correo = correo;
-        } catch (IllegalArgumentException e){
-            System.out.println("Error en el Correo: " + e.getMessage());
         }
     }
 
@@ -102,14 +153,19 @@ public class Usuarios {
     }
 
     public void setNickname(String nickname) {
-        try {
-            nickname = nickname.trim();
-            if (nickname.length() <= 4 || !nickname.matches("^[a-zA-Z0-9]+$")){
-                throw new IllegalArgumentException("El nickname debe tener al menos 5 caracteres y solo letras/números.");
+        while (true) {
+            try {
+                nickname = nickname.trim();
+                if (nickname.length() <= 4 || !nickname.matches("^[a-zA-Z0-9]+$")) {
+                    throw new IllegalArgumentException("El nickname debe tener al menos 5 caracteres y solo letras/números.");
+                }
+                this.nickname = nickname;
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error en el Nickname: " + e.getMessage());
+                System.out.print("Vuelva a intentar. Nickname: ");
+                nickname=scanner.nextLine();
             }
-            this.nickname = nickname;
-        } catch (IllegalArgumentException e){
-            System.out.println("Error en el Nickname: " + e.getMessage());
         }
     }
 
@@ -117,29 +173,86 @@ public class Usuarios {
         return clave;
     }
 
-    public void setClave(String clave){
-        try {
-            String regex = "^(?=.*[A-Za-z])(?=.*[^A-Za-z0-9]).{9,}$";
-            if (!clave.matches(regex)) {
-                throw new IllegalArgumentException("La clave debe tener al menos 9 caracteres, una letra y un carácter especial.");
+    public void setClave(String clave) {
+        while (true) {
+            try {
+                String regex = "^(?=.*[A-Za-z])(?=.*[^A-Za-z0-9]).{9,}$";
+                if (!clave.matches(regex)) {
+                    throw new IllegalArgumentException("La clave debe tener al menos 9 caracteres, una letra y un carácter especial.");
+                }
+                this.clave = clave;
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error en la Clave: " + e.getMessage());
+                System.out.print("Vuelva a intentar. Clave: ");
+                clave=scanner.nextLine();
             }
-            this.clave = clave;
-        } catch (IllegalArgumentException e){
-            System.out.println("Error en la Clave: " + e.getMessage());
         }
-
     }
-        
+
+    public String getNombreCompleto() {
+        return nombre + " " + apellido;
+    }
+
     //======Método toString para mostrar información
     @Override
     public String toString() {
-        return "Usuario {" +
-                "ID=" + id +
-                ", Nombre='" + nombre + " " + apellido + '\'' +
-                ", Teléfono='" + telefono + '\'' +
-                ", Correo='" + correo + '\'' +
-                ", Nickname='" + nickname + '\'' +
-                '}';
+        return "Usuario {"
+                + "ID=" + id
+                + ", Nombre='" + nombre + " " + apellido + '\''
+                + ", Teléfono='" + telefono + '\''
+                + ", Correo='" + correo + '\''
+                + ", Nickname='" + nickname + '\''
+                + '}';
     }
-    
+
+ 
+    // Método estático para crear usuario desde consola
+    public static Usuarios crearUsuarioDesdeInput(Scanner scanner) {
+        System.out.println("\n=== Registro de Usuario ===");
+
+        System.out.print("Nombre: ");
+        String nombre = scanner.nextLine().trim();
+
+        System.out.print("Apellido: ");
+        String apellido = scanner.nextLine().trim();
+
+        System.out.print("Teléfono: ");
+        String telefono = scanner.nextLine().trim();
+
+        System.out.print("Correo: ");
+        String correo = scanner.nextLine().trim();
+
+        System.out.print("Nickname: ");
+        String nickName = scanner.nextLine().trim();
+
+        System.out.print("Clave: ");
+        String clave = scanner.nextLine().trim();
+
+        int nuevoId = generarNuevoId(); // Método que busca el último ID en el archivo
+
+        Usuarios nuevoUsuario = new Usuarios(nuevoId, nombre, apellido, telefono, correo, nickName, clave);
+        guardarUsuarioEnArchivo(nuevoUsuario);
+        return nuevoUsuario;
+    }
+
+    private static void guardarUsuarioEnArchivo(Usuarios usuario) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("usuarios.txt", true)))) {
+            out.println(usuario.toLineaTXT());
+            System.out.println("Usuario guardado correctamente.");
+        } catch (IOException e) {
+            System.out.println("Error al guardar usuario: " + e.getMessage());
+        }
+    }
+
+    public String toLineaTXT() {
+        return id + "," + nombre + "," + apellido + "," + telefono + "," + correo + "," + nickname + "," + clave;
+    }
+
+    private static int generarNuevoId() {
+        // Lógica para leer el archivo y obtener el último ID + 1
+        // Puedes implementarla luego si quieres que te ayude
+        return (int) (Math.random() * 10000); // Temporal
+    }
+
 }

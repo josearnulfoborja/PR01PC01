@@ -99,7 +99,7 @@ public class Habitaciones {
    public Habitaciones agregarHabitacion() {
     Scanner sc = new Scanner(System.in);
 
-    // ✅ Declarar variables al inicio
+    //  Declarar variables al inicio
     int id = 0, capacidad = 0, nivel = 0;
     float precio = 0;
     String tipo = "", estado = "";
@@ -113,7 +113,7 @@ public class Habitaciones {
                 sc.nextLine();
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
@@ -125,7 +125,7 @@ public class Habitaciones {
                 sc.nextLine();
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
@@ -137,7 +137,7 @@ public class Habitaciones {
                     throw new IllegalArgumentException("Tipo inválido");
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
@@ -149,7 +149,7 @@ public class Habitaciones {
                 sc.nextLine();
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
@@ -161,7 +161,7 @@ public class Habitaciones {
                 sc.nextLine();
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
@@ -173,12 +173,12 @@ public class Habitaciones {
                     throw new IllegalArgumentException("Estado inválido");
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
     } catch (Exception e) {
-        System.out.println("❌ Error inesperado: " + e.getMessage());
+        System.out.println(" Error inesperado: " + e.getMessage());
         return null;
     }
    
@@ -194,7 +194,7 @@ public class Habitaciones {
                     + h.getPrecio() + ","
                     + h.getEstado();
             writer.write(linea + "\n");
-            System.out.println("✅ Habitacion guardado exitosamente.");
+            System.out.println(" Habitacion guardado exitosamente.");
         } catch (IOException e) {
             System.out.println("Error al guardar en archivo: " + e.getMessage());
         }

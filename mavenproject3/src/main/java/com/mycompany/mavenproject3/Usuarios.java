@@ -200,40 +200,7 @@ public class Usuarios {
                 + '}';
     }
 
-    // Método para validar login
-    /*
-    public boolean login(String usuarioIngresado, String claveIngresada) {
-        return this.nickname.equals(usuarioIngresado) && this.clave.equals(claveIngresada);
-    }
-     */
- /*  
-     public static Empleado loginDesdeArchivo(String usuarioIngresado, String claveIngresada) {
-        try (BufferedReader br = new BufferedReader(new FileReader("empleados.txt"))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                String[] datos = linea.split(",");
-                String usuario = datos[1];
-                String clave = datos[2];
-
-                if (usuario.equals(usuarioIngresado) && clave.equals(claveIngresada)) {
-                    int id = Integer.parseInt(datos[0]);
-                    String nombre = datos[3];
-                    String apellido = datos[4];
-                    String area = datos[5];
-                    String puesto = datos[6];
-
-                    // Crear y devolver el Empleado logueado
-                    return new Empleado(id, usuario, clave, nombre, apellido, area, puesto);
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("❌ Error al leer archivo: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("❌ Error inesperado: " + e.getMessage());
-        }
-        return null; // No se encontró
-    }
-     */
+ 
     // Método estático para crear usuario desde consola
     public static Usuarios crearUsuarioDesdeInput(Scanner scanner) {
         System.out.println("\n=== Registro de Usuario ===");

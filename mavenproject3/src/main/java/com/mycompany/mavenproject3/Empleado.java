@@ -4,15 +4,12 @@
  */
 package com.mycompany.mavenproject3;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 /**
  *
- * @author User
+ * @author User 
  */
 public class Empleado extends Usuarios {
     private String Area ="SIN ESPECIFICAR";
@@ -28,15 +25,38 @@ public class Empleado extends Usuarios {
     }    
     
    public void setArea(String area) {
-        if (area == null || area.length() < 3)
-            throw new IllegalArgumentException("Área inválida.");
-        this.Area = area.trim();
+       while (true) {
+            try {
+                if (area == null || area.length() < 3)
+                    throw new IllegalArgumentException("Area invalida, debe tener minimo 3 caracteres.");
+                this.Area = area.trim();
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error en el area: " + e.getMessage());
+                System.out.print("Vuelva a intentar. Arrea: ");
+                area=scanner.nextLine();
+            }
+        }
+       
+        
     }
 
     public void setPuesto(String puesto) {
-        if (puesto == null || puesto.length() < 3)
-            throw new IllegalArgumentException("Puesto inválido.");
-        this.Puesto = puesto.trim();
+        while (true) {
+            try {
+                if (puesto == null || puesto.length() < 3) {
+                    throw new IllegalArgumentException("Puesto invalido, debe tener minimo 3 caracteres.");
+                }
+                this.Puesto = puesto.trim();
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error en el Puesto: " + e.getMessage());
+                System.out.print("Vuelva a intentar. Puesto: ");
+                puesto=scanner.nextLine();
+            }
+        }
+        
+        
     }
 
     public Empleado crearEmpleadoDesdeUsuario(Empleado usuario) {
@@ -75,9 +95,9 @@ public class Empleado extends Usuarios {
                        e.getPuesto();
             writer.write(linea + "\n");            
         
-        System.out.println("✅ Empleado guardado exitosamente.");
+        System.out.println("Empleado guardado exitosamente.");
         } catch (IOException ex) {
-            System.out.println("❌ Error al guardar el empleado: " + ex.getMessage());
+            System.out.println("Error al guardar el empleado: " + ex.getMessage());
         }
     }
 }

@@ -3,34 +3,9 @@
  */
 package com.mycompany.mavenproject3;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
-
-import java.util.Scanner;
-
-import java.io.FileWriter;
-
-import java.lang.reflect.Field;
-
-import java.io.FileWriter;
-
-import java.io.FileWriter;
-
-import java.lang.reflect.Field;
-
-import java.lang.reflect.Field;
-
-import java.io.FileWriter;
-import java.io.PrintWriter;
-
-import java.text.SimpleDateFormat;
-
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -110,11 +85,11 @@ public class Mavenproject3 {
 
             Cliente cliente = new Cliente();
 
-            System.out.print("¿El cliente ya está registrado? (s/n): ");
+            System.out.print("El cliente ya está registrado? (s/n): ");
             String respuestaC = sc.nextLine().trim().toLowerCase();
             cliente = new Cliente();
             while (!respuestaC.equals("s") && !respuestaC.equals("n")) {
-                System.out.print("ERROR: Ingrese una respuesta valida\n¿El cliente ya está registrado? (s/n): ");
+                System.out.print("ERROR: Ingrese una respuesta valida\n¿El cliente ya esta registrado? (s/n): ");
                 respuestaC = sc.nextLine().trim().toLowerCase();
             }
             if (respuestaC.equals("s")) {
@@ -178,22 +153,22 @@ public class Mavenproject3 {
                 System.out.println("Se requiere crear una nueva habitación para continuar.");
                 habit = menuAgregarHabitacion(sc);
                 if (habit == null) {
-                    System.out.println("❌ No se pudo continuar sin habitación.");
+                    System.out.println("X| No se pudo continuar sin habitación.");
                     return;
                 }
             } else {
                 habit = seleccionarHabitacion(sc); // método que busca habitación disponible
                 if (habit == null) {
-                    System.out.print("¿Desea crear una nueva habitación? (s/n): ");
+                    System.out.print("Desea crear una nueva habitación? (s/n): ");
                     String respuestaH = sc.nextLine().trim().toLowerCase();
                     if (respuestaH.equals("s")) {
                         habit = menuAgregarHabitacion(sc);
                         if (habit == null) {
-                            System.out.println("❌ No se pudo continuar sin habitación.");
+                            System.out.println("X| No se pudo continuar sin habitación.");
                             return;
                         }
                     } else {
-                        System.out.println("❌ Reserva cancelada por falta de habitación.");
+                        System.out.println("X| Reserva cancelada por falta de habitación.");
                         return;
                     }
                 }
@@ -246,16 +221,16 @@ public class Mavenproject3 {
                         hab.setEstado(estado);
                         return hab;
                     } else {
-                        System.out.println("❌ La habitación está ocupada.");
+                        System.out.println("X| La habitación está ocupada.");
                         return null;
                     }
                 }
             }
         } catch (IOException e) {
-            System.out.println("❌ Error al buscar habitación: " + e.getMessage());
+            System.out.println("X| Error al buscar habitación: " + e.getMessage());
         }
 
-        System.out.println("❌ Habitación no encontrada.");
+        System.out.println("X| Habitación no encontrada.");
         return null;
     }
 
@@ -347,7 +322,7 @@ public class Mavenproject3 {
             }
 
         } catch (IOException e) {
-            System.out.println("❌ Error al leer habitaciones: " + e.getMessage());
+            System.out.println("X| Error al leer habitaciones: " + e.getMessage());
         }
     }
 
@@ -358,7 +333,7 @@ public class Mavenproject3 {
             nueva.guardarHabitacionEnArchivo(habitCreada);
             return habitCreada;
         } else {
-            System.out.println("❌ No se pudo crear la habitación.");
+            System.out.println("X| No se pudo crear la habitación.");
             return null;
         }
     }
@@ -500,12 +475,12 @@ public class Mavenproject3 {
 
             System.out.println(" Cliente registrado exitosamente.");
 
-            System.out.println("\n¿Desea registrar otro cliente? (s/n)");
+            System.out.println("\nDesea registrar otro cliente? (s/n)");
             String resp = sc.nextLine().trim().toLowerCase();
 
             while (!resp.equals("s") && !resp.equals("n")) {
                 System.out.println("Ingrese una respuesta valida. ");
-                System.out.println("\n¿Desea registrar otro cliente? (s/n)");
+                System.out.println("\nDesea registrar otro cliente? (s/n)");
                 resp = sc.nextLine().trim().toLowerCase();
             }
 
@@ -572,10 +547,10 @@ public class Mavenproject3 {
         System.out.print("Clave: ");
         empleado.setClave(sc.nextLine());
 
-        System.out.print("Área: ");
+        System.out.print("Area en la que trabaja: ");
         empleado.setArea(sc.nextLine());
 
-        System.out.print("Puesto: ");
+        System.out.print("Puesto que desemplenia: ");
         empleado.setPuesto(sc.nextLine());
 
         empleado.crearEmpleadoDesdeUsuario(empleado);
@@ -694,7 +669,7 @@ public class Mavenproject3 {
         System.out.print("Correo: ");
         String correoIngresado = scanner.nextLine();
 
-        System.out.print("🔒 Contraseña: ");
+        System.out.print("Contrasenia: ");
         String contraseñaIngresada = scanner.nextLine();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("empleados.txt"))) {
@@ -732,13 +707,13 @@ public class Mavenproject3 {
     public static void mostrarMenuPrincipal(Scanner scanner, Empleado empleadoActivo) {
         boolean continuar = true;
         while (continuar) {
-            System.out.println("\n=== MENÚ PRINCIPAL ===");
+            System.out.println("\n=== MENU PRINCIPAL ===");
             System.out.println("1. Registrar cliente");
             System.out.println("2. Ver clientes");
             System.out.println("3. Crear reserva");
             System.out.println("4. Ver reservas");
             System.out.println("5. Salir");
-            System.out.print("Seleccione una opción: ");
+            System.out.print("Seleccione una opcion: ");
             String opcion = scanner.nextLine();
 
             switch (opcion) {

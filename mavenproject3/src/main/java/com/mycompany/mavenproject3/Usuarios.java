@@ -110,12 +110,12 @@ public class Usuarios {
         while (true) {
             try {
                 if (telefono == null || !telefono.matches("\\d{8}")) {
-                    throw new IllegalArgumentException("El teléfono debe tener exactamente 8 dígitos.");
+                    throw new IllegalArgumentException("El telefono debe tener exactamente 8 digitos.");
                 }
                 this.telefono = telefono;
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("Error en el Teléfono: " + e.getMessage());
+                System.out.println("Error en el Telefono: " + e.getMessage());
                 System.out.print("Vuelva a intentar. Telefono: ");
                 telefono=scanner.nextLine();
             }
@@ -129,8 +129,8 @@ public class Usuarios {
     public void setCorreo(String correo) {
         while (true) {
             try {
-                if (correo == null || !correo.contains("@")) {
-                    throw new IllegalArgumentException("El correo debe contener '@'.");
+                if (correo == null || !correo.contains("@") || correo.length() <= 4 ) {
+                    throw new IllegalArgumentException("El correo debe contener '@' y minimo 5 caracteres.");
                 }
                 this.correo = correo;
                 break;
@@ -151,7 +151,7 @@ public class Usuarios {
             try {
                 nickname = nickname.trim();
                 if (nickname.length() <= 4 || !nickname.matches("^[a-zA-Z0-9]+$")) {
-                    throw new IllegalArgumentException("El nickname debe tener al menos 5 caracteres y solo letras/números.");
+                    throw new IllegalArgumentException("El nickname debe tener al menos 5 caracteres y solo letras/numeros.");
                 }
                 this.nickname = nickname;
                 break;
@@ -172,7 +172,7 @@ public class Usuarios {
             try {
                 String regex = "^(?=.*[A-Za-z])(?=.*[^A-Za-z0-9]).{9,}$";
                 if (!clave.matches(regex)) {
-                    throw new IllegalArgumentException("La clave debe tener al menos 9 caracteres, una letra y un carácter especial.");
+                    throw new IllegalArgumentException("La clave debe tener al menos 9 caracteres, una letra y un caracter especial.");
                 }
                 this.clave = clave;
                 break;
@@ -244,7 +244,7 @@ public class Usuarios {
         System.out.print("Apellido: ");
         String apellido = scanner.nextLine().trim();
 
-        System.out.print("Teléfono: ");
+        System.out.print("Telefono: ");
         String telefono = scanner.nextLine().trim();
 
         System.out.print("Correo: ");

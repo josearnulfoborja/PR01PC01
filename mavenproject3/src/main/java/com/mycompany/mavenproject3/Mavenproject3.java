@@ -28,8 +28,10 @@ import java.lang.reflect.Field;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.text.ParseException;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.util.Scanner;
 
@@ -82,11 +84,6 @@ public class Mavenproject3 {
         }
     }
 
-    /**
-     * Creacion de nuevo usuario
-     *
-     * @param empleado
-     */
 // <editor-fold desc="Reverva">
     public static void crearReserva(Scanner sc, Empleado recepcionistaActivo) {
         Scanner scanner = new Scanner(System.in);
@@ -97,6 +94,7 @@ public class Mavenproject3 {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         try {
+            /*
             int idReserva = obtenerNuevoReservaId();
             reserva.setId(idReserva);
             System.out.print("Fecha de solicitud (dd/MM/yyyy): ");
@@ -107,62 +105,96 @@ public class Mavenproject3 {
 
             System.out.print("Fin de reserva (dd/MM/yyyy): ");
             reserva.setFinReserva(sdf.parse(sc.nextLine()));
+             */
+
+            // Validar fecha de solicitud
+            // Validar fecha de solicitud
+            sdf.setLenient(false); // ← esto fuerza el formato exacto
+
+            Date fechaSolicitud = null;
+            Date inicioReserva = null;
+            Date finReserva = null;
+            while (true) {
+                System.out.print("📅 Fecha de solicitud (dd/MM/yyyy): ");
+                String input = sc.nextLine();
+                try {
+                    fechaSolicitud = sdf.parse(input);
+                    break;
+                } catch (ParseException e) {
+                    System.out.println("❌ Fecha inválida. Intente de nuevo con el formato dd/MM/yyyy.");
+                }
+            }
+
+// Validar inicio de reserva
+            while (true) {
+                System.out.print("📅 Inicio de reserva (dd/MM/yyyy): ");
+                String input = sc.nextLine();
+                try {
+                    inicioReserva = sdf.parse(input);
+                    break;
+                } catch (ParseException e) {
+                    System.out.println("❌ Fecha inválida. Intente de nuevo con el formato dd/MM/yyyy.");
+                }
+            }
+
+// Validar fin de reserva
+            while (true) {
+                System.out.print("📅 Fin de reserva (dd/MM/yyyy): ");
+                String input = sc.nextLine();
+                try {
+                    finReserva = sdf.parse(input);
+                    break;
+                } catch (ParseException e) {
+                    System.out.println("❌ Fecha inválida. Intente de nuevo con el formato dd/MM/yyyy.");
+                }
+            }
+
+// Asignar a la reserva
+            reserva.setFechaSolicitud(fechaSolicitud);
+            reserva.setInicioReserva(inicioReserva);
+            reserva.setFinReserva(finReserva);
 
             Cliente cliente = new Cliente();
 
             System.out.print("¿El cliente ya está registrado? (s/n): ");
             String respuestaC = sc.nextLine().trim().toLowerCase();
-            cliente = new Cliente();
+
             while (!respuestaC.equals("s") && !respuestaC.equals("n")) {
                 System.out.print("ERROR: Ingrese una respuesta valida\n¿El cliente ya está registrado? (s/n): ");
                 respuestaC = sc.nextLine().trim().toLowerCase();
             }
             if (respuestaC.equals("s")) {
-                //  Buscar cliente existente
-                System.out.print("Ingrese el codigo del Cliente: ");
-                int idCliente;
-                String codCliente = sc.nextLine();
-                idCliente = Integer.parseInt(codCliente);
+                mostrarClientesRegistrados();
 
-                cliente = buscarClientePorId(idCliente);
+                System.out.println("\nSeleccione una opción:");
 
-                if (cliente == null) {
-                    System.out.println(" Cliente no encontrado. No se puede continuar.");
-                    return;
+                System.out.println("1. Crear nuevo cliente");
+                System.out.println("2. Seleccionar cliente existente");
+                System.out.print("Opción: ");
+                String opcionCliente = sc.nextLine().trim();
+
+                switch (opcionCliente) {
+                    case "1":
+                        cliente = registrarNuevoClienteClase(sc);
+                        break;
+                    case "2":
+                        System.out.print("Ingrese el código del Cliente: ");
+                        int idCliente = Integer.parseInt(sc.nextLine());
+                        cliente = buscarClientePorId(idCliente);
+                        if (cliente == null) {
+                            System.out.println(" Cliente no encontrado. No se puede continuar.");
+                            return;
+                        }
+                        break;
+                    default:
+                        System.out.println(" Opción inválida. No se puede continuar.");
+                        return;
                 }
+
             } else {
 
-                registrarNuevoCliente(sc);
-                
-                /*
-                System.out.print("📝 Nombre del cliente: ");
-                cliente.setNombre(sc.nextLine());
+                cliente = registrarNuevoClienteClase(sc);
 
-                System.out.print("📝 Apellido del cliente: ");
-                cliente.setApellido(sc.nextLine());
-
-                System.out.print("📞 Teléfono: ");
-                cliente.setTelefono(sc.nextLine());
-
-                System.out.print("📧 Correo electrónico: ");
-                cliente.setCorreo(sc.nextLine());
-
-                //System.out.print("👤 Nickname: ");
-                //cliente.setNickname(sc.nextLine());
-                //System.out.print("🔒 Clave: ");
-                //cliente.setClave(sc.nextLine());
-                System.out.print("💳 Número de tarjeta: ");
-                cliente.setTarjeta(sc.nextLine());
-
-                System.out.print("💳 Codigo de tarjeta: ");
-                cliente.setCodTarjeta(sc.nextLine());
-
-                System.out.print("🏷️ Tipo de cliente (Ej: Regular, VIP): ");
-                cliente.setTipoCliente(sc.nextLine());
-
-                cliente.crearClienteDesdeUsuario(cliente);
-
-                System.out.println(" Cliente registrado exitosamente.");*/
             }
             reserva.setReservante(cliente);
             reserva.setRecepcionista(recepcionistaActivo);
@@ -172,35 +204,33 @@ public class Mavenproject3 {
              */
             mostrarHabitacionesDisponibles();
 
-            Habitaciones habit;
-            if (!hayHabitacionesRegistradas()) {
-                //System.out.println("⚠️ No hay habitaciones registradas.");
-                System.out.println("Se requiere crear una nueva habitación para continuar.");
-                habit = menuAgregarHabitacion(sc);
-                if (habit == null) {
-                    System.out.println("❌ No se pudo continuar sin habitación.");
-                    return;
-                }
-            } else {
-                habit = seleccionarHabitacion(sc); // método que busca habitación disponible
-                if (habit == null) {
-                    System.out.print("¿Desea crear una nueva habitación? (s/n): ");
-                    String respuestaH = sc.nextLine().trim().toLowerCase();
-                    if (respuestaH.equals("s")) {
-                        habit = menuAgregarHabitacion(sc);
-                        if (habit == null) {
-                            System.out.println("❌ No se pudo continuar sin habitación.");
-                            return;
-                        }
-                    } else {
-                        System.out.println("❌ Reserva cancelada por falta de habitación.");
+            System.out.println("\nSeleccione una opción:");
+            System.out.println("1. Crear nueva habitación");
+            System.out.println("2. Seleccionar habitación existente");
+            System.out.print("Opción: ");
+            String opcionHabitacion = sc.nextLine().trim();
+
+            Habitaciones habit = null;
+
+            switch (opcionHabitacion) {
+                case "1":
+                    habit = menuAgregarHabitacion(sc); // método que retorna una habitación creada
+                    break;
+                case "2":
+                    //System.out.print("Ingrese el ID de la habitación: ");
+                    // int idHabitacion = Integer.parseInt(sc.nextLine());
+                    habit = seleccionarHabitacion(sc); // método que busca y retorna la habitación
+                    if (habit == null) {
+                        System.out.println(" Habitación no encontrada. No se puede continuar.");
                         return;
                     }
-                }
+                    break;
+                default:
+                    System.out.println(" Opción inválida. No se puede continuar.");
+                    return;
             }
 
             reserva.setSuite(habit);
-            //validar
 
             // Validación
             reserva.setEstadoReserva("VALIDA");
@@ -246,16 +276,16 @@ public class Mavenproject3 {
                         hab.setEstado(estado);
                         return hab;
                     } else {
-                        System.out.println("❌ La habitación está ocupada.");
+                        System.out.println(" La habitación está ocupada.");
                         return null;
                     }
                 }
             }
         } catch (IOException e) {
-            System.out.println("❌ Error al buscar habitación: " + e.getMessage());
+            System.out.println(" Error al buscar habitación: " + e.getMessage());
         }
 
-        System.out.println("❌ Habitación no encontrada.");
+        System.out.println(" Habitación no encontrada.");
         return null;
     }
 
@@ -268,12 +298,16 @@ public class Mavenproject3 {
 
             while ((linea = reader.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length == 4) {
+                if (partes.length == 8) {
                     System.out.println(contador + ". "
-                            + "Cliente: " + partes[0]
-                            + " | Habitación: " + partes[1]
+                            + "ID: " + partes[0]
+                            + " | Fecha Solicitud: " + partes[1]
                             + " | Entrada: " + partes[2]
-                            + " | Salida: " + partes[3]);
+                            + " | Salida: " + partes[3]
+                            + " | Cliente: " + partes[4]
+                            + " | Empleado: " + partes[5]
+                            + " | Habitación Nivel: " + partes[6]
+                            + " | Estado: " + partes[7]);
                     contador++;
                 }
             }
@@ -329,7 +363,7 @@ public class Mavenproject3 {
     public static void mostrarHabitacionesDisponibles() {
         try (BufferedReader br = new BufferedReader(new FileReader("habitaciones.txt"))) {
             String linea;
-            System.out.println("\n📋 Habitaciones disponibles:");
+            System.out.println("\n Habitaciones disponibles:");
             boolean hayDisponibles = false;
 
             while ((linea = br.readLine()) != null) {
@@ -343,11 +377,11 @@ public class Mavenproject3 {
             }
 
             if (!hayDisponibles) {
-                System.out.println("⚠️ No hay habitaciones disponibles.");
+                System.out.println(" No hay habitaciones disponibles.");
             }
 
         } catch (IOException e) {
-            System.out.println("❌ Error al leer habitaciones: " + e.getMessage());
+            System.out.println(" Error al leer habitaciones: " + e.getMessage());
         }
     }
 
@@ -358,7 +392,7 @@ public class Mavenproject3 {
             nueva.guardarHabitacionEnArchivo(habitCreada);
             return habitCreada;
         } else {
-            System.out.println("❌ No se pudo crear la habitación.");
+            System.out.println(" No se pudo crear la habitación.");
             return null;
         }
     }
@@ -439,32 +473,28 @@ public class Mavenproject3 {
             int nuevoId = obtenerNuevoIdCliente(); // ID automático        
             cliente.setId(nuevoId);
 
-            System.out.print("\n📝 Nombre del cliente: ");
+            System.out.print("\n Nombre del cliente: ");
             cliente.setNombre(sc.nextLine());
 
-            System.out.print("📝 Apellido del cliente: ");
+            System.out.print("Apellido del cliente: ");
             cliente.setApellido(sc.nextLine());
 
-            System.out.print("📞 Teléfono: ");
+            System.out.print("Teléfono: ");
             cliente.setTelefono(sc.nextLine());
 
             while (true) {
-                System.out.print("📧 Correo electrónico: ");
+                System.out.print("Correo electrónico: ");
                 cliente.setCorreo(sc.nextLine());
-                
-                if(!cliente.getCorreo().contains("@")){
+
+                if (!cliente.getCorreo().contains("@")) {
                     System.out.println("El correo, debe contener \"@\".");
                 } else {
                     break;
                 }
             }
 
-            //System.out.print("👤 Nickname: ");
-            //cliente.setNickname(sc.nextLine());
-            //System.out.print("🔒 Clave: ");
-            //cliente.setClave(sc.nextLine());
             while (true) {
-                System.out.print("💳 Número de tarjeta: ");
+                System.out.print(" Número de tarjeta: ");
                 cliente.setTarjeta(sc.nextLine());
 
                 if (cliente.getNoTarjeta().length() != 16) {
@@ -475,7 +505,7 @@ public class Mavenproject3 {
             }
 
             while (true) {
-                System.out.print("💳 Codigo de tarjeta: ");
+                System.out.print(" Codigo de tarjeta: ");
                 cliente.setCodTarjeta(sc.nextLine());
 
                 if (cliente.getCodTarjeta().length() != 3) {
@@ -486,7 +516,7 @@ public class Mavenproject3 {
             }
 
             while (true) {
-                System.out.print("🏷️ Tipo de cliente (Regular, VIP): ");
+                System.out.print(" Tipo de cliente (Regular, VIP): ");
                 cliente.setTipoCliente(sc.nextLine());
 
                 if (!(cliente.getTipoCliente().toUpperCase()).equals("REGULAR") && !cliente.getTipoCliente().toUpperCase().equals("VIP")) {
@@ -518,6 +548,89 @@ public class Mavenproject3 {
         }
     }
 
+    public static Cliente registrarNuevoClienteClase(Scanner sc) {
+        while (true) {
+            Cliente cliente = new Cliente();
+
+            int nuevoId = obtenerNuevoIdCliente(); // ID automático        
+            cliente.setId(nuevoId);
+
+            System.out.print("\n Nombre del cliente: ");
+            cliente.setNombre(sc.nextLine());
+
+            System.out.print(" Apellido del cliente: ");
+            cliente.setApellido(sc.nextLine());
+
+            System.out.print(" Teléfono: ");
+            cliente.setTelefono(sc.nextLine());
+
+            while (true) {
+                System.out.print("📧 Correo electrónico: ");
+                cliente.setCorreo(sc.nextLine());
+
+                if (!cliente.getCorreo().contains("@")) {
+                    System.out.println("El correo, debe contener \"@\".");
+                } else {
+                    break;
+                }
+            }
+
+            while (true) {
+                System.out.print(" Número de tarjeta: ");
+                cliente.setTarjeta(sc.nextLine());
+
+                if (cliente.getNoTarjeta().length() != 16) {
+                    System.out.println("El numero de tarjeta, debe tener al menos 16 caracteres");
+                } else {
+                    break;
+                }
+            }
+
+            while (true) {
+                System.out.print(" Codigo de tarjeta: ");
+                cliente.setCodTarjeta(sc.nextLine());
+
+                if (cliente.getCodTarjeta().length() != 3) {
+                    System.out.println("El codigo de tarjeta, debe tener al menos 3 caracteres.");
+                } else {
+                    break;
+                }
+            }
+
+            while (true) {
+                System.out.print(" Tipo de cliente (Regular, VIP): ");
+                cliente.setTipoCliente(sc.nextLine());
+
+                if (!(cliente.getTipoCliente().toUpperCase()).equals("REGULAR") && !cliente.getTipoCliente().toUpperCase().equals("VIP")) {
+                    System.out.println("Ingrese un tipo valido. Vuelva a ingresar.");
+                } else {
+                    break;
+                }
+            }
+
+            cliente.crearClienteDesdeUsuario(cliente);
+
+            System.out.println(" Cliente registrado exitosamente.");
+
+            System.out.println("\n¿Desea registrar otro cliente? (s/n)");
+            String resp = sc.nextLine().trim().toLowerCase();
+
+            while (!resp.equals("s") && !resp.equals("n")) {
+                System.out.println("Ingrese una respuesta valida. ");
+                System.out.println("\n¿Desea registrar otro cliente? (s/n)");
+                resp = sc.nextLine().trim().toLowerCase();
+            }
+
+            if (resp.equals("s")) {
+
+            } else {
+                System.out.println("Volviendo a menu...");
+                return cliente;
+            }
+
+        }
+    }
+
     public static void mostrarClientesRegistrados() {
         System.out.println("\n=== Clientes Registrados ===");
 
@@ -527,11 +640,15 @@ public class Mavenproject3 {
 
             while ((linea = reader.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length == 5) {
+                if (partes.length == 8) {
                     System.out.println(contador + ". "
-                            + "Nombre: " + partes[0] + " " + partes[1]
-                            + " | Correo: " + partes[2]
-                            + " | Teléfono: " + partes[4]);
+                            + "ID: " + partes[0]
+                            + " | Nombre: " + partes[1] + " " + partes[2]
+                            + " | Teléfono: " + partes[3]
+                            + " | Correo: " + partes[4]
+                            + " | NoTarjeta: " + partes[5]
+                            + " | CodTarjeta: " + partes[6]
+                            + " | TipoCliente: " + partes[7]);
                     contador++;
                 }
             }
@@ -572,7 +689,7 @@ public class Mavenproject3 {
         System.out.print("Clave: ");
         empleado.setClave(sc.nextLine());
 
-        System.out.print("Área: ");
+        System.out.print("Area: ");
         empleado.setArea(sc.nextLine());
 
         System.out.print("Puesto: ");
@@ -672,7 +789,7 @@ public class Mavenproject3 {
 
                 if (usuario.equals(usuarioBuscado) && contrasena.equals(contrasenaBuscada)) {
                     Empleado emp = new Empleado();
-                    emp.setId(Integer.parseInt(partes[0].replaceAll("[^\\d]", ""))); // E001 → 1
+                    emp.setId(Integer.parseInt(partes[0].replaceAll("[^\\d]", ""))); // 
                     emp.setNombre(partes[1].trim());
                     emp.setApellido(partes[2].trim());
                     //emp.setUsuario(usuario);
@@ -694,7 +811,7 @@ public class Mavenproject3 {
         System.out.print("Correo: ");
         String correoIngresado = scanner.nextLine();
 
-        System.out.print("🔒 Contraseña: ");
+        System.out.print("Contraseña: ");
         String contraseñaIngresada = scanner.nextLine();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("empleados.txt"))) {
@@ -844,50 +961,3 @@ public class Mavenproject3 {
     }
 
 }
-
-// </editor-fold>      
-// <editor-fold desc="Archivos">
-/*
-      public static void guardarArchivo(Object entidad, String nombreArchivo) {
-        try (FileWriter writer = new FileWriter(nombreArchivo, true)) {
-            Class<?> clase = entidad.getClass();
-            Field[] campos = clase.getDeclaredFields();
-            StringBuilder linea = new StringBuilder();
-
-            for (Field campo : campos) {
-                campo.setAccessible(true);
-                Object valor = campo.get(entidad);
-                linea.append(valor != null ? valor.toString() : "null").append(",");
-            }
-
-            writer.write(linea.substring(0, linea.length() - 1) + "\n");
-            System.out.println(" " + clase.getSimpleName() + " guardado en " + nombreArchivo);
-        } catch (Exception e) {
-            System.out.println(" Error al guardar " + entidad.getClass().getSimpleName() + ": " + e.getMessage());
-        }
-    }
- */
- /*
-      public static void guardarArchivo(Object entidad, String nombreArchivo) {
-    try (FileWriter writer = new FileWriter(nombreArchivo, true)) {
-        Class<?> clase = entidad.getClass();
-        StringBuilder linea = new StringBuilder();
-
-        // Recorre la jerarquía de clases
-        while (clase != null) {
-            Field[] campos = clase.getDeclaredFields();
-            for (Field campo : campos) {
-                campo.setAccessible(true);
-                Object valor = campo.get(entidad);
-                linea.append(valor != null ? valor.toString() : "null").append(",");
-            }
-            clase = clase.getSuperclass(); // Sube a la clase padre
-        }
-
-        writer.write(linea.substring(0, linea.length() - 1) + "\n");
-        System.out.println(" " + entidad.getClass().getSimpleName() + " guardado en " + nombreArchivo);
-    } catch (Exception e) {
-        System.out.println(" Error al guardar " + entidad.getClass().getSimpleName() + ": " + e.getMessage());
-    }
-}
- */

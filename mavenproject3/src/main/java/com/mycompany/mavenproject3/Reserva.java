@@ -193,7 +193,7 @@ public class Reserva {
                 + ", FechaSolicitud=" + (fechaSolicitud != null ? sdf.format(fechaSolicitud) : "null")
                 + ", InicioReserva=" + (inicioReserva != null ? sdf.format(inicioReserva) : "null")
                 + ", FinReserva=" + (finReserva != null ? sdf.format(finReserva) : "null")
-                + ", Cliente=" + (reservante != null ? reservante.getCorreo() : "null")
+                + ", Cliente=" + (reservante != null ? reservante.getNombre() + " " + reservante.getApellido(): "null")
                 + ", Empleado=" + (recepcionista != null ? recepcionista.getNombre() : "null")
                 + ", Habitación=" + (suite != null ? suite.getNivel() : "null")
                 + ", Estado='" + estadoReserva + '\''               

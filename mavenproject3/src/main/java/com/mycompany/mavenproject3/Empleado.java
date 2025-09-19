@@ -59,16 +59,7 @@ public class Empleado extends Usuarios {
     }
 
     public Empleado crearEmpleadoDesdeUsuario(Empleado usuario) {
-       
-        /*
-                System.out.println("\n=== Datos del Empleado ===");
-
-        System.out.print("Área: ");
-        String area = scanner.nextLine();
-
-        System.out.print("Puesto: ");
-        String puesto = scanner.nextLine();
-    */
+           
         Empleado empleado = new Empleado(usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getTelefono(),
                                          usuario.getCorreo(), usuario.getNickname(), usuario.getClave(),usuario.getArea() , usuario.getPuesto());
         guardarEmpleado(empleado);
@@ -94,9 +85,9 @@ public class Empleado extends Usuarios {
                        e.getPuesto();
             writer.write(linea + "\n");            
         
-        System.out.println("✅ Empleado guardado exitosamente.");
+        System.out.println("Empleado guardado exitosamente.");
         } catch (IOException ex) {
-            System.out.println("❌ Error al guardar el empleado: " + ex.getMessage());
+            System.out.println("Error al guardar el empleado: " + ex.getMessage());
         }
     }
 }

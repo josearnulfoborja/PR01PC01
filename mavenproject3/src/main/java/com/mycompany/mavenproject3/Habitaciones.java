@@ -37,18 +37,42 @@ public class Habitaciones {
         return id;
     }
 
-    public int getNivel() {
-        return nivel;
+    public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("El ID debe ser mayor que 0.");
+        }
+        this.id = id;
     }
 
     public int getCapacidad() {
         return capacidad;
     }
 
+    public void setCapacidad(int capacidad) {
+        if (capacidad <= 0) {
+            throw new IllegalArgumentException("La capacidad debe ser mayor que 0.");
+        }
+        this.capacidad = capacidad;
+    }
+
     public String getTipo() {
         return tipo;
     }
 
+    public void setTipo(String tipo) {
+        tipo = tipo.trim().toLowerCase();
+        if (!(tipo.equals("individual") || tipo.equals("doble") || tipo.equals("triple"))) {
+            throw new IllegalArgumentException("El tipo debe ser: individual, doble o triple.");
+        }
+        this.tipo = tipo;
+    }
+
+
+    public int getNivel() {
+        return nivel;
+    }
+
+  
     public String getEstado() {
         return estado;
     }
@@ -69,20 +93,22 @@ public class Habitaciones {
         this.nivel = nivel;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
     public void setEstado(String estado) {
-        this.estado = estado;
+        estado = estado.trim().toLowerCase();
+        if (!(estado.equals("disponible") || estado.equals("ocupado"))) {
+            throw new IllegalArgumentException("El estado solo puede ser: disponible u ocupado.");
+        }
+        this.estado = Character.toUpperCase(estado.charAt(0)) + estado.substring(1);
+    }
+
+    @Override
+    public String toString() {
+        return "Habitacion " + id
+                + ", Capacidad:" + capacidad
+                + ", Tipo:" + tipo
+                + ", Nivel:" + nivel
+                + ", Precio:" + precio
+                + ", Estado:" + estado;
     }
 
     public void setPrecio(float precio) {
@@ -99,7 +125,7 @@ public class Habitaciones {
    public Habitaciones agregarHabitacion() {
     Scanner sc = new Scanner(System.in);
 
-    // ✅ Declarar variables al inicio
+    //  Declarar variables al inicio
     int id = 0, capacidad = 0, nivel = 0;
     float precio = 0;
     String tipo = "", estado = "";
@@ -113,7 +139,7 @@ public class Habitaciones {
                 sc.nextLine();
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
@@ -125,7 +151,7 @@ public class Habitaciones {
                 sc.nextLine();
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
@@ -137,7 +163,7 @@ public class Habitaciones {
                     throw new IllegalArgumentException("Tipo inválido");
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
@@ -149,7 +175,7 @@ public class Habitaciones {
                 sc.nextLine();
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
@@ -161,7 +187,7 @@ public class Habitaciones {
                 sc.nextLine();
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
@@ -173,12 +199,12 @@ public class Habitaciones {
                     throw new IllegalArgumentException("Estado inválido");
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(" " + e.getMessage());
             }
         }
 
     } catch (Exception e) {
-        System.out.println("❌ Error inesperado: " + e.getMessage());
+        System.out.println(" Error inesperado: " + e.getMessage());
         return null;
     }
    
@@ -194,7 +220,7 @@ public class Habitaciones {
                     + h.getPrecio() + ","
                     + h.getEstado();
             writer.write(linea + "\n");
-            System.out.println("✅ Habitacion guardado exitosamente.");
+            System.out.println(" Habitacion guardado exitosamente.");
         } catch (IOException e) {
             System.out.println("Error al guardar en archivo: " + e.getMessage());
         }
@@ -209,5 +235,6 @@ public class Habitaciones {
         } else {
             habitaciones.forEach(System.out::println);
         }
+
     }
 }

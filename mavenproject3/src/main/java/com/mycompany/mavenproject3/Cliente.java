@@ -52,15 +52,7 @@ public class Cliente extends Usuarios {
         guardarCliente(cliente);
         return cliente;
     }
-/*
-    private static void guardarCliente(Cliente cliente) {
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("clientes.txt", true)))) {
-            out.println(cliente.getNickname() + "," + cliente.noTarjeta + "," + cliente.getTipoCliente() + "," + cliente.getNoTarjeta());
-        } catch (IOException e) {
-            System.out.println("Error al guardar cliente: " + e.getMessage());
-        }
-    }
-    */
+
     
     public static void guardarCliente(Cliente e) {
         try (FileWriter writer = new FileWriter("clientes.txt", true)) {
@@ -74,9 +66,9 @@ public class Cliente extends Usuarios {
                        e.getCodTarjeta();               
         writer.write(linea + "\n");            
         
-        System.out.println("✅ Cliente guardado exitosamente.");
+        System.out.println("Cliente guardado exitosamente.");
         } catch (IOException ex) {
-            System.out.println("❌ Error al guardar el cliente: " + ex.getMessage());
+            System.out.println("Error al guardar el cliente: " + ex.getMessage());
         }
     }
 
